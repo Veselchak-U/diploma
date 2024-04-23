@@ -1,10 +1,9 @@
 {
   "pageNotFound": "Страница не найдена",
   "toInitialScreen": "На начальный экран",
-  "enterActivationCode": "Введите полученный код активациии устройства",
-  "activationCode": "Код активации",
+  "enterPhoneNumber": "Вход по номеру телефона",
   "enterOnlyNumbers": "вводите только цифры",
-  "activateDevice": "Активировать устройство",
+  "login": "Вход",
   "version": "Версия",
   "authorization": "Авторизация",
   "invalidCode": "Неверный код",

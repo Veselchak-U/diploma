@@ -11,16 +11,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get toInitialScreen => 'На начальный экран';
 
   @override
-  String get enterActivationCode => 'Введите полученный код активациии устройства';
-
-  @override
-  String get activationCode => 'Код активации';
+  String get enterPhoneNumber => 'Вход по номеру телефона';
 
   @override
   String get enterOnlyNumbers => 'вводите только цифры';
 
   @override
-  String get activateDevice => 'Активировать устройство';
+  String get login => 'Вход';
 
   @override
   String get version => 'Версия';

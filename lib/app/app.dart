@@ -42,6 +42,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      designSize: const Size(375, 712),
       builder: (context, child) {
         final theme = AppTheme.light;
 

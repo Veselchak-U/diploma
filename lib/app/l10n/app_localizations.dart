@@ -103,17 +103,11 @@ abstract class AppLocalizations {
   /// **'На начальный экран'**
   String get toInitialScreen;
 
-  /// No description provided for @enterActivationCode.
+  /// No description provided for @enterPhoneNumber.
   ///
   /// In ru, this message translates to:
-  /// **'Введите полученный код активациии устройства'**
-  String get enterActivationCode;
-
-  /// No description provided for @activationCode.
-  ///
-  /// In ru, this message translates to:
-  /// **'Код активации'**
-  String get activationCode;
+  /// **'Вход по номеру телефона'**
+  String get enterPhoneNumber;
 
   /// No description provided for @enterOnlyNumbers.
   ///
@@ -121,11 +115,11 @@ abstract class AppLocalizations {
   /// **'вводите только цифры'**
   String get enterOnlyNumbers;
 
-  /// No description provided for @activateDevice.
+  /// No description provided for @login.
   ///
   /// In ru, this message translates to:
-  /// **'Активировать устройство'**
-  String get activateDevice;
+  /// **'Вход'**
+  String get login;
 
   /// No description provided for @version.
   ///

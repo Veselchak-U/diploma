@@ -23,6 +23,7 @@ class LoginScreenVm {
 
   final loading = ValueNotifier<bool>(false);
   final appVersion = ValueNotifier<String>('');
+  final isPhoneComplete = ValueNotifier<bool>(false);
 
   void _init() {
     _loginController.addListener(_loginControllerListener);
@@ -34,6 +35,15 @@ class LoginScreenVm {
     _loginController.removeListener(_loginControllerListener);
     _loginController.dispose();
     loading.dispose();
+    appVersion.dispose();
+    isPhoneComplete.dispose();
+  }
+
+  void onPhoneChanged(String phone) {
+    final phoneComplete = phone.length == 12;
+    if (isPhoneComplete.value == phoneComplete) return;
+
+    isPhoneComplete.value = phoneComplete;
   }
 
   void login() {

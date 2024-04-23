@@ -27,8 +27,8 @@ final class InitialController extends StateController<InitialControllerState>
     return handle(
       () async {
         // Check if token exist
-        final token = await _localStorage.getUserId();
-        if (token == null) {
+        final userId = await _localStorage.getUserId();
+        if (userId == null) {
           setState(const InitialController$Unauthorized(''));
           return;
         }
