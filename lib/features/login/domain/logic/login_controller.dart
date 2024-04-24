@@ -26,13 +26,15 @@ final class LoginController extends StateController<LoginControllerState>
     super.dispose();
   }
 
-  void login() {
+  void login(String phone) {
     return handle(
       () async {
         setState(const LoginController$Loading());
 
-        final model = await _loginRepository.login();
-        await _localStorage.setUserId(model?.userId);
+        final model = await _loginRepository.login(phone);
+        await _localStorage.setUserId(model?.iduser);
+
+        setState(const LoginController$Success());
       },
       _errorHandler,
       _doneHandler,

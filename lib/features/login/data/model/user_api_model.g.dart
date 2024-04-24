@@ -7,17 +7,17 @@ part of 'user_api_model.dart';
 // **************************************************************************
 
 UserApiModel _$UserApiModelFromJson(Map<String, dynamic> json) => UserApiModel(
-      id: json['id'] as int?,
-      expiresAt: _$JsonConverterFromJson<String, DateTime>(
-          json['expiresAt'], const ConvertDateTime().fromJson),
-      deletedAt: _$JsonConverterFromJson<String, DateTime>(
-          json['deleted_at'], const ConvertDateTime().fromJson),
-      code: json['code'] as String?,
-      active: json['active'] as bool?,
+      iduser: json['iduser'] as int,
+      name: json['name'] as String,
+      surname: json['surname'] as String,
+      telephone: json['telephone'] as String,
+      photo: json['photo'] as String,
     );
 
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+Map<String, dynamic> _$UserApiModelToJson(UserApiModel instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'surname': instance.surname,
+      'telephone': instance.telephone,
+      'photo': instance.photo,
+    };

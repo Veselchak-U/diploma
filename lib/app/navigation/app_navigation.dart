@@ -7,6 +7,8 @@ import 'package:get_pet/app/navigation/navigation_error_screen.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/features/home/presentation/home_screen.dart';
+import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen_vm.dart';
@@ -104,6 +106,16 @@ class AppNavigation {
               getPackageInfo: DI.get<InfoService>().getPackageInfo(),
             ),
           ),
+        ),
+      ),
+      GoRoute(
+        name: AppRoute.home.name,
+        path: AppRoute.home.path,
+        builder: (context, state) => Provider(
+          lazy: false,
+          create: (context) => HomeScreenVm(),
+          dispose: (context, vm) => vm.dispose(),
+          child: const HomeScreen(),
         ),
       ),
       GoRoute(

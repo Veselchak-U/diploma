@@ -46,8 +46,8 @@ class LoginScreenVm {
     isPhoneComplete.value = phoneComplete;
   }
 
-  void login() {
-    _loginController.login();
+  void login(String phone) {
+    _loginController.login(phone);
   }
 
   void _loginControllerListener() {

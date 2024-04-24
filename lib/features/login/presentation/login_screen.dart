@@ -74,7 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       return LoadingButton(
                         label: l10n.login,
                         loading: loading,
-                        onPressed: isPhoneComplete ? vm.login : null,
+                        onPressed:
+                            isPhoneComplete ? () => vm.login(_phone) : null,
                       );
                     },
                   );

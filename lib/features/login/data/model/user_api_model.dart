@@ -1,41 +1,27 @@
-import 'package:get_pet/app/utils/date_time_ext.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_api_model.g.dart';
 
-@JsonSerializable(
-  createToJson: false,
-  fieldRename: FieldRename.none,
-)
+@JsonSerializable()
 class UserApiModel {
-  final int? id;
-  @ConvertDateTime()
-  final DateTime? expiresAt;
-  @ConvertDateTime()
-  @JsonKey(name: "deleted_at")
-  final DateTime? deletedAt;
-  final String? code;
-  final bool? active;
+  @JsonKey(includeToJson: false)
+  final int iduser;
+  final String name;
+  final String surname;
+  final String telephone;
+  final String photo;
 
   UserApiModel({
-    this.id,
-    this.expiresAt,
-    this.deletedAt,
-    this.code,
-    this.active,
+    required this.iduser,
+    required this.name,
+    required this.surname,
+    required this.telephone,
+    required this.photo,
   });
 
   factory UserApiModel.fromJson(Map<String, dynamic> json) {
     return _$UserApiModelFromJson(json);
   }
 
-  bool get isDeleted => deletedAt != null;
-
-  bool get isExpired => expiresAt?.isBeforeToday() == true;
-
-  bool get isInactive => active == false;
-
-  bool get isActive => !isInactive && !isExpired;
-
-  bool get hasCodeChanged => code != null;
+  Map<String, dynamic> toJson() => _$UserApiModelToJson(this);
 }

@@ -1,8 +1,8 @@
 import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
-import 'package:get_pet/features/login/data/model/login_api_model.dart';
+import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
 abstract interface class LoginRepository {
-  Future<LoginApiModel?> login();
+  Future<UserApiModel?> login(String phone);
 }
 
 class LoginRepositoryImpl implements LoginRepository {
@@ -11,7 +11,20 @@ class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl(this._loginDatasource);
 
   @override
-  Future<LoginApiModel?> login() async {
-    return _loginDatasource.login();
+  Future<UserApiModel?> login(String phone) async {
+    await _loginDatasource.verifyPhoneNumber(phone);
+
+    var user = await _loginDatasource.getUser(phone);
+    user ??= await _loginDatasource.addUser(
+      UserApiModel(
+        iduser: -1,
+        name: '',
+        surname: '',
+        telephone: phone,
+        photo: '',
+      ),
+    );
+
+    return user;
   }
 }

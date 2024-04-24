@@ -32,6 +32,8 @@ final class InitialController extends StateController<InitialControllerState>
           setState(const InitialController$Unauthorized(''));
           return;
         }
+
+        setState(const InitialController$Success());
       },
       _errorHandler,
       _doneHandler,
