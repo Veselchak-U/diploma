@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:control/control.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/logger/observer/state_controller_observer.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/config.dart';
+import 'package:get_pet/firebase_options.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:windows_single_instance/windows_single_instance.dart';
 
@@ -31,6 +33,10 @@ void main() {
 
 Future<void> _initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   FlutterError.onError = (details) {
     LoggerService().e('FlutterError.onError()',

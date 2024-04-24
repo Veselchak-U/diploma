@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201697189483",
+    "project_id": "getpet-ea0fa",
+    "storage_bucket": "getpet-ea0fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201697189483:android:4128851b18440b1d989b2e",
+        "android_client_info": {
+          "package_name": "ru.usatova_od.get_pet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsz75hMqR9lBs-vcIWUkcXJrllMu4DKNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
