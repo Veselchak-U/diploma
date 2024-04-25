@@ -312,6 +312,30 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Следуйте инструкциям и отключите оптимизацию, чтобы обеспечить бесперебойную работу этого приложения'**
   String get additionalOptimizationText;
+
+  /// No description provided for @home.
+  ///
+  /// In ru, this message translates to:
+  /// **'Домой'**
+  String get home;
+
+  /// No description provided for @search.
+  ///
+  /// In ru, this message translates to:
+  /// **'Найти'**
+  String get search;
+
+  /// No description provided for @add.
+  ///
+  /// In ru, this message translates to:
+  /// **'Добавить'**
+  String get add;
+
+  /// No description provided for @profile.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль'**
+  String get profile;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

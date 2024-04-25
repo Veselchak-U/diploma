@@ -114,4 +114,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get additionalOptimizationText => 'Следуйте инструкциям и отключите оптимизацию, чтобы обеспечить бесперебойную работу этого приложения';
+
+  @override
+  String get home => 'Домой';
+
+  @override
+  String get search => 'Найти';
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get profile => 'Профиль';
 }
