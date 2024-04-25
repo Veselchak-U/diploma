@@ -45,8 +45,11 @@ class AppTheme {
 
   static final _elevatedButtonThemeLight = ElevatedButtonThemeData(
     style: ButtonStyle(
-      fixedSize: MaterialStateProperty.all(
-        Size(double.maxFinite, 56.r),
+      // fixedSize: MaterialStateProperty.all(
+      //   Size(double.maxFinite, 56.r),
+      // ),
+      padding: MaterialStateProperty.all(
+        const EdgeInsets.symmetric(horizontal: 8).h,
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(

@@ -12,6 +12,6 @@ class AppColors {
   static const errorLight = Color(0xffEB5757);
   static const backgroundLight = Color(0xfff6fafe);
   static const onBackgroundLight = Color(0xff171c1f);
-  static const disabledLight = Color(0xffE8E8E8);
+  static const disabledLight = Color(0xffF1F1F1);
   static const inactiveSliderLight = Color(0xffEBF1F4);
 }

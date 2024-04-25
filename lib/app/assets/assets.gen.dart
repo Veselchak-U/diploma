@@ -22,6 +22,9 @@ class $AssetsIconsGen {
   SvgGenImage get iconHome40 =>
       const SvgGenImage('assets/icons/icon_home_40.svg');
 
+  /// File path: assets/icons/icon_paw.svg
+  SvgGenImage get iconPaw => const SvgGenImage('assets/icons/icon_paw.svg');
+
   /// File path: assets/icons/icon_search_40.svg
   SvgGenImage get iconSearch40 =>
       const SvgGenImage('assets/icons/icon_search_40.svg');
@@ -32,7 +35,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values =>
-      [iconAdd40, iconHome40, iconSearch40, iconUser40];
+      [iconAdd40, iconHome40, iconPaw, iconSearch40, iconUser40];
 }
 
 class $AssetsImagesGen {

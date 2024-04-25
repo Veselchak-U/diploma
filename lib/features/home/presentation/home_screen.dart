@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/assets/assets.gen.dart';
 import 'package:get_pet/app/l10n/l10n.dart';
-import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
-import 'package:get_pet/features/home/presentation/pages/add_page.dart';
-import 'package:get_pet/features/home/presentation/pages/home_page.dart';
-import 'package:get_pet/features/home/presentation/pages/profile_page.dart';
-import 'package:get_pet/features/home/presentation/pages/search_page.dart';
-import 'package:provider/provider.dart';
+import 'package:get_pet/features/home/presentation/add_page/add_page.dart';
+import 'package:get_pet/features/home/presentation/home_page/home_page.dart';
+import 'package:get_pet/features/home/presentation/profile_page/profile_page.dart';
+import 'package:get_pet/features/home/presentation/search_page/search_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,8 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _pageIndex = 0;
-
   static const _pages = <Widget>[
     HomePage(),
     SearchPage(),
@@ -25,9 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ProfilePage(),
   ];
 
+  int _pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<HomeScreenVm>();
     final theme = Theme.of(context);
     final selectedColor = theme.colorScheme.secondary;
     final selectedColorFilter = ColorFilter.mode(

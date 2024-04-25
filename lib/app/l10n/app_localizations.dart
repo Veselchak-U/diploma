@@ -169,149 +169,17 @@ abstract class AppLocalizations {
   /// **'Сервер не ответил на запрос вовремя. Повторите попытку позже.'**
   String get serverTimeout;
 
-  /// No description provided for @updatingPlaylist.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновление плейлиста...'**
-  String get updatingPlaylist;
-
-  /// No description provided for @initializingBuffer.
-  ///
-  /// In ru, this message translates to:
-  /// **'Инициализация буфера...'**
-  String get initializingBuffer;
-
-  /// No description provided for @updatingBuffer.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновление буфера...'**
-  String get updatingBuffer;
-
-  /// No description provided for @waitingForBuffer.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ожидание буфера, проигрывание начнётся автоматически...'**
-  String get waitingForBuffer;
-
-  /// No description provided for @currentTrackNotFound.
-  ///
-  /// In ru, this message translates to:
-  /// **'Не найден текущий трек в плейлисте.'**
-  String get currentTrackNotFound;
-
-  /// No description provided for @inactiveOrExpired.
-  ///
-  /// In ru, this message translates to:
-  /// **'Договор неактивен или истёк срок действия'**
-  String get inactiveOrExpired;
-
-  /// No description provided for @update.
-  ///
-  /// In ru, this message translates to:
-  /// **'Обновить'**
-  String get update;
-
-  /// No description provided for @userWasDeleted.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пользователь был удалён, требуется повторная активация.'**
-  String get userWasDeleted;
-
-  /// No description provided for @contractDeactivated.
-  ///
-  /// In ru, this message translates to:
-  /// **'Договор был деактивирован, свяжитесь с администратором.'**
-  String get contractDeactivated;
-
-  /// No description provided for @contractExpired.
-  ///
-  /// In ru, this message translates to:
-  /// **'Истёк срок действия договора, свяжитесь с администратором.'**
-  String get contractExpired;
-
-  /// No description provided for @codeChanged.
-  ///
-  /// In ru, this message translates to:
-  /// **'Код доступа был изменён, необходима повторная авторизация.'**
-  String get codeChanged;
-
   /// No description provided for @initError.
   ///
   /// In ru, this message translates to:
   /// **'Ошибка инициализации'**
   String get initError;
 
-  /// No description provided for @noData.
-  ///
-  /// In ru, this message translates to:
-  /// **'Нет данных в ответе сервера'**
-  String get noData;
-
-  /// No description provided for @codeWasChanged.
-  ///
-  /// In ru, this message translates to:
-  /// **'Код активации был изменён'**
-  String get codeWasChanged;
-
-  /// No description provided for @playlistNotFound.
-  ///
-  /// In ru, this message translates to:
-  /// **'Плейлист на сегодня не найден'**
-  String get playlistNotFound;
-
-  /// No description provided for @batteryOptimization.
-  ///
-  /// In ru, this message translates to:
-  /// **'Оптимизация батареи'**
-  String get batteryOptimization;
-
-  /// No description provided for @batteryOptimizationText.
-  ///
-  /// In ru, this message translates to:
-  /// **'Для бесперебойной работы приложения при выключенном экране необходимо отключить оптимизацию батареи.'**
-  String get batteryOptimizationText;
-
-  /// No description provided for @openSettings.
-  ///
-  /// In ru, this message translates to:
-  /// **'Перейти в настройки'**
-  String get openSettings;
-
-  /// No description provided for @later.
-  ///
-  /// In ru, this message translates to:
-  /// **'Позже'**
-  String get later;
-
   /// No description provided for @cancel.
   ///
   /// In ru, this message translates to:
   /// **'Отмена'**
   String get cancel;
-
-  /// No description provided for @enableAutoStart.
-  ///
-  /// In ru, this message translates to:
-  /// **'Включить автоматический запуск'**
-  String get enableAutoStart;
-
-  /// No description provided for @enableAutoStartText.
-  ///
-  /// In ru, this message translates to:
-  /// **'Следуйте инструкциям и включите автозапуск этого приложения'**
-  String get enableAutoStartText;
-
-  /// No description provided for @additionalOptimization.
-  ///
-  /// In ru, this message translates to:
-  /// **'В вашем устройстве предусмотрена дополнительная оптимизация заряда батареи'**
-  String get additionalOptimization;
-
-  /// No description provided for @additionalOptimizationText.
-  ///
-  /// In ru, this message translates to:
-  /// **'Следуйте инструкциям и отключите оптимизацию, чтобы обеспечить бесперебойную работу этого приложения'**
-  String get additionalOptimizationText;
 
   /// No description provided for @home.
   ///
@@ -336,6 +204,24 @@ abstract class AppLocalizations {
   /// In ru, this message translates to:
   /// **'Профиль'**
   String get profile;
+
+  /// No description provided for @findCouple.
+  ///
+  /// In ru, this message translates to:
+  /// **'Найди пару'**
+  String get findCouple;
+
+  /// No description provided for @forYourPet.
+  ///
+  /// In ru, this message translates to:
+  /// **'своему\nпитомцу в любом месте'**
+  String get forYourPet;
+
+  /// No description provided for @orAdd.
+  ///
+  /// In ru, this message translates to:
+  /// **'Или добавь'**
+  String get orAdd;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
