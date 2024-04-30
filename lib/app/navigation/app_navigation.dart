@@ -7,6 +7,7 @@ import 'package:get_pet/app/navigation/navigation_error_screen.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
@@ -113,7 +114,9 @@ class AppNavigation {
         path: AppRoute.home.path,
         builder: (context, state) => Provider(
           lazy: false,
-          create: (context) => HomeScreenVm(),
+          create: (context) => HomeScreenVm(
+            DI.get<PetRepository>(),
+          ),
           dispose: (context, vm) => vm.dispose(),
           child: const HomeScreen(),
         ),

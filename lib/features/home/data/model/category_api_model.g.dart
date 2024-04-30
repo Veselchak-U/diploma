@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_api_model.dart';
+part of 'category_api_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserApiModel _$UserApiModelFromJson(Map<String, dynamic> json) => UserApiModel(
-      id: json['iduser'] as int,
+CategoryApiModel _$CategoryApiModelFromJson(Map<String, dynamic> json) =>
+    CategoryApiModel(
+      id: json['idcategory'] as int,
       name: json['name'] as String,
-      surname: json['surname'] as String,
-      telephone: json['telephone'] as String,
       photo: json['photo'] as String,
+      count: json['count'] as int,
     );
 
-Map<String, dynamic> _$UserApiModelToJson(UserApiModel instance) =>
+Map<String, dynamic> _$CategoryApiModelToJson(CategoryApiModel instance) =>
     <String, dynamic>{
+      'idcategory': instance.id,
       'name': instance.name,
-      'surname': instance.surname,
-      'telephone': instance.telephone,
       'photo': instance.photo,
+      'count': instance.count,
     };

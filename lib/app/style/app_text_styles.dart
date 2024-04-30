@@ -44,4 +44,10 @@ class AppTextStyles {
     // letterSpacing: 0.5,
     // fontFamily: 'GolosText',
   );
+  static final s11w400 = TextStyle(
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w400,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
 }

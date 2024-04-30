@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_pet/app/style/app_text_styles.dart';
 import 'package:get_pet/features/home/presentation/home_page/widgets/home_page_animals.dart';
 import 'package:get_pet/features/home/presentation/home_page/widgets/home_page_categories.dart';
 import 'package:get_pet/features/home/presentation/home_page/widgets/home_page_head.dart';
@@ -29,11 +31,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: const [
-          HomePageHead(),
-          HomePageCategories(),
-          HomePageAnimals(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const HomePageHead(),
+          Padding(
+            padding: const EdgeInsets.all(16).r,
+            child: Text('Категории', style: AppTextStyles.s13w600),
+          ),
+          const HomePageCategories(),
+          Padding(
+            padding: const EdgeInsets.all(16).r,
+            child: Text('Новые пары', style: AppTextStyles.s13w600),
+          ),
+          const Expanded(
+            child: HomePageAnimals(),
+          ),
         ],
       ),
     );

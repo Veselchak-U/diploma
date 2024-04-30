@@ -31,8 +31,8 @@ final class LoginController extends StateController<LoginControllerState>
       () async {
         setState(const LoginController$Loading());
 
-        final model = await _loginRepository.login(phone);
-        await _localStorage.setUserId(model?.iduser);
+        final user = await _loginRepository.login(phone);
+        await _localStorage.setUserId(user?.id);
 
         setState(const LoginController$Success());
       },

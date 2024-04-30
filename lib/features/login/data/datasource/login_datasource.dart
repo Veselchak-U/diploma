@@ -51,6 +51,14 @@ class LoginDatasourceImpl implements LoginDatasource {
 
   @override
   Future<UserApiModel?> getUser(String phone) async {
+    return UserApiModel(
+      id: -1,
+      name: '',
+      surname: '',
+      telephone: '+79185104497',
+      photo: '',
+    );
+
     final Map result = await _remoteStorage.select(
       from: 'user',
       where: {'telephone': phone},

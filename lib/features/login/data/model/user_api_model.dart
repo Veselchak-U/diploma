@@ -4,15 +4,15 @@ part 'user_api_model.g.dart';
 
 @JsonSerializable()
 class UserApiModel {
-  @JsonKey(includeToJson: false)
-  final int iduser;
+  @JsonKey(name: 'iduser', includeToJson: false)
+  final int id;
   final String name;
   final String surname;
   final String telephone;
   final String photo;
 
   UserApiModel({
-    required this.iduser,
+    required this.id,
     required this.name,
     required this.surname,
     required this.telephone,

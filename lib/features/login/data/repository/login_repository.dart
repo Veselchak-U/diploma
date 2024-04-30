@@ -8,16 +8,16 @@ abstract interface class LoginRepository {
 class LoginRepositoryImpl implements LoginRepository {
   final LoginDatasource _loginDatasource;
 
-  LoginRepositoryImpl(this._loginDatasource);
+  const LoginRepositoryImpl(this._loginDatasource);
 
   @override
   Future<UserApiModel?> login(String phone) async {
-    await _loginDatasource.verifyPhoneNumber(phone);
+    // await _loginDatasource.verifyPhoneNumber(phone);
 
     var user = await _loginDatasource.getUser(phone);
     user ??= await _loginDatasource.addUser(
       UserApiModel(
-        iduser: -1,
+        id: -1,
         name: '',
         surname: '',
         telephone: phone,
