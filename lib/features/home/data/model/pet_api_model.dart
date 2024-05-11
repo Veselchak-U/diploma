@@ -1,3 +1,4 @@
+import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'pet_api_model.g.dart';
@@ -14,7 +15,7 @@ class PetApiModel {
   final String age;
   final String color;
   final String weight;
-  final String type;
+  final PetType type;
   final String description;
 
   PetApiModel({

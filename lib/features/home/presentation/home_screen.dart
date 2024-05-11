@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/assets/assets.gen.dart';
 import 'package:get_pet/app/l10n/l10n.dart';
-import 'package:get_pet/features/home/presentation/add_page/add_page.dart';
-import 'package:get_pet/features/home/presentation/home_page/home_page.dart';
-import 'package:get_pet/features/home/presentation/profile_page/profile_page.dart';
-import 'package:get_pet/features/home/presentation/search_page/search_page.dart';
+import 'package:get_pet/features/home/presentation/home_pages/add_page/add_page.dart';
+import 'package:get_pet/features/home/presentation/home_pages/home_page/home_page.dart';
+import 'package:get_pet/features/home/presentation/home_pages/profile_page/profile_page.dart';
+import 'package:get_pet/features/home/presentation/home_pages/search_page/search_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

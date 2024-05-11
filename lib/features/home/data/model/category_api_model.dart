@@ -22,4 +22,7 @@ class CategoryApiModel {
   }
 
   Map<String, dynamic> toJson() => _$CategoryApiModelToJson(this);
+
+  @override
+  String toString() => name;
 }

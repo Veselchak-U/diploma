@@ -18,6 +18,8 @@ class PetRepositoryImpl implements PetRepository {
 
   @override
   Future<List<CategoryApiModel>> getCategories() async {
+    if (_categories.isNotEmpty) return _categories;
+
     _categories = await _petDatasource.getCategories();
 
     return _categories;

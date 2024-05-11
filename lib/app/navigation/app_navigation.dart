@@ -8,8 +8,11 @@ import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
+import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
+import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_screen.dart';
+import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_screen_vm.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen_vm.dart';
@@ -115,11 +118,27 @@ class AppNavigation {
         builder: (context, state) => Provider(
           lazy: false,
           create: (context) => HomeScreenVm(
+            context,
             DI.get<PetRepository>(),
           ),
           dispose: (context, vm) => vm.dispose(),
           child: const HomeScreen(),
         ),
+        routes: [
+          GoRoute(
+            name: AppRoute.petProfile.name,
+            path: AppRoute.petProfile.path,
+            builder: (context, state) => Provider(
+              lazy: false,
+              create: (context) => PetProfileScreenVm(
+                state.extra as PetEntity?,
+                DI.get<PetRepository>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+              child: const PetProfileScreen(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         name: AppRoute.settings.name,

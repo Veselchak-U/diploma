@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
+import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 
 abstract interface class PetDatasource {
   Future<List<CategoryApiModel>> getCategories();
@@ -60,7 +61,7 @@ class PetDatasourceImpl implements PetDatasource {
         age: 'age 1',
         color: 'color 1',
         weight: 'weight 1',
-        type: 'type 1',
+        type: PetType.mating,
         description: 'description 1',
       ),
       PetApiModel(
@@ -73,7 +74,7 @@ class PetDatasourceImpl implements PetDatasource {
         age: 'age 2',
         color: 'color 2',
         weight: 'weight 2',
-        type: 'type 2',
+        type: PetType.mating,
         description: 'description 2',
       ),
       PetApiModel(
@@ -86,7 +87,7 @@ class PetDatasourceImpl implements PetDatasource {
         age: 'age 3',
         color: 'color 3',
         weight: 'weight 3',
-        type: 'type 3',
+        type: PetType.adopting,
         description: 'description 3',
       ),
       PetApiModel(
@@ -99,7 +100,7 @@ class PetDatasourceImpl implements PetDatasource {
         age: 'age 4',
         color: 'color 4',
         weight: 'weight 4',
-        type: 'type 4',
+        type: PetType.adopting,
         description: 'description 4',
       ),
     ];

@@ -16,7 +16,7 @@ PetApiModel _$PetApiModelFromJson(Map<String, dynamic> json) => PetApiModel(
       age: json['age'] as String,
       color: json['color'] as String,
       weight: json['weight'] as String,
-      type: json['type'] as String,
+      type: $enumDecode(_$PetTypeEnumMap, json['type']),
       description: json['description'] as String,
     );
 
@@ -31,6 +31,11 @@ Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
       'age': instance.age,
       'color': instance.color,
       'weight': instance.weight,
-      'type': instance.type,
+      'type': _$PetTypeEnumMap[instance.type]!,
       'description': instance.description,
     };
+
+const _$PetTypeEnumMap = {
+  PetType.adopting: 'adopting',
+  PetType.mating: 'mating',
+};

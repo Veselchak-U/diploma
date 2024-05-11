@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/widgets/loading_indicator.dart';
 
 enum LoadingButtonType { primary, transparent }
@@ -22,11 +23,17 @@ class LoadingButton extends StatelessWidget {
     final button = switch (type) {
       LoadingButtonType.primary => ElevatedButton(
           onPressed: loading ? null : onPressed,
-          child: Text(label),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8).r,
+            child: Text(label),
+          ),
         ),
       LoadingButtonType.transparent => TextButton(
           onPressed: loading ? null : onPressed,
-          child: Text(label),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8).r,
+            child: Text(label),
+          ),
         ),
     };
 
