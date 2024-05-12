@@ -42,7 +42,7 @@ class PetRepositoryImpl implements PetRepository {
       id: model.id,
       category: category,
       title: model.title,
-      photo: model.photo,
+      photo: UriData.parse(model.photo).contentAsBytes(),
       breed: model.breed,
       location: model.location,
       age: model.age,

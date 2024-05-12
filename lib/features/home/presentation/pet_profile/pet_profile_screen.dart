@@ -38,6 +38,15 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
           padding: const EdgeInsets.all(24).r,
           child: Column(
             children: [
+              vm.petPhoto == null
+                  ? Padding(
+                      padding: const EdgeInsets.all(32).r,
+                      child: LoadingButton(
+                        label: 'Добавить фото',
+                        onPressed: vm.onAddPhoto,
+                      ),
+                    )
+                  : Image.memory(vm.petPhoto!),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Название анкеты',

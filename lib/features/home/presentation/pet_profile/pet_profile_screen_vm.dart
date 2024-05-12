@@ -1,4 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
@@ -23,15 +25,15 @@ class PetProfileScreenVm {
 
   int? petId;
   CategoryApiModel? petCategory;
-  String? petTitle;
-  String? petPhoto;
-  String? petBreed;
-  String? petLocation;
-  String? petAge;
-  String? petColor;
-  String? petWeight;
+  String petTitle = '';
+  Uint8List? petPhoto;
+  String petBreed = '';
+  String petLocation = '';
+  String petAge = '';
+  String petColor = '';
+  String petWeight = '';
   PetType? petType;
-  String? petDescription;
+  String petDescription = '';
 
   Future<void> _init() async {
     _petProfileController.addListener(_petProfileControllerListener);
@@ -109,15 +111,15 @@ class PetProfileScreenVm {
 
     final pet = PetEntity(
       category: petCategory!,
-      title: petTitle!,
+      title: petTitle,
       photo: petPhoto!,
-      breed: petBreed!,
-      location: petLocation!,
-      age: petAge!,
-      color: petColor!,
-      weight: petWeight!,
+      breed: petBreed,
+      location: petLocation,
+      age: petAge,
+      color: petColor,
+      weight: petWeight,
       type: petType!,
-      description: petDescription!,
+      description: petDescription,
     );
 
     _petProfileController.addPet(pet);
@@ -125,16 +127,16 @@ class PetProfileScreenVm {
 
   bool _checkFieldFullness() {
     String? error;
-    if (petCategory == null) error = 'petCategory == null';
-    if (petTitle == null) error = 'petTitle == null';
-    if (petPhoto == null) error = 'petPhoto == null';
-    if (petBreed == null) error = 'petBreed == null';
-    if (petLocation == null) error = 'petLocation == null';
-    if (petAge == null) error = 'petAge == null';
-    if (petColor == null) error = 'petColor == null';
-    if (petWeight == null) error = 'petWeight == null';
-    if (petType == null) error = 'petType == null';
-    if (petDescription == null) error = 'petDescription == null';
+    if (petCategory == null) error = 'Не заполнено: petCategory';
+    if (petTitle.isEmpty) error = 'Не заполнено: petTitle';
+    if (petPhoto == null) error = 'Не заполнено: petPhoto';
+    if (petBreed.isEmpty) error = 'Не заполнено: petBreed';
+    if (petLocation.isEmpty) error = 'Не заполнено: petLocation';
+    if (petAge.isEmpty) error = 'Не заполнено: petAge';
+    if (petColor.isEmpty) error = 'Не заполнено: petColor';
+    if (petWeight.isEmpty) error = 'Не заполнено: petWeight';
+    if (petType == null) error = 'Не заполнено: petType';
+    if (petDescription.isEmpty) error = 'Не заполнено: petDescription';
 
     if (error != null) {
       AppOverlays.showErrorBanner(msg: error);
@@ -156,4 +158,6 @@ class PetProfileScreenVm {
         break;
     }
   }
+
+  Future<void> onAddPhoto() async {}
 }

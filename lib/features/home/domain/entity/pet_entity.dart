@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 
@@ -5,7 +7,7 @@ class PetEntity {
   final int? id;
   final CategoryApiModel category;
   final String title;
-  final String photo;
+  final Uint8List photo;
   final String breed;
   final String location;
   final String age;
@@ -31,7 +33,7 @@ class PetEntity {
   PetEntity copyWith({
     CategoryApiModel? category,
     String? title,
-    String? photo,
+    Uint8List? photo,
     String? breed,
     String? location,
     String? age,
