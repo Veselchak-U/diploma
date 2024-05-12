@@ -173,9 +173,16 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(32).r,
-                child: LoadingButton(
-                  label: 'Добавить анкету',
-                  onPressed: vm.onAddPet,
+                child: ValueListenableBuilder(
+                  valueListenable: vm.loading,
+                  builder: (context, loading, _) {
+                    return LoadingButton(
+                      label:
+                          vm.isAddMode ? 'Добавить анкету' : 'Изменить анкету',
+                      loading: loading,
+                      onPressed: vm.isAddMode ? vm.onAddPet : vm.onUpdatePet,
+                    );
+                  },
                 ),
               ),
             ],

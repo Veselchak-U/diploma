@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
+import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
@@ -12,12 +14,18 @@ abstract interface class PetRepository {
   Future<List<PetEntity>> getNewPets();
 
   Future<void> addPet(PetEntity pet);
+
+  Future<void> updatePet(PetEntity pet);
 }
 
 class PetRepositoryImpl implements PetRepository {
   final PetDatasource _petDatasource;
+  final LocalStorage _localStorage;
 
-  PetRepositoryImpl(this._petDatasource);
+  PetRepositoryImpl(
+    this._petDatasource,
+    this._localStorage,
+  );
 
   List<CategoryApiModel> _categories = [];
 
@@ -39,10 +47,27 @@ class PetRepositoryImpl implements PetRepository {
   }
 
   @override
-  Future<void> addPet(PetEntity pet) {
-    final model = _convertToPetApiModel(pet);
+  Future<void> addPet(PetEntity pet) async {
+    final userId = await _localStorage.getUserId();
+    if (userId == null) {
+      throw const LogicException('Cannot add pet: userId == null');
+    }
+
+    final model = _convertToPetApiModel(pet, userId);
 
     return _petDatasource.addPet(model);
+  }
+
+  @override
+  Future<void> updatePet(PetEntity pet) async {
+    final userId = await _localStorage.getUserId();
+    if (userId == null) {
+      throw const LogicException('Cannot update pet: userId == null');
+    }
+
+    final model = _convertToPetApiModel(pet, userId);
+
+    return _petDatasource.updatePet(model);
   }
 
   PetEntity _convertToPetEntity(PetApiModel model) {
@@ -50,6 +75,7 @@ class PetRepositoryImpl implements PetRepository {
 
     return PetEntity(
       id: model.id,
+      userId: model.userId,
       category: category,
       title: model.title,
       photo: model.photo.isNotEmpty
@@ -65,9 +91,10 @@ class PetRepositoryImpl implements PetRepository {
     );
   }
 
-  PetApiModel _convertToPetApiModel(PetEntity entity) {
+  PetApiModel _convertToPetApiModel(PetEntity entity, int userId) {
     return PetApiModel(
       id: entity.id,
+      userId: userId,
       categoryId: entity.category.id,
       title: entity.title,
       photo: entity.photo.isNotEmpty ? base64.encode(entity.photo) : '',

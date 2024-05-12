@@ -5,6 +5,7 @@ import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 
 class PetEntity {
   final int? id;
+  final int? userId;
   final CategoryApiModel category;
   final String title;
   final Uint8List photo;
@@ -18,6 +19,7 @@ class PetEntity {
 
   PetEntity({
     this.id,
+    this.userId,
     required this.category,
     required this.title,
     required this.photo,
@@ -43,6 +45,8 @@ class PetEntity {
     String? description,
   }) {
     return PetEntity(
+      id: id,
+      userId: userId,
       category: category ?? this.category,
       title: title ?? this.title,
       photo: photo ?? this.photo,

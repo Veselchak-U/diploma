@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
@@ -11,6 +12,8 @@ abstract interface class PetDatasource {
   Future<List<PetApiModel>> getNewPets();
 
   Future<void> addPet(PetApiModel model);
+
+  Future<void> updatePet(PetApiModel model);
 }
 
 class PetDatasourceImpl implements PetDatasource {
@@ -55,6 +58,7 @@ class PetDatasourceImpl implements PetDatasource {
     return [
       PetApiModel(
         id: 1,
+        userId: -1,
         categoryId: 1,
         title: 'Шотландская вислоухая',
         photo: '',
@@ -68,6 +72,7 @@ class PetDatasourceImpl implements PetDatasource {
       ),
       PetApiModel(
         id: 2,
+        userId: -1,
         categoryId: 2,
         title: 'Стаффордширский терьер',
         photo: '',
@@ -81,6 +86,7 @@ class PetDatasourceImpl implements PetDatasource {
       ),
       PetApiModel(
         id: 3,
+        userId: -1,
         categoryId: 2,
         title: 'Стаффордширский терьер',
         photo: '',
@@ -94,6 +100,7 @@ class PetDatasourceImpl implements PetDatasource {
       ),
       PetApiModel(
         id: 4,
+        userId: -1,
         categoryId: 1,
         title: 'Шотландская вислоухая',
         photo: '',
@@ -109,16 +116,24 @@ class PetDatasourceImpl implements PetDatasource {
   }
 
   @override
-  Future<void> addPet(PetApiModel model) async {
-    try {
-      final result = await _remoteStorage.insert(
-        to: 'questionnaire',
-        data: model.toJson(),
-      );
+  Future<void> addPet(PetApiModel model) {
+    return _remoteStorage.insert(
+      to: 'questionnaire',
+      data: model.toJson(),
+    );
+  }
 
-      print(result);
-    } catch (e) {
-      print(e);
+  @override
+  Future<void> updatePet(PetApiModel model) {
+    final id = model.id;
+    if (id == null) {
+      throw const LogicException('Cannot update pet: id == null');
     }
+
+    return _remoteStorage.update(
+      to: 'questionnaire',
+      id: id,
+      data: model.toJson(),
+    );
   }
 }

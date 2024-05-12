@@ -15,6 +15,12 @@ abstract interface class RemoteStorage {
     required Map<String, dynamic> data,
     bool replace = false,
   });
+
+  Future<int> update({
+    required String to,
+    required int id,
+    required Map<String, dynamic> data,
+  });
 }
 
 class RemoteStorageImpl implements RemoteStorage {
@@ -85,6 +91,22 @@ class RemoteStorageImpl implements RemoteStorage {
       insertData: data,
       replace: replace,
       debug: true,
+    );
+    await _db.close();
+
+    return result;
+  }
+
+  @override
+  Future<int> update({
+    required String to,
+    required int id,
+    required Map<String, dynamic> data,
+  }) async {
+    final result = await _db.update(
+      table: to,
+      updateData: data,
+      where: {'id': id},
     );
     await _db.close();
 

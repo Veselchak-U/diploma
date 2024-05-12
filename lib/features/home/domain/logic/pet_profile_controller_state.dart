@@ -23,6 +23,11 @@ final class PetProfileController$AddSuccess extends PetProfileControllerState {
   const PetProfileController$AddSuccess();
 }
 
+final class PetProfileController$UpdateSuccess
+    extends PetProfileControllerState {
+  const PetProfileController$UpdateSuccess();
+}
+
 final class PetProfileController$Error extends PetProfileControllerState {
   final Object error;
 

@@ -49,6 +49,18 @@ final class PetProfileController
     );
   }
 
+  void updatePet(PetEntity pet) {
+    return handle(
+      () async {
+        setState(const PetProfileController$Loading());
+        await _petRepository.updatePet(pet);
+        setState(const PetProfileController$UpdateSuccess());
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
   FutureOr<void> _errorHandler(Object e, StackTrace st) {
     setState(PetProfileController$Error(e));
   }

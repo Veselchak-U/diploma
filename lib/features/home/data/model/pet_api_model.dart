@@ -7,10 +7,11 @@ part 'pet_api_model.g.dart';
 class PetApiModel {
   @JsonKey(name: 'idquestionnaire')
   final int? id;
-  @JsonKey(name: 'idcategory')
+  @JsonKey(name: 'user_iduser')
+  final int userId;
+  @JsonKey(name: 'category_idcategory')
   final int categoryId;
   final String title;
-  final String photo;
   final String breed;
   final String location;
   final String age;
@@ -18,12 +19,13 @@ class PetApiModel {
   final String weight;
   final PetType type;
   final String description;
+  final String photo;
 
   PetApiModel({
     required this.id,
+    required this.userId,
     required this.categoryId,
     required this.title,
-    required this.photo,
     required this.breed,
     required this.location,
     required this.age,
@@ -31,6 +33,7 @@ class PetApiModel {
     required this.weight,
     required this.type,
     required this.description,
+    required this.photo,
   });
 
   factory PetApiModel.fromJson(Map<String, dynamic> json) {

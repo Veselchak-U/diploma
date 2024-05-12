@@ -7,13 +7,16 @@ import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PetProfileScreenVm {
+  final BuildContext _context;
   final PetEntity? _pet;
   final PetProfileController _petProfileController;
 
   PetProfileScreenVm(
+    this._context,
     this._pet,
     this._petProfileController,
   ) {
@@ -23,6 +26,7 @@ class PetProfileScreenVm {
   late final bool isAddMode;
   final categories = ValueNotifier<List<CategoryApiModel>>([]);
   final petPhoto = ValueNotifier<Uint8List?>(null);
+  final loading = ValueNotifier<bool>(true);
   final formKey = GlobalKey<FormState>();
 
   int? petId;
@@ -38,15 +42,16 @@ class PetProfileScreenVm {
 
   Future<void> _init() async {
     _petProfileController.addListener(_petProfileControllerListener);
+    _petProfileController.getCategories();
     isAddMode = _pet == null;
     _initPet(_pet);
-    _petProfileController.getCategories();
   }
 
   void dispose() {
     _petProfileController.removeListener(_petProfileControllerListener);
     categories.dispose();
     petPhoto.dispose();
+    loading.dispose();
   }
 
   void _initPet(PetEntity? pet) {
@@ -111,7 +116,7 @@ class PetProfileScreenVm {
   }
 
   void onAddPet() {
-    LoggerService().d('PetProfileScreenVm.onAdd()');
+    LoggerService().d('PetProfileScreenVm.onAddPet()');
     if (formKey.currentState?.validate() != true) return;
 
     if (_checkFieldFullness() == false) return;
@@ -130,6 +135,28 @@ class PetProfileScreenVm {
     );
 
     _petProfileController.addPet(pet);
+  }
+
+  void onUpdatePet() {
+    LoggerService().d('PetProfileScreenVm.onUpdatePet()');
+    if (formKey.currentState?.validate() != true) return;
+
+    if (_checkFieldFullness() == false) return;
+
+    final pet = PetEntity(
+      category: petCategory!,
+      title: petTitle,
+      photo: petPhoto.value!,
+      breed: petBreed,
+      location: petLocation,
+      age: petAge,
+      color: petColor,
+      weight: petWeight,
+      type: petType!,
+      description: petDescription,
+    );
+
+    _petProfileController.updatePet(pet);
   }
 
   bool _checkFieldFullness() {
@@ -153,25 +180,66 @@ class PetProfileScreenVm {
     return true;
   }
 
-  void _petProfileControllerListener() {
-    switch (_petProfileController.state) {
-      case final PetProfileController$CategoriesSuccess state:
-        categories.value = state.categories;
-        break;
-      case final PetProfileController$Error state:
-        AppOverlays.showErrorBanner(msg: '${state.error}');
-        break;
-      default:
-        break;
-    }
-  }
-
   Future<void> onAddPhoto() async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
     if (image != null) {
       petPhoto.value = await image.readAsBytes();
+    }
+  }
+
+  void _petProfileControllerListener() {
+    final state = _petProfileController.state;
+    _handleLoading(state);
+    _handleCategories(state);
+    _handleAddOrUpdateSuccess(state);
+    _handleError(state);
+  }
+
+  void _handleLoading(PetProfileControllerState state) {
+    switch (state) {
+      case PetProfileController$Loading():
+        loading.value = true;
+        break;
+      default:
+        loading.value = false;
+        break;
+    }
+  }
+
+  void _handleCategories(PetProfileControllerState state) {
+    switch (state) {
+      case PetProfileController$CategoriesSuccess():
+        categories.value = state.categories;
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _handleAddOrUpdateSuccess(PetProfileControllerState state) {
+    switch (state) {
+      case PetProfileController$AddSuccess():
+        AppOverlays.showErrorBanner(msg: 'Анкета добавлена!', isError: false);
+        GoRouter.of(_context).pop();
+        break;
+      case PetProfileController$UpdateSuccess():
+        AppOverlays.showErrorBanner(msg: 'Анкета изменена!', isError: false);
+        GoRouter.of(_context).pop();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _handleError(PetProfileControllerState state) {
+    switch (state) {
+      case PetProfileController$Error():
+        AppOverlays.showErrorBanner(msg: '${state.error}');
+        break;
+      default:
+        break;
     }
   }
 }

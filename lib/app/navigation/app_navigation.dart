@@ -132,6 +132,7 @@ class AppNavigation {
             builder: (context, state) => Provider(
               lazy: false,
               create: (context) => PetProfileScreenVm(
+                context,
                 state.extra as PetEntity?,
                 DI.get<PetProfileController>(),
               ),

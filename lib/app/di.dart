@@ -40,8 +40,10 @@ class DI {
   void _repositories() {
     _sl.registerLazySingleton<LoginRepository>(
         () => LoginRepositoryImpl(_sl<LoginDatasource>()));
-    _sl.registerLazySingleton<PetRepository>(
-        () => PetRepositoryImpl(_sl<PetDatasource>()));
+    _sl.registerLazySingleton<PetRepository>(() => PetRepositoryImpl(
+          _sl<PetDatasource>(),
+          _sl<LocalStorage>(),
+        ));
   }
 
   void _businessLogic() {
