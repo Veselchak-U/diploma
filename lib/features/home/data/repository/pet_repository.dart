@@ -7,6 +7,8 @@ abstract interface class PetRepository {
   Future<List<CategoryApiModel>> getCategories();
 
   Future<List<PetEntity>> getNewPets();
+
+  Future<void> addPet(PetEntity pet);
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -49,5 +51,10 @@ class PetRepositoryImpl implements PetRepository {
       type: model.type,
       description: model.description,
     );
+  }
+
+  @override
+  Future<void> addPet(PetEntity pet) {
+    return _petDatasource.addPet(pet);
   }
 }

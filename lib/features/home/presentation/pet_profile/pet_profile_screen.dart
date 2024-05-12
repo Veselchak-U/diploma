@@ -45,7 +45,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 ),
                 initialValue: vm.petTitle,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onTitleChanged,
+                onChanged: vm.onTitleChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => (value == null || value.isEmpty)
                     ? 'Заполните название анкеты'
@@ -75,7 +75,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 ),
                 initialValue: vm.petBreed,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onBreedChanged,
+                onChanged: vm.onBreedChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => (value == null || value.isEmpty)
                     ? 'Заполните породу'
@@ -88,7 +88,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 ),
                 initialValue: vm.petAge,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onAgeChanged,
+                onChanged: vm.onAgeChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => (value == null || value.isEmpty)
                     ? 'Заполните возраст'
@@ -101,7 +101,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 ),
                 initialValue: vm.petColor,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onColorChanged,
+                onChanged: vm.onColorChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
                     (value == null || value.isEmpty) ? 'Заполните окрас' : null,
@@ -113,7 +113,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 ),
                 initialValue: vm.petWeight,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onWeightChanged,
+                onChanged: vm.onWeightChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
                     (value == null || value.isEmpty) ? 'Заполните вес' : null,
@@ -135,9 +135,10 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                   labelText: 'Описание',
                   helperText: '',
                 ),
+                maxLines: 5,
                 initialValue: vm.petDescription,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: vm.onDescriptionChanged,
+                onChanged: vm.onDescriptionChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => (value == null || value.isEmpty)
                     ? 'Заполните описание'
@@ -147,7 +148,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 padding: const EdgeInsets.all(32).r,
                 child: LoadingButton(
                   label: 'Добавить анкету',
-                  onPressed: vm.onAdd,
+                  onPressed: vm.onAddPet,
                 ),
               ),
             ],

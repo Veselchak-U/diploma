@@ -5,6 +5,7 @@ import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
+import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
@@ -51,6 +52,9 @@ class DI {
     _sl.registerFactory(() => LoginController(
           _sl<LoginRepository>(),
           _sl<LocalStorage>(),
+        ));
+    _sl.registerFactory(() => PetProfileController(
+          _sl<PetRepository>(),
         ));
   }
 }
