@@ -61,9 +61,15 @@ class HomeScreenVm {
     }
   }
 
-  Future<void> updateNewPets() async {
+  Future<void> updateNewPets() {
     loading.value = true;
-    newPets.value = await _petRepository.getNewPets();
-    loading.value = false;
+    _petRepository.getNewPets().then(
+      (value) {
+        newPets.value = value;
+        loading.value = false;
+      },
+    );
+
+    return Future.value();
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
+import 'package:get_pet/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class HomePageAnimals extends StatelessWidget {
@@ -12,24 +13,38 @@ class HomePageAnimals extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<HomeScreenVm>();
 
-    return ValueListenableBuilder(
-      valueListenable: vm.newPets,
-      builder: (context, newPets, _) {
-        return RefreshIndicator(
-          onRefresh: vm.updateNewPets,
-          child: GridView.count(
-            padding: const EdgeInsets.all(16).r,
-            crossAxisCount: 2,
-            childAspectRatio: 0.695,
-            mainAxisSpacing: 16.r,
-            crossAxisSpacing: 16.r,
-            children: List.generate(
-              newPets.length,
-              (index) => _PetItem(newPets[index]),
-            ),
-          ),
-        );
-      },
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ValueListenableBuilder(
+          valueListenable: vm.newPets,
+          builder: (context, newPets, _) {
+            return RefreshIndicator(
+              onRefresh: vm.updateNewPets,
+              child: GridView.count(
+                padding: const EdgeInsets.all(16).r,
+                crossAxisCount: 2,
+                childAspectRatio: 0.695,
+                mainAxisSpacing: 16.r,
+                crossAxisSpacing: 16.r,
+                children: List.generate(
+                  newPets.length,
+                  (index) => _PetItem(newPets[index]),
+                ),
+              ),
+            );
+          },
+        ),
+        ValueListenableBuilder(
+          valueListenable: vm.loading,
+          builder: (context, loading, _) {
+            return Visibility(
+              visible: loading,
+              child: const LoadingIndicator(),
+            );
+          },
+        ),
+      ],
     );
   }
 }
