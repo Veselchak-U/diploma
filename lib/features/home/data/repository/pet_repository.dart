@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
@@ -78,9 +75,7 @@ class PetRepositoryImpl implements PetRepository {
       userId: model.userId,
       category: category,
       title: model.title,
-      photo: model.photo.isNotEmpty
-          ? UriData.parse(model.photo).contentAsBytes()
-          : Uint8List(0),
+      photo: model.photo,
       breed: model.breed,
       location: model.location,
       age: model.age,
@@ -97,7 +92,7 @@ class PetRepositoryImpl implements PetRepository {
       userId: userId,
       categoryId: entity.category.id,
       title: entity.title,
-      photo: entity.photo.isNotEmpty ? base64.encode(entity.photo) : '',
+      photo: entity.photo,
       breed: entity.breed,
       location: entity.location,
       age: entity.age,

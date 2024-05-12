@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:get_pet/app/utils/string_utils.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -19,7 +22,11 @@ class PetApiModel {
   final String weight;
   final PetType type;
   final String description;
-  final String photo;
+  @JsonKey(
+    fromJson: StringUtils.base64ToUint8List,
+    toJson: StringUtils.uint8ListToBase64,
+  )
+  final Uint8List photo;
 
   PetApiModel({
     required this.id,

@@ -18,7 +18,7 @@ PetApiModel _$PetApiModelFromJson(Map<String, dynamic> json) => PetApiModel(
       weight: json['weight'] as String,
       type: $enumDecode(_$PetTypeEnumMap, json['type']),
       description: json['description'] as String,
-      photo: json['photo'] as String,
+      photo: StringUtils.base64ToUint8List(json['photo'] as String),
     );
 
 Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
@@ -34,7 +34,7 @@ Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
       'weight': instance.weight,
       'type': _$PetTypeEnumMap[instance.type]!,
       'description': instance.description,
-      'photo': instance.photo,
+      'photo': StringUtils.uint8ListToBase64(instance.photo),
     };
 
 const _$PetTypeEnumMap = {

@@ -4,7 +4,6 @@ import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
-import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 
 abstract interface class PetDatasource {
   Future<List<CategoryApiModel>> getCategories();
@@ -55,64 +54,72 @@ class PetDatasourceImpl implements PetDatasource {
 
   @override
   Future<List<PetApiModel>> getNewPets() async {
-    return [
-      PetApiModel(
-        id: 1,
-        userId: -1,
-        categoryId: 1,
-        title: 'Шотландская вислоухая',
-        photo: '',
-        breed: 'breed 1',
-        location: 'Шахты (111 км)',
-        age: 'age 1',
-        color: 'color 1',
-        weight: 'weight 1',
-        type: PetType.mating,
-        description: 'description 1',
-      ),
-      PetApiModel(
-        id: 2,
-        userId: -1,
-        categoryId: 2,
-        title: 'Стаффордширский терьер',
-        photo: '',
-        breed: 'breed 2',
-        location: 'Ростов-на-Дону (57 км)',
-        age: 'age 2',
-        color: 'color 2',
-        weight: 'weight 2',
-        type: PetType.adopting,
-        description: 'description 2',
-      ),
-      PetApiModel(
-        id: 3,
-        userId: -1,
-        categoryId: 2,
-        title: 'Стаффордширский терьер',
-        photo: '',
-        breed: 'breed 3',
-        location: 'Ростов-на-Дону (57 км)',
-        age: 'age 3',
-        color: 'color 3',
-        weight: 'weight 3',
-        type: PetType.sale,
-        description: 'description 3',
-      ),
-      PetApiModel(
-        id: 4,
-        userId: -1,
-        categoryId: 1,
-        title: 'Шотландская вислоухая',
-        photo: '',
-        breed: 'breed 4',
-        location: 'Шахты (111 км)',
-        age: 'age 4',
-        color: 'color 4',
-        weight: 'weight 4',
-        type: PetType.mating,
-        description: 'description 4',
-      ),
-    ];
+    final result = await _remoteStorage.selectAll(
+      from: 'questionnaire',
+    );
+
+    final models = result.map((e) => PetApiModel.fromJson(e)).toList();
+
+    return models;
+
+    // return [
+    //   PetApiModel(
+    //     id: 1,
+    //     userId: -1,
+    //     categoryId: 1,
+    //     title: 'Шотландская вислоухая',
+    //     photo: '',
+    //     breed: 'breed 1',
+    //     location: 'Шахты (111 км)',
+    //     age: 'age 1',
+    //     color: 'color 1',
+    //     weight: 'weight 1',
+    //     type: PetType.mating,
+    //     description: 'description 1',
+    //   ),
+    //   PetApiModel(
+    //     id: 2,
+    //     userId: -1,
+    //     categoryId: 2,
+    //     title: 'Стаффордширский терьер',
+    //     photo: '',
+    //     breed: 'breed 2',
+    //     location: 'Ростов-на-Дону (57 км)',
+    //     age: 'age 2',
+    //     color: 'color 2',
+    //     weight: 'weight 2',
+    //     type: PetType.adopting,
+    //     description: 'description 2',
+    //   ),
+    //   PetApiModel(
+    //     id: 3,
+    //     userId: -1,
+    //     categoryId: 2,
+    //     title: 'Стаффордширский терьер',
+    //     photo: '',
+    //     breed: 'breed 3',
+    //     location: 'Ростов-на-Дону (57 км)',
+    //     age: 'age 3',
+    //     color: 'color 3',
+    //     weight: 'weight 3',
+    //     type: PetType.sale,
+    //     description: 'description 3',
+    //   ),
+    //   PetApiModel(
+    //     id: 4,
+    //     userId: -1,
+    //     categoryId: 1,
+    //     title: 'Шотландская вислоухая',
+    //     photo: '',
+    //     breed: 'breed 4',
+    //     location: 'Шахты (111 км)',
+    //     age: 'age 4',
+    //     color: 'color 4',
+    //     weight: 'weight 4',
+    //     type: PetType.mating,
+    //     description: 'description 4',
+    //   ),
+    // ];
   }
 
   @override

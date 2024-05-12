@@ -46,11 +46,24 @@ class _PetItem extends StatelessWidget {
         border: Border.all(color: theme.disabledColor),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: pet.photo.isEmpty
                 ? const Placeholder()
-                : Image.memory(pet.photo),
+                : Container(
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                    foregroundDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: const Radius.circular(16).r,
+                      ),
+                      image: DecorationImage(
+                        image: Image.memory(pet.photo).image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
           ),
           Expanded(
             child: Padding(
