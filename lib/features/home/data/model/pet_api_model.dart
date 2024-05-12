@@ -6,7 +6,8 @@ part 'pet_api_model.g.dart';
 @JsonSerializable()
 class PetApiModel {
   @JsonKey(name: 'idquestionnaire')
-  final int id;
+  final int? id;
+  @JsonKey(name: 'idcategory')
   final int categoryId;
   final String title;
   final String photo;

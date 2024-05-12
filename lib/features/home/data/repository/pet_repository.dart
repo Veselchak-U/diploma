@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
@@ -37,6 +38,13 @@ class PetRepositoryImpl implements PetRepository {
     return entities;
   }
 
+  @override
+  Future<void> addPet(PetEntity pet) {
+    final model = _convertToPetApiModel(pet);
+
+    return _petDatasource.addPet(model);
+  }
+
   PetEntity _convertToPetEntity(PetApiModel model) {
     final category = _categories.firstWhere((e) => e.id == model.categoryId);
 
@@ -57,8 +65,19 @@ class PetRepositoryImpl implements PetRepository {
     );
   }
 
-  @override
-  Future<void> addPet(PetEntity pet) {
-    return _petDatasource.addPet(pet);
+  PetApiModel _convertToPetApiModel(PetEntity entity) {
+    return PetApiModel(
+      id: entity.id,
+      categoryId: entity.category.id,
+      title: entity.title,
+      photo: entity.photo.isNotEmpty ? base64.encode(entity.photo) : '',
+      breed: entity.breed,
+      location: entity.location,
+      age: entity.age,
+      color: entity.color,
+      weight: entity.weight,
+      type: entity.type,
+      description: entity.description,
+    );
   }
 }

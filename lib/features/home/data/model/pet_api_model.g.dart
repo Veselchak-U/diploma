@@ -7,8 +7,8 @@ part of 'pet_api_model.dart';
 // **************************************************************************
 
 PetApiModel _$PetApiModelFromJson(Map<String, dynamic> json) => PetApiModel(
-      id: json['idquestionnaire'] as int,
-      categoryId: json['category_id'] as int,
+      id: json['idquestionnaire'] as int?,
+      categoryId: json['idcategory'] as int,
       title: json['title'] as String,
       photo: json['photo'] as String,
       breed: json['breed'] as String,
@@ -23,7 +23,7 @@ PetApiModel _$PetApiModelFromJson(Map<String, dynamic> json) => PetApiModel(
 Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
     <String, dynamic>{
       'idquestionnaire': instance.id,
-      'category_id': instance.categoryId,
+      'idcategory': instance.categoryId,
       'title': instance.title,
       'photo': instance.photo,
       'breed': instance.breed,

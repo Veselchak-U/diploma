@@ -59,14 +59,14 @@ class LoginDatasourceImpl implements LoginDatasource {
       photo: '',
     );
 
-    final Map result = await _remoteStorage.select(
-      from: 'user',
-      where: {'telephone': phone},
-    );
-
-    return result.isEmpty
-        ? null
-        : UserApiModel.fromJson(result as Map<String, dynamic>);
+    // final Map result = await _remoteStorage.select(
+    //   from: 'user',
+    //   where: {'telephone': phone},
+    // );
+    //
+    // return result.isEmpty
+    //     ? null
+    //     : UserApiModel.fromJson(result as Map<String, dynamic>);
   }
 
   @override
@@ -78,19 +78,4 @@ class LoginDatasourceImpl implements LoginDatasource {
 
     return getUser(user.telephone);
   }
-
-// return _client.post(
-//   Uri.parse(Config.environment.baseUrl).replace(path: ApiEndpoints.login),
-//   body: {
-//     'name': 'name',
-//     'code': code,
-//   },
-//   parser: (response) {
-//     if (response.body case final Map<String, dynamic> data) {
-//       return LoginApiModel.fromJson(data);
-//     }
-//
-//     throw ApiException(response);
-//   },
-// );
 }

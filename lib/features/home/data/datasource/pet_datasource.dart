@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
-import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 
 abstract interface class PetDatasource {
@@ -11,7 +10,7 @@ abstract interface class PetDatasource {
 
   Future<List<PetApiModel>> getNewPets();
 
-  Future<void> addPet(PetEntity pet);
+  Future<void> addPet(PetApiModel model);
 }
 
 class PetDatasourceImpl implements PetDatasource {
@@ -110,8 +109,16 @@ class PetDatasourceImpl implements PetDatasource {
   }
 
   @override
-  Future<void> addPet(PetEntity pet) {
-    // TODO: implement addPet
-    throw UnimplementedError();
+  Future<void> addPet(PetApiModel model) async {
+    try {
+      final result = await _remoteStorage.insert(
+        to: 'questionnaire',
+        data: model.toJson(),
+      );
+
+      print(result);
+    } catch (e) {
+      print(e);
+    }
   }
 }
