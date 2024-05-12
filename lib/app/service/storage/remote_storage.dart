@@ -21,6 +21,11 @@ abstract interface class RemoteStorage {
     required int id,
     required Map<String, dynamic> data,
   });
+
+  Future<int> delete({
+    required String from,
+    required Map<String, dynamic> where,
+  });
 }
 
 class RemoteStorageImpl implements RemoteStorage {
@@ -107,6 +112,20 @@ class RemoteStorageImpl implements RemoteStorage {
       table: to,
       updateData: data,
       where: {'id': id},
+    );
+    await _db.close();
+
+    return result;
+  }
+
+  @override
+  Future<int> delete({
+    required String from,
+    required Map<String, dynamic> where,
+  }) async {
+    final result = await _db.delete(
+      table: from,
+      where: where,
     );
     await _db.close();
 

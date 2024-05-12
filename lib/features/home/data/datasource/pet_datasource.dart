@@ -13,6 +13,8 @@ abstract interface class PetDatasource {
   Future<void> addPet(PetApiModel model);
 
   Future<void> updatePet(PetApiModel model);
+
+  Future<void> deletePet(int id);
 }
 
 class PetDatasourceImpl implements PetDatasource {
@@ -141,6 +143,14 @@ class PetDatasourceImpl implements PetDatasource {
       to: 'questionnaire',
       id: id,
       data: model.toJson(),
+    );
+  }
+
+  @override
+  Future<void> deletePet(int id) {
+    return _remoteStorage.delete(
+      from: 'questionnaire',
+      where: {'idquestionnaire': id},
     );
   }
 }

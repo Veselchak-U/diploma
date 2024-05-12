@@ -13,6 +13,8 @@ abstract interface class PetRepository {
   Future<void> addPet(PetEntity pet);
 
   Future<void> updatePet(PetEntity pet);
+
+  Future<void> deletePet(PetEntity pet);
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -65,6 +67,16 @@ class PetRepositoryImpl implements PetRepository {
     final model = _convertToPetApiModel(pet, userId);
 
     return _petDatasource.updatePet(model);
+  }
+
+  @override
+  Future<void> deletePet(PetEntity pet) {
+    final petId = pet.id;
+    if (petId == null) {
+      throw const LogicException('Cannot delete pet: petId == null');
+    }
+
+    return _petDatasource.deletePet(petId);
   }
 
   PetEntity _convertToPetEntity(PetApiModel model) {
