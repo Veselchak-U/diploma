@@ -80,6 +80,11 @@ class PetProfileScreenVm {
     petBreed = value;
   }
 
+  void onLocationChanged(String value) {
+    LoggerService().d('PetProfileScreenVm.onLocationChanged(): "$value"');
+    petLocation = value;
+  }
+
   void onAgeChanged(String value) {
     LoggerService().d('PetProfileScreenVm.onAgeChanged(): "$value"');
     petAge = value;

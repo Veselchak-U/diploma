@@ -97,6 +97,19 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
+                  labelText: 'Местоположение',
+                  helperText: '',
+                ),
+                initialValue: vm.petLocation,
+                textInputAction: TextInputAction.next,
+                onChanged: vm.onLocationChanged,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Заполните местоположение'
+                    : null,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
                   labelText: 'Возраст',
                   helperText: '',
                 ),
