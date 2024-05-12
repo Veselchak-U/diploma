@@ -45,6 +45,7 @@ class _PetItem extends StatelessWidget {
     final theme = Theme.of(context);
 
     return InkWell(
+      borderRadius: BorderRadius.circular(16).r,
       onLongPress: () => vm.deletePet(pet),
       child: DecoratedBox(
         decoration: BoxDecoration(
