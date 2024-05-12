@@ -47,8 +47,10 @@ class _PetItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Expanded(
-            child: Placeholder(),
+          Expanded(
+            child: pet.photo.isEmpty
+                ? const Placeholder()
+                : Image.memory(pet.photo),
           ),
           Expanded(
             child: Padding(

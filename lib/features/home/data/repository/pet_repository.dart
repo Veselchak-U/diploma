@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
@@ -42,7 +44,9 @@ class PetRepositoryImpl implements PetRepository {
       id: model.id,
       category: category,
       title: model.title,
-      photo: UriData.parse(model.photo).contentAsBytes(),
+      photo: model.photo.isNotEmpty
+          ? UriData.parse(model.photo).contentAsBytes()
+          : Uint8List(0),
       breed: model.breed,
       location: model.location,
       age: model.age,
