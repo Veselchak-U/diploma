@@ -43,6 +43,7 @@ dependencies:
   connectivity_plus: 6.0.1
   uuid: 4.4.0
   open_settings_plus: 0.3.1
+  image_picker: 1.1.1
 
   # Code generation
   json_annotation: 4.8.1

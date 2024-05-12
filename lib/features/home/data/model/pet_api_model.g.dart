@@ -38,4 +38,5 @@ Map<String, dynamic> _$PetApiModelToJson(PetApiModel instance) =>
 const _$PetTypeEnumMap = {
   PetType.adopting: 'adopting',
   PetType.mating: 'mating',
+  PetType.sale: 'sale',
 };

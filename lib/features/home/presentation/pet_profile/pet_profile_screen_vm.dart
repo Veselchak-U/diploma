@@ -7,6 +7,7 @@ import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PetProfileScreenVm {
   final PetEntity? _pet;
@@ -21,12 +22,12 @@ class PetProfileScreenVm {
 
   late final bool isAddMode;
   final categories = ValueNotifier<List<CategoryApiModel>>([]);
+  final petPhoto = ValueNotifier<Uint8List?>(null);
   final formKey = GlobalKey<FormState>();
 
   int? petId;
   CategoryApiModel? petCategory;
   String petTitle = '';
-  Uint8List? petPhoto;
   String petBreed = '';
   String petLocation = '';
   String petAge = '';
@@ -45,6 +46,7 @@ class PetProfileScreenVm {
   void dispose() {
     _petProfileController.removeListener(_petProfileControllerListener);
     categories.dispose();
+    petPhoto.dispose();
   }
 
   void _initPet(PetEntity? pet) {
@@ -53,7 +55,7 @@ class PetProfileScreenVm {
     petId = pet.id;
     petCategory = pet.category;
     petTitle = pet.title;
-    petPhoto = pet.photo;
+    petPhoto.value = pet.photo;
     petBreed = pet.breed;
     petLocation = pet.location;
     petAge = pet.age;
@@ -112,7 +114,7 @@ class PetProfileScreenVm {
     final pet = PetEntity(
       category: petCategory!,
       title: petTitle,
-      photo: petPhoto!,
+      photo: petPhoto.value!,
       breed: petBreed,
       location: petLocation,
       age: petAge,
@@ -127,16 +129,16 @@ class PetProfileScreenVm {
 
   bool _checkFieldFullness() {
     String? error;
-    if (petCategory == null) error = 'Не заполнено: petCategory';
-    if (petTitle.isEmpty) error = 'Не заполнено: petTitle';
-    if (petPhoto == null) error = 'Не заполнено: petPhoto';
-    if (petBreed.isEmpty) error = 'Не заполнено: petBreed';
-    if (petLocation.isEmpty) error = 'Не заполнено: petLocation';
-    if (petAge.isEmpty) error = 'Не заполнено: petAge';
-    if (petColor.isEmpty) error = 'Не заполнено: petColor';
-    if (petWeight.isEmpty) error = 'Не заполнено: petWeight';
-    if (petType == null) error = 'Не заполнено: petType';
-    if (petDescription.isEmpty) error = 'Не заполнено: petDescription';
+    if (petCategory == null) error = 'Не заполнено: Category';
+    if (petTitle.isEmpty) error = 'Не заполнено: Title';
+    if (petPhoto.value == null) error = 'Не заполнено: Photo';
+    if (petBreed.isEmpty) error = 'Не заполнено: Breed';
+    if (petLocation.isEmpty) error = 'Не заполнено: Location';
+    if (petAge.isEmpty) error = 'Не заполнено: Age';
+    if (petColor.isEmpty) error = 'Не заполнено: Color';
+    if (petWeight.isEmpty) error = 'Не заполнено: Weight';
+    if (petType == null) error = 'Не заполнено: Type';
+    if (petDescription.isEmpty) error = 'Не заполнено: Description';
 
     if (error != null) {
       AppOverlays.showErrorBanner(msg: error);
@@ -159,5 +161,12 @@ class PetProfileScreenVm {
     }
   }
 
-  Future<void> onAddPhoto() async {}
+  Future<void> onAddPhoto() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image != null) {
+      petPhoto.value = await image.readAsBytes();
+    }
+  }
 }
