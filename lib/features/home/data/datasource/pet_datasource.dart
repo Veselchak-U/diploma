@@ -23,34 +23,34 @@ class PetDatasourceImpl implements PetDatasource {
 
   @override
   Future<List<CategoryApiModel>> getCategories() async {
-    // final Map result = await _remoteStorage.selectAll(
-    //   from: 'category',
-    // );
-    //
-    // return result.isEmpty
-    //     ? []
-    //     : CategoryApiModel.fromJson(result as Map<String, dynamic>);
+    final result = await _remoteStorage.selectAll(
+      from: 'category',
+    );
 
-    return [
-      CategoryApiModel(
-        id: 1,
-        name: 'Коты',
-        photo: '',
-        count: 250,
-      ),
-      CategoryApiModel(
-        id: 2,
-        name: 'Собаки',
-        photo: '',
-        count: 340,
-      ),
-      CategoryApiModel(
-        id: 3,
-        name: 'Рыбки',
-        photo: '',
-        count: 10,
-      ),
-    ];
+    return result.isEmpty
+        ? []
+        : result.map((e) => CategoryApiModel.fromJson(e)).toList();
+
+    // return [
+    //   CategoryApiModel(
+    //     id: 1,
+    //     name: 'Коты',
+    //     photo: '',
+    //     count: 250,
+    //   ),
+    //   CategoryApiModel(
+    //     id: 2,
+    //     name: 'Собаки',
+    //     photo: '',
+    //     count: 340,
+    //   ),
+    //   CategoryApiModel(
+    //     id: 3,
+    //     name: 'Рыбки',
+    //     photo: '',
+    //     count: 10,
+    //   ),
+    // ];
   }
 
   @override

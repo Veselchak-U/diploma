@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:get_pet/app/utils/string_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_api_model.g.dart';
@@ -7,10 +10,14 @@ class CategoryApiModel {
   @JsonKey(name: 'idcategory')
   final int id;
   final String name;
-  final String photo;
-  final int count;
+  @JsonKey(
+    fromJson: StringUtils.base64ToUint8List,
+    toJson: StringUtils.uint8ListToBase64,
+  )
+  final Uint8List photo;
+  final int? count;
 
-  CategoryApiModel({
+  const CategoryApiModel({
     required this.id,
     required this.name,
     required this.photo,

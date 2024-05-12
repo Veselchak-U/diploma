@@ -51,14 +51,21 @@ class _CategoryItem extends StatelessWidget {
           padding: const EdgeInsets.only(left: 24).r,
           child: Row(
             children: [
-              SizedBox(width: 32.r, height: 32.r, child: const Placeholder()),
+              SizedBox(
+                width: 32.r,
+                height: 32.r,
+                child: Image.memory(category.photo),
+              ),
               SizedBox(width: 16.r),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(category.name, style: AppTextStyles.s13w600),
-                  Text('Всего ${category.count}', style: AppTextStyles.s11w400),
+                  category.count != null
+                      ? Text('Всего ${category.count}',
+                          style: AppTextStyles.s11w400)
+                      : const SizedBox.shrink(),
                 ],
               ),
             ],
