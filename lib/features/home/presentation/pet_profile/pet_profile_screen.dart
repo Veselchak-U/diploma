@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
@@ -5,6 +6,7 @@ import 'package:get_pet/features/home/domain/entity/pet_type.dart';
 import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_screen_vm.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
+import 'package:get_pet/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class PetProfileScreen extends StatefulWidget {
@@ -39,17 +41,27 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
           child: Column(
             children: [
               ValueListenableBuilder(
-                valueListenable: vm.petPhoto,
-                builder: (context, petPhoto, _) {
-                  return petPhoto == null
+                valueListenable: vm.petPhotoUrl,
+                builder: (context, petPhotoUrl, _) {
+                  return petPhotoUrl == null
                       ? Padding(
                           padding: const EdgeInsets.all(32).r,
-                          child: LoadingButton(
-                            label: 'Добавить фото',
-                            onPressed: vm.onAddPhoto,
+                          child: ValueListenableBuilder(
+                            valueListenable: vm.imageLoading,
+                            builder: (context, imageLoading, _) {
+                              return LoadingButton(
+                                label: 'Добавить фото',
+                                loading: imageLoading,
+                                onPressed: vm.onAddPhoto,
+                              );
+                            },
                           ),
                         )
-                      : Image.memory(petPhoto);
+                      : CachedNetworkImage(
+                          imageUrl: petPhotoUrl,
+                          placeholder: (_, __) => const LoadingIndicator(),
+                          errorWidget: (_, __, ___) => const Icon(Icons.error),
+                        );
                 },
               ),
               TextFormField(

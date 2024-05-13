@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
@@ -71,21 +72,26 @@ class _PetItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: pet.photo.isEmpty
-                  ? const Placeholder()
-                  : Container(
-                      width: double.maxFinite,
-                      height: double.maxFinite,
-                      foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.vertical(
-                          top: const Radius.circular(16).r,
-                        ),
-                        image: DecorationImage(
-                          image: Image.memory(pet.photo).image,
-                          fit: BoxFit.cover,
-                        ),
+              child: CachedNetworkImage(
+                imageUrl: pet.photoUrl,
+                imageBuilder: (context, imageProvider) {
+                  return Container(
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                    foregroundDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: const Radius.circular(16).r,
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
+                  );
+                },
+                placeholder: (_, __) => const LoadingIndicator(),
+                errorWidget: (_, __, ___) => const Icon(Icons.error),
+              ),
             ),
             Expanded(
               child: Padding(

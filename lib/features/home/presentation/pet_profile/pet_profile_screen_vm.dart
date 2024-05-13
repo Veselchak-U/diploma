@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
@@ -25,8 +25,9 @@ class PetProfileScreenVm {
 
   late final bool isAddMode;
   final categories = ValueNotifier<List<CategoryApiModel>>([]);
-  final petPhoto = ValueNotifier<Uint8List?>(null);
+  final petPhotoUrl = ValueNotifier<String?>(null);
   final loading = ValueNotifier<bool>(true);
+  final imageLoading = ValueNotifier<bool>(false);
   final formKey = GlobalKey<FormState>();
 
   int? petId;
@@ -50,8 +51,9 @@ class PetProfileScreenVm {
   void dispose() {
     _petProfileController.removeListener(_petProfileControllerListener);
     categories.dispose();
-    petPhoto.dispose();
+    petPhotoUrl.dispose();
     loading.dispose();
+    imageLoading.dispose();
   }
 
   void _initPet(PetEntity? pet) {
@@ -60,7 +62,7 @@ class PetProfileScreenVm {
     petId = pet.id;
     petCategory = pet.category;
     petTitle = pet.title;
-    petPhoto.value = pet.photo;
+    petPhotoUrl.value = pet.photoUrl;
     petBreed = pet.breed;
     petLocation = pet.location;
     petAge = pet.age;
@@ -124,7 +126,7 @@ class PetProfileScreenVm {
     final pet = PetEntity(
       category: petCategory!,
       title: petTitle,
-      photo: petPhoto.value!,
+      photoUrl: petPhotoUrl.value!,
       breed: petBreed,
       location: petLocation,
       age: petAge,
@@ -146,7 +148,7 @@ class PetProfileScreenVm {
     final pet = PetEntity(
       category: petCategory!,
       title: petTitle,
-      photo: petPhoto.value!,
+      photoUrl: petPhotoUrl.value!,
       breed: petBreed,
       location: petLocation,
       age: petAge,
@@ -163,7 +165,7 @@ class PetProfileScreenVm {
     String? error;
     if (petCategory == null) error = 'Не заполнено: Category';
     if (petTitle.isEmpty) error = 'Не заполнено: Title';
-    if (petPhoto.value == null) error = 'Не заполнено: Photo';
+    if (petPhotoUrl.value == null) error = 'Не заполнено: Photo';
     if (petBreed.isEmpty) error = 'Не заполнено: Breed';
     if (petLocation.isEmpty) error = 'Не заполнено: Location';
     if (petAge.isEmpty) error = 'Не заполнено: Age';
@@ -185,7 +187,7 @@ class PetProfileScreenVm {
       source: ImageSource.gallery,
     );
     if (image != null) {
-      petPhoto.value = await image.readAsBytes();
+      _petProfileController.uploadImage(File(image.path));
     }
   }
 
@@ -193,6 +195,7 @@ class PetProfileScreenVm {
     final state = _petProfileController.state;
     _handleLoading(state);
     _handleCategories(state);
+    _handleUploadImage(state);
     _handleAddOrUpdateSuccess(state);
     _handleError(state);
   }
@@ -214,6 +217,21 @@ class PetProfileScreenVm {
         categories.value = state.categories;
         break;
       default:
+        break;
+    }
+  }
+
+  void _handleUploadImage(PetProfileControllerState state) {
+    switch (state) {
+      case PetProfileController$ImageLoading():
+        imageLoading.value = true;
+        break;
+      case PetProfileController$ImageSuccess():
+        petPhotoUrl.value = state.imageUrl;
+        imageLoading.value = false;
+        break;
+      default:
+        imageLoading.value = false;
         break;
     }
   }

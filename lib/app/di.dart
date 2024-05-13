@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/lifecycle/lifecycle_controller.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/app/service/storage/remote_file_storage.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
@@ -27,6 +28,9 @@ class DI {
     final localStorage = await LocalStorageImpl().init();
     _sl.registerSingleton<LocalStorage>(localStorage);
     _sl.registerSingleton<RemoteStorage>(RemoteStorageImpl());
+    _sl.registerSingleton<RemoteFileStorage>(RemoteFileStorageImpl(
+      _sl<LocalStorage>(),
+    ));
     _sl.registerSingleton<InfoService>(InfoServiceImpl());
   }
 
@@ -57,6 +61,7 @@ class DI {
         ));
     _sl.registerFactory(() => PetProfileController(
           _sl<PetRepository>(),
+          _sl<RemoteFileStorage>(),
         ));
   }
 }

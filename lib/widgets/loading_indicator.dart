@@ -7,10 +7,12 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: CircularProgressIndicator(
-        color: color,
-        strokeWidth: 2,
+    return Center(
+      child: RepaintBoundary(
+        child: CircularProgressIndicator(
+          color: color,
+          strokeWidth: 2,
+        ),
       ),
     );
   }
