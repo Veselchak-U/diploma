@@ -3,6 +3,7 @@ class AppRoute {
   static const login = AppRoute('login', '/login');
   static const home = AppRoute('home', '/home');
   static const petProfile = AppRoute('petProfile', 'pet-profile');
+  static const petDetails = AppRoute('petDetails', 'pet-details');
   static const settings = AppRoute('settings', '/settings');
 
   final String name;

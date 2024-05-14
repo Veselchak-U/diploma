@@ -72,4 +72,11 @@ class HomeScreenVm {
 
     return Future.value();
   }
+
+  void openPetDetails(PetEntity pet) {
+    GoRouter.of(_context).pushNamed(
+      AppRoute.petDetails.name,
+      extra: pet,
+    );
+  }
 }

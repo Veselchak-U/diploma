@@ -53,7 +53,7 @@ class HomePageAnimals extends StatelessWidget {
 class _PetItem extends StatelessWidget {
   final PetEntity pet;
 
-  const _PetItem(this.pet, {super.key});
+  const _PetItem(this.pet);
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +62,7 @@ class _PetItem extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(16).r,
+      onTap: () => vm.openPetDetails(pet),
       onLongPress: () => vm.deletePet(pet),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -72,25 +73,28 @@ class _PetItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: CachedNetworkImage(
-                imageUrl: pet.photoUrl,
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    width: double.maxFinite,
-                    height: double.maxFinite,
-                    foregroundDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        top: const Radius.circular(16).r,
+              child: Hero(
+                tag: pet.id ?? -1,
+                child: CachedNetworkImage(
+                  imageUrl: pet.photoUrl,
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      foregroundDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                          top: const Radius.circular(16).r,
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-                placeholder: (_, __) => const LoadingIndicator(),
-                errorWidget: (_, __, ___) => const Icon(Icons.error),
+                    );
+                  },
+                  placeholder: (_, __) => const LoadingIndicator(),
+                  errorWidget: (_, __, ___) => const Icon(Icons.error),
+                ),
               ),
             ),
             Expanded(

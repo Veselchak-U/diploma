@@ -8,6 +8,12 @@ class AppTextStyles {
     // letterSpacing: 0.5,
     // fontFamily: 'GolosText',
   );
+  static final s20w600 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
   static final s18w400 = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w400,
@@ -22,6 +28,18 @@ class AppTextStyles {
   );
   static final s16w400 = TextStyle(
     fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
+  static final s15w600 = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
+  static final s15w400 = TextStyle(
+    fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     // letterSpacing: 0.5,
     // fontFamily: 'GolosText',
