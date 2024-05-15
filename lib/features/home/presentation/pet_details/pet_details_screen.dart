@@ -198,6 +198,8 @@ class _UserDetailsState extends State<_UserDetails> {
     final user = widget.user;
     if (user == null) return const SizedBox.shrink();
 
+    final vm = context.read<PetDetailsScreenVm>();
+
     return Row(
       children: [
         Container(
@@ -224,8 +226,14 @@ class _UserDetailsState extends State<_UserDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Опубликовано'),
-              Text('${widget.user?.name ?? ""} ${widget.user?.surname ?? ""}'),
+              Text(
+                'Опубликовано',
+                style: AppTextStyles.s9w600,
+              ),
+              Text(
+                '${widget.user?.name ?? ""} ${widget.user?.surname ?? ""}',
+                style: AppTextStyles.s11w400,
+              ),
             ],
           ),
         ),
@@ -234,7 +242,26 @@ class _UserDetailsState extends State<_UserDetails> {
           valueListenable: _phoneOpened,
           builder: (context, phoneOpened, _) {
             return phoneOpened
-                ? Text(widget.user?.telephone ?? "")
+                ? Material(
+                    borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                      onTap: vm.copyPhone,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8).r,
+                        child: Row(
+                          children: [
+                            Text(
+                              widget.user?.telephone ?? "",
+                              style: AppTextStyles.s13w400,
+                            ),
+                            SizedBox(width: 4.r),
+                            Icon(Icons.copy, size: 18.r),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 : LoadingButton(
                     label: 'Написать',
                     onPressed: _openPhone,

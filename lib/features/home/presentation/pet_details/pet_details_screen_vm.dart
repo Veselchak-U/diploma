@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details_controller.dart';
@@ -79,5 +80,23 @@ class PetDetailsScreenVm {
       default:
         break;
     }
+  }
+
+  void copyPhone() {
+    final phone = user.value?.telephone;
+    if (phone == null) {
+      AppOverlays.showErrorBanner(
+        msg: 'Телефон пользователя не задан',
+        isError: false,
+      );
+      return;
+    }
+
+    FlutterClipboard.copy(phone).then((_) {
+      AppOverlays.showErrorBanner(
+        msg: 'Телефон $phone скопирован в буфер обмена.',
+        isError: false,
+      );
+    });
   }
 }

@@ -38,6 +38,12 @@ class AppTextStyles {
     // letterSpacing: 0.5,
     // fontFamily: 'GolosText',
   );
+  static final s15w500 = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
   static final s15w400 = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w400,
@@ -65,6 +71,12 @@ class AppTextStyles {
   static final s11w400 = TextStyle(
     fontSize: 11.sp,
     fontWeight: FontWeight.w400,
+    // letterSpacing: 0.5,
+    // fontFamily: 'GolosText',
+  );
+  static final s9w600 = TextStyle(
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w600,
     // letterSpacing: 0.5,
     // fontFamily: 'GolosText',
   );
