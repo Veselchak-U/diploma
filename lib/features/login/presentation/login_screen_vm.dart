@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/features/login/domain/logic/login_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreenVm {
   final BuildContext _context;
@@ -94,5 +96,25 @@ class LoginScreenVm {
       msg: logoutReason ?? '',
       duration: const Duration(seconds: 10),
     );
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      final googleAccount =
+          await GoogleSignIn(/*scopes: ['profile']*/).signIn();
+      final googleAuth = await googleAccount?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final userCredentials =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final user = userCredentials.user;
+    } on Object catch (e, st) {
+      debugPrint('!!! $e');
+    }
   }
 }
