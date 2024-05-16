@@ -12,7 +12,20 @@
           "package_name": "ru.usatova_od.get_pet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "201697189483-i3a16rfjv3d0pbjbei3b46k3fu9svuia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.usatova_od.get_pet",
+            "certificate_hash": "e842b9c0a77d7a6b7b335a0a8b7e092f5caf8c01"
+          }
+        },
+        {
+          "client_id": "201697189483-9u6ul9je70vn3qg478omcabu6vi092d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCsz75hMqR9lBs-vcIWUkcXJrllMu4DKNc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201697189483-9u6ul9je70vn3qg478omcabu6vi092d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
