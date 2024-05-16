@@ -45,3 +45,5 @@ app.*.map.json
 
 # Secrets
 build_config.json
+*.jks
+key.properties
