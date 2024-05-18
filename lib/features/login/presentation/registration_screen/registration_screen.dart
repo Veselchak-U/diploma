@@ -26,7 +26,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<RegistrationScreenVm>();
-    final theme = Theme.of(context);
 
     return AppScaffold(
       title: 'Завершение регистрации',

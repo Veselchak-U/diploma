@@ -4,7 +4,7 @@ import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
-abstract interface class LoginDatasource {
+abstract interface class UserDatasource {
   Future<UserApiModel?> getUserById(int? id);
 
   Future<UserApiModel?> getUserByEmail(String? email);
@@ -16,10 +16,10 @@ abstract interface class LoginDatasource {
   Future<int> updateUser(UserApiModel user);
 }
 
-class LoginDatasourceImpl implements LoginDatasource {
+class UserDatasourceImpl implements UserDatasource {
   final RemoteStorage _remoteStorage;
 
-  const LoginDatasourceImpl(this._remoteStorage);
+  const UserDatasourceImpl(this._remoteStorage);
 
   @override
   Future<UserApiModel?> getUserById(int? id) async {
@@ -39,20 +39,20 @@ class LoginDatasourceImpl implements LoginDatasource {
 
   @override
   Future<UserApiModel?> getUserByEmail(String? email) async {
-    // if (email == null || email.trim().isEmpty) {
-    //   throw const LogicException('Cannot find user with empty email');
-    // }
-    //
-    // final Map result = await _remoteStorage.select(
-    //   from: 'user',
-    //   where: {'email': email},
-    // );
-    //
-    // return result.isEmpty
-    //     ? null
-    //     : UserApiModel.fromJson(result as Map<String, dynamic>);
+    if (email == null || email.trim().isEmpty) {
+      throw const LogicException('Cannot find user with empty email');
+    }
 
-    return null;
+    final Map result = await _remoteStorage.select(
+      from: 'user',
+      where: {'email': email},
+    );
+
+    return result.isEmpty
+        ? null
+        : UserApiModel.fromJson(result as Map<String, dynamic>);
+
+    // return null;
 
     // return UserApiModel(
     //   id: -1,
@@ -90,16 +90,16 @@ class LoginDatasourceImpl implements LoginDatasource {
 
   @override
   Future<UserApiModel?> addUser(UserApiModel user) async {
-    // await _remoteStorage.insert(
-    //   to: 'user',
-    //   data: user.toJson(),
-    // );
-    //
-    // return getUserByEmail(user.email);
-
-    return user.copyWith(
-      id: -1,
+    await _remoteStorage.insert(
+      to: 'user',
+      data: user.toJson(),
     );
+
+    return getUserByEmail(user.email);
+
+    // return user.copyWith(
+    //   id: -1,
+    // );
   }
 
   @override
@@ -109,12 +109,12 @@ class LoginDatasourceImpl implements LoginDatasource {
       throw const LogicException('Cannot update user with null id');
     }
 
-    // return _remoteStorage.update(
-    //   to: 'user',
-    //   id: userId,
-    //   data: user.toJson(),
-    // );
+    return _remoteStorage.update(
+      to: 'user',
+      id: userId,
+      data: user.toJson(),
+    );
 
-    return 0;
+    // return 0;
   }
 }

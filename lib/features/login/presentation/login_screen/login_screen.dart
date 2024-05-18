@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<LoginScreenVm>();
-    final theme = Theme.of(context);
 
     return AppScaffold(
       title: 'Авторизация',

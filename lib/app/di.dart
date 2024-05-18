@@ -10,8 +10,9 @@ import 'package:get_pet/features/home/domain/logic/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart';
-import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
+import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
+import 'package:get_pet/features/login/data/repository/user_repository.dart';
 import 'package:get_pet/features/login/domain/logic/login_controller.dart';
 
 class DI {
@@ -37,8 +38,8 @@ class DI {
   }
 
   void _dataSources() {
-    _sl.registerLazySingleton<LoginDatasource>(
-        () => LoginDatasourceImpl(_sl<RemoteStorage>()));
+    _sl.registerLazySingleton<UserDatasource>(
+        () => UserDatasourceImpl(_sl<RemoteStorage>()));
     _sl.registerLazySingleton<FirebaseDatasource>(
         () => FirebaseDatasourceImpl());
     _sl.registerLazySingleton<PetDatasource>(
@@ -47,8 +48,11 @@ class DI {
 
   void _repositories() {
     _sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
-          _sl<LoginDatasource>(),
+          _sl<UserDatasource>(),
           _sl<FirebaseDatasource>(),
+        ));
+    _sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
+          _sl<UserDatasource>(),
         ));
     _sl.registerLazySingleton<PetRepository>(() => PetRepositoryImpl(
           _sl<PetDatasource>(),
@@ -60,10 +64,11 @@ class DI {
     _sl.registerLazySingleton(() => LifecycleController());
     _sl.registerFactory(() => InitialController(
           _sl<LocalStorage>(),
-          _sl<LoginRepository>(),
+          _sl<UserRepository>(),
         ));
     _sl.registerFactory(() => LoginController(
           _sl<LoginRepository>(),
+          _sl<UserRepository>(),
           _sl<LocalStorage>(),
           _sl<RemoteFileStorage>(),
         ));

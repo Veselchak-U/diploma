@@ -7,17 +7,20 @@ import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/app/service/storage/remote_file_storage.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
+import 'package:get_pet/features/login/data/repository/user_repository.dart';
 
 part 'login_controller_state.dart';
 
 final class LoginController extends StateController<LoginControllerState>
     with SequentialControllerHandler {
   final LoginRepository _loginRepository;
+  final UserRepository _userRepository;
   final LocalStorage _localStorage;
   final RemoteFileStorage _remoteFileStorage;
 
   LoginController(
     this._loginRepository,
+    this._userRepository,
     this._localStorage,
     this._remoteFileStorage, {
     super.initialState = const LoginController$Idle(),
@@ -71,7 +74,7 @@ final class LoginController extends StateController<LoginControllerState>
     return handle(
       () async {
         setState(const LoginController$Loading());
-        await _loginRepository.updateUser(user);
+        await _userRepository.updateUser(user);
         setState(const LoginController$UserUpdated());
       },
       _errorHandler,

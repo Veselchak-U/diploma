@@ -1,23 +1,19 @@
 import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart';
-import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
+import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
 abstract interface class LoginRepository {
   Future<UserApiModel?> loginByGoogle();
 
   Future<UserApiModel?> loginByPhone(String phone);
-
-  Future<UserApiModel?> getUserById(int? id);
-
-  Future<void> updateUser(UserApiModel user);
 }
 
 class LoginRepositoryImpl implements LoginRepository {
-  final LoginDatasource _loginDatasource;
+  final UserDatasource _userDatasource;
   final FirebaseDatasource _firebaseDatasource;
 
   const LoginRepositoryImpl(
-    this._loginDatasource,
+    this._userDatasource,
     this._firebaseDatasource,
   );
 
@@ -25,8 +21,8 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<UserApiModel?> loginByGoogle() async {
     final googleUser = await _firebaseDatasource.loginByGoogle();
 
-    var user = await _loginDatasource.getUserByEmail(googleUser.email);
-    user ??= await _loginDatasource.addUser(
+    var user = await _userDatasource.getUserByEmail(googleUser.email);
+    user ??= await _userDatasource.addUser(
       UserApiModel(
         name: googleUser.displayName ?? '',
         surname: '',
@@ -43,8 +39,8 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<UserApiModel?> loginByPhone(String phone) async {
     // await _firebaseDatasource.verifyPhoneNumber(phone);
 
-    var user = await _loginDatasource.getUserByPhone(phone);
-    user ??= await _loginDatasource.addUser(
+    var user = await _userDatasource.getUserByPhone(phone);
+    user ??= await _userDatasource.addUser(
       UserApiModel(
         name: '',
         surname: '',
@@ -55,15 +51,5 @@ class LoginRepositoryImpl implements LoginRepository {
     );
 
     return user;
-  }
-
-  @override
-  Future<UserApiModel?> getUserById(int? id) {
-    return _loginDatasource.getUserById(id);
-  }
-
-  @override
-  Future<void> updateUser(UserApiModel user) {
-    return _loginDatasource.updateUser(user);
   }
 }

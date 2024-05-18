@@ -49,7 +49,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           verificationId: verificationId,
           smsCode: '123123',
         );
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        await FirebaseAuth.instance.signInWithCredential(
           phoneCredential,
         );
 
