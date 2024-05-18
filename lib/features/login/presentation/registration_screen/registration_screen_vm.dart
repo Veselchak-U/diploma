@@ -61,22 +61,22 @@ class RegistrationScreenVm {
   }
 
   void onNameChanged(String value) {
-    LoggerService().d('FillUserScreenVm.onNameChanged(): "$value"');
+    LoggerService().d('RegistrationScreenVm.onNameChanged(): "$value"');
     userName = value;
   }
 
   void onSurnameChanged(String value) {
-    LoggerService().d('FillUserScreenVm.onSurnameChanged(): "$value"');
+    LoggerService().d('RegistrationScreenVm.onSurnameChanged(): "$value"');
     userSurname = value;
   }
 
   void onPhoneChanged(String value) {
-    LoggerService().d('FillUserScreenVm.onPhoneChanged(): "$value"');
+    LoggerService().d('RegistrationScreenVm.onPhoneChanged(): "$value"');
     userTelephone = value;
   }
 
   void completeRegister() {
-    LoggerService().d('FillUserScreenVm.completeRegister()');
+    LoggerService().d('RegistrationScreenVm.completeRegister()');
     if (formKey.currentState?.validate() != true) return;
 
     final user = UserApiModel(

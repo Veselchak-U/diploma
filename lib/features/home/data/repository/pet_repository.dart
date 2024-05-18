@@ -4,7 +4,6 @@ import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
-import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
 abstract interface class PetRepository {
   Future<List<CategoryApiModel>> getCategories();
@@ -16,8 +15,6 @@ abstract interface class PetRepository {
   Future<void> updatePet(PetEntity pet);
 
   Future<void> deletePet(PetEntity pet);
-
-  Future<UserApiModel> getUser(int userId);
 }
 
 class PetRepositoryImpl implements PetRepository {
@@ -116,10 +113,5 @@ class PetRepositoryImpl implements PetRepository {
       type: entity.type,
       description: entity.description,
     );
-  }
-
-  @override
-  Future<UserApiModel> getUser(int userId) {
-    return _petDatasource.getUser(userId);
   }
 }

@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:control/control.dart';
-import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
+import 'package:get_pet/features/login/data/repository/user_repository.dart';
 
 part 'pet_details_controller_state.dart';
 
 final class PetDetailsController
     extends StateController<PetDetailsControllerState>
     with SequentialControllerHandler {
-  final PetRepository _petRepository;
+  final UserRepository _userRepository;
 
   PetDetailsController(
-    this._petRepository, {
+    this._userRepository, {
     super.initialState = const PetDetailsController$Idle(),
   }) {
     _init();
@@ -29,8 +29,10 @@ final class PetDetailsController
     return handle(
       () async {
         setState(const PetDetailsController$Loading());
-        final user = await _petRepository.getUser(userId);
-        setState(PetDetailsController$UserSuccess(user));
+        final user = await _userRepository.getUserById(userId);
+        if (user != null) {
+          setState(PetDetailsController$UserSuccess(user));
+        }
       },
       _errorHandler,
       _doneHandler,

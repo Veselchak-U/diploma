@@ -77,7 +77,7 @@ class DI {
           _sl<RemoteFileStorage>(),
         ));
     _sl.registerFactory(() => PetDetailsController(
-          _sl<PetRepository>(),
+          _sl<UserRepository>(),
         ));
   }
 }

@@ -18,8 +18,8 @@ abstract interface class RemoteStorage {
 
   Future<int> update({
     required String to,
-    required int id,
     required Map<String, dynamic> data,
+    required Map<String, dynamic> where,
   });
 
   Future<int> delete({
@@ -29,6 +29,8 @@ abstract interface class RemoteStorage {
 }
 
 class RemoteStorageImpl implements RemoteStorage {
+  static const _requestTimeOut = Duration(seconds: 30);
+
   MysqlUtils get _db => MysqlUtils(
         settings: {
           'host': Config.dbHost,
@@ -59,11 +61,14 @@ class RemoteStorageImpl implements RemoteStorage {
 
   @override
   Future<List<dynamic>> selectAll({required String from}) async {
-    final result = await _db.getAll(
-      table: from,
-      fields: '*',
-      debug: true,
-    );
+    final result = await _db
+        .getAll(
+          table: from,
+          fields: '*',
+          debug: true,
+        )
+        .timeout(_requestTimeOut);
+
     await _db.close();
 
     return result;
@@ -74,12 +79,15 @@ class RemoteStorageImpl implements RemoteStorage {
     required String from,
     required Map<String, dynamic> where,
   }) async {
-    final result = await _db.getOne(
-      table: from,
-      fields: '*',
-      where: where,
-      debug: true,
-    );
+    final result = await _db
+        .getOne(
+          table: from,
+          fields: '*',
+          where: where,
+          debug: true,
+        )
+        .timeout(_requestTimeOut);
+
     await _db.close();
 
     return result;
@@ -91,12 +99,15 @@ class RemoteStorageImpl implements RemoteStorage {
     required Map<String, dynamic> data,
     bool replace = false,
   }) async {
-    final result = await _db.insert(
-      table: to,
-      insertData: data,
-      replace: replace,
-      debug: true,
-    );
+    final result = await _db
+        .insert(
+          table: to,
+          insertData: data,
+          replace: replace,
+          debug: true,
+        )
+        .timeout(_requestTimeOut);
+
     await _db.close();
 
     return result;
@@ -105,14 +116,17 @@ class RemoteStorageImpl implements RemoteStorage {
   @override
   Future<int> update({
     required String to,
-    required int id,
     required Map<String, dynamic> data,
+    required Map<String, dynamic> where,
   }) async {
-    final result = await _db.update(
-      table: to,
-      updateData: data,
-      where: {'id': id},
-    );
+    final result = await _db
+        .update(
+          table: to,
+          updateData: data,
+          where: where,
+        )
+        .timeout(_requestTimeOut);
+
     await _db.close();
 
     return result;
@@ -123,10 +137,13 @@ class RemoteStorageImpl implements RemoteStorage {
     required String from,
     required Map<String, dynamic> where,
   }) async {
-    final result = await _db.delete(
-      table: from,
-      where: where,
-    );
+    final result = await _db
+        .delete(
+          table: from,
+          where: where,
+        )
+        .timeout(_requestTimeOut);
+
     await _db.close();
 
     return result;

@@ -94,7 +94,7 @@ class PetDetailsScreenVm {
 
     FlutterClipboard.copy(phone).then((_) {
       AppOverlays.showErrorBanner(
-        msg: 'Телефон $phone скопирован в буфер обмена.',
+        msg: 'Телефон $phone скопирован',
         isError: false,
       );
     });
