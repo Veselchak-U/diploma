@@ -59,6 +59,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get add => 'Добавить';
 
   @override
+  String get support => 'Поддержка';
+
+  @override
   String get profile => 'Профиль';
 
   @override

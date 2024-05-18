@@ -199,6 +199,12 @@ abstract class AppLocalizations {
   /// **'Добавить'**
   String get add;
 
+  /// No description provided for @support.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поддержка'**
+  String get support;
+
   /// No description provided for @profile.
   ///
   /// In ru, this message translates to:

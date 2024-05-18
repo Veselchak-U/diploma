@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/assets/assets.gen.dart';
 import 'package:get_pet/app/l10n/l10n.dart';
-import 'package:get_pet/features/home/presentation/home_pages/add_page/add_page.dart';
+import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/features/home/presentation/home_pages/home_page/home_page.dart';
 import 'package:get_pet/features/home/presentation/home_pages/profile_page/profile_page.dart';
 import 'package:get_pet/features/home/presentation/home_pages/search_page/search_page.dart';
+import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const _pages = <Widget>[
     HomePage(),
     SearchPage(),
-    AddPage(),
+    SupportPage(),
     ProfilePage(),
   ];
 
@@ -37,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _pages[_pageIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: AppColors.onBackgroundLight,
+        showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
             icon: Assets.icons.iconHome40.svg(
@@ -51,10 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
             label: l10n.search,
           ),
           BottomNavigationBarItem(
-            icon: Assets.icons.iconAdd40.svg(
+            icon: Assets.icons.iconSupport40.svg(
               colorFilter: _pageIndex == 2 ? selectedColorFilter : null,
             ),
-            label: l10n.add,
+            label: l10n.support,
           ),
           BottomNavigationBarItem(
             icon: Assets.icons.iconUser40.svg(
