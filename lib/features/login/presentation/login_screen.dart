@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: LoadingButton(
           label: 'Вход через Google',
-          onPressed: vm.loginWithGoogle,
+          onPressed: vm.loginByGoogle,
         ),
       ),
     );

@@ -182,6 +182,7 @@ class PetDatasourceImpl implements PetDatasource {
       id: -1,
       name: 'Ольга',
       surname: 'Усатова',
+      email: 'qqq@www.com',
       telephone: '+79181234567',
       photo:
           'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fapp%2Fkoshka_64.png?alt=media&token=c6d3b740-9a85-47c1-b869-2bc7fe2413bf',

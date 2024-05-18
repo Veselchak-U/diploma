@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:control/control.dart';
+import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 
 part 'login_controller_state.dart';
@@ -26,20 +28,43 @@ final class LoginController extends StateController<LoginControllerState>
     super.dispose();
   }
 
-  void login(String phone) {
+  void loginByGoogle() {
     return handle(
       () async {
         setState(const LoginController$Loading());
 
-        final user = await _loginRepository.login(phone);
-        await _localStorage.setUserId(user?.id);
+        final user = await _loginRepository.loginByGoogle();
+        if (user == null) {
+          throw const LogicException('Пользователь не найден в БД');
+        }
 
-        setState(const LoginController$Success());
+        final userId = user.id;
+        if (userId == null) {
+          throw const LogicException('У пользователя не задан id');
+        }
+        await _localStorage.setUserId(userId);
+
+        setState(LoginController$Success(user));
       },
       _errorHandler,
       _doneHandler,
     );
   }
+
+  // void loginByPhone(String phone) {
+  //   return handle(
+  //     () async {
+  //       setState(const LoginController$Loading());
+  //
+  //       final user = await _loginRepository.loginByPhone(phone);
+  //       await _localStorage.setUserId(user?.id);
+  //
+  //       setState(const LoginController$Success());
+  //     },
+  //     _errorHandler,
+  //     _doneHandler,
+  //   );
+  // }
 
   FutureOr<void> _errorHandler(Object e, StackTrace st) {
     setState(LoginController$Error(e));

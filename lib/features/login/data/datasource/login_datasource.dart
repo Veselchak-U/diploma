@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
 abstract interface class LoginDatasource {
-  Future<bool?> verifyPhoneNumber(String phone);
+  Future<UserApiModel?> getUserByEmail(String? email);
 
-  Future<UserApiModel?> getUser(String phone);
+  Future<UserApiModel?> getUserByPhone(String? phone);
 
   Future<UserApiModel?> addUser(UserApiModel user);
 }
@@ -18,64 +18,61 @@ class LoginDatasourceImpl implements LoginDatasource {
   const LoginDatasourceImpl(this._remoteStorage);
 
   @override
-  Future<bool?> verifyPhoneNumber(String phone) {
-    final completer = Completer<bool?>();
-
-    FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phone,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        completer.complete(true);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        completer.completeError(e);
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        final phoneCredential = PhoneAuthProvider.credential(
-          verificationId: verificationId,
-          smsCode: '123123',
-        );
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(
-          phoneCredential,
-        );
-
-        completer.complete(true);
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        completer.completeError(TimeoutException(null));
-      },
-      timeout: const Duration(seconds: 30),
-    );
-
-    return completer.future;
-  }
-
-  @override
-  Future<UserApiModel?> getUser(String phone) async {
-    return UserApiModel(
-      id: -1,
-      name: '',
-      surname: '',
-      telephone: '+79185104497',
-      photo: '',
-    );
-
+  Future<UserApiModel?> getUserByEmail(String? email) async {
+    // if (email == null || email.trim().isEmpty) {
+    //   throw const LogicException('Cannot find user with empty email');
+    // }
+    //
     // final Map result = await _remoteStorage.select(
     //   from: 'user',
-    //   where: {'telephone': phone},
+    //   where: {'email': email},
     // );
     //
     // return result.isEmpty
     //     ? null
     //     : UserApiModel.fromJson(result as Map<String, dynamic>);
+
+    return UserApiModel(
+      id: -1,
+      name: '',
+      surname: '',
+      email: '',
+      telephone: '+79185104497',
+      photo: '',
+    );
+  }
+
+  @override
+  Future<UserApiModel?> getUserByPhone(String? phone) async {
+    if (phone == null || phone.trim().isEmpty) {
+      throw const LogicException('Cannot find user with empty phone');
+    }
+
+    final Map result = await _remoteStorage.select(
+      from: 'user',
+      where: {'telephone': phone},
+    );
+
+    return result.isEmpty
+        ? null
+        : UserApiModel.fromJson(result as Map<String, dynamic>);
+
+    // return UserApiModel(
+    //   id: -1,
+    //   name: '',
+    //   surname: '',
+    //   telephone: '+79185104497',
+    //   photo: '',
+    // );
   }
 
   @override
   Future<UserApiModel?> addUser(UserApiModel user) async {
-    final result = await _remoteStorage.insert(
+    await _remoteStorage.insert(
       to: 'user',
       data: user.toJson(),
     );
 
-    return getUser(user.telephone);
+    return getUserByEmail(user.email);
   }
 }

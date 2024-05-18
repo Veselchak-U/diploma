@@ -5,16 +5,18 @@ part 'user_api_model.g.dart';
 @JsonSerializable()
 class UserApiModel {
   @JsonKey(name: 'iduser', includeToJson: false)
-  final int id;
+  final int? id;
   final String name;
   final String surname;
+  final String email;
   final String telephone;
   final String photo;
 
   UserApiModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.surname,
+    required this.email,
     required this.telephone,
     required this.photo,
   });
@@ -24,4 +26,10 @@ class UserApiModel {
   }
 
   Map<String, dynamic> toJson() => _$UserApiModelToJson(this);
+
+  bool get isComplete =>
+      name.trim().isNotEmpty &&
+      email.trim().isNotEmpty &&
+      telephone.trim().isNotEmpty &&
+      photo.trim().isNotEmpty;
 }

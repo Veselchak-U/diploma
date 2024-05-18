@@ -19,7 +19,9 @@ final class LoginController$UserInactive extends LoginControllerState {
 }
 
 final class LoginController$Success extends LoginControllerState {
-  const LoginController$Success();
+  final UserApiModel user;
+
+  const LoginController$Success(this.user);
 }
 
 final class LoginController$Error extends LoginControllerState {
