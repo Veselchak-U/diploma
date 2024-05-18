@@ -20,9 +20,12 @@ import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_scree
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen_vm.dart';
+import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/domain/logic/login_controller.dart';
-import 'package:get_pet/features/login/presentation/login_screen.dart';
-import 'package:get_pet/features/login/presentation/login_screen_vm.dart';
+import 'package:get_pet/features/login/presentation/login_screen/login_screen.dart';
+import 'package:get_pet/features/login/presentation/login_screen/login_screen_vm.dart';
+import 'package:get_pet/features/login/presentation/registration_screen/registration_screen.dart';
+import 'package:get_pet/features/login/presentation/registration_screen/registration_screen_vm.dart';
 import 'package:get_pet/features/settings/presentation/settings_screen.dart';
 import 'package:get_pet/features/settings/presentation/settings_screen_vm.dart';
 import 'package:get_pet/widgets/app_drawer.dart';
@@ -117,6 +120,20 @@ class AppNavigation {
         ),
       ),
       GoRoute(
+        name: AppRoute.registration.name,
+        path: AppRoute.registration.path,
+        builder: (context, state) => Provider(
+          lazy: false,
+          create: (context) => RegistrationScreenVm(
+            context,
+            state.extra as UserApiModel,
+            DI.get<LoginController>(),
+          ),
+          dispose: (context, vm) => vm.dispose(),
+          child: const RegistrationScreen(),
+        ),
+      ),
+      GoRoute(
         name: AppRoute.home.name,
         path: AppRoute.home.path,
         builder: (context, state) => Provider(
@@ -154,7 +171,7 @@ class AppNavigation {
                 DI.get<PetDetailsController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
-              child: PetDetailsScreen(),
+              child: const PetDetailsScreen(),
             ),
           ),
         ],

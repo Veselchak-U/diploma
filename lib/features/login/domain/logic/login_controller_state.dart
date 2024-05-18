@@ -18,10 +18,24 @@ final class LoginController$UserInactive extends LoginControllerState {
   const LoginController$UserInactive(this.reason);
 }
 
-final class LoginController$Success extends LoginControllerState {
+final class LoginController$LoginSuccess extends LoginControllerState {
   final UserApiModel user;
 
-  const LoginController$Success(this.user);
+  const LoginController$LoginSuccess(this.user);
+}
+
+final class LoginController$ImageLoading extends LoginControllerState {
+  const LoginController$ImageLoading();
+}
+
+final class LoginControllerS$ImageSuccess extends LoginControllerState {
+  final String imageUrl;
+
+  const LoginControllerS$ImageSuccess(this.imageUrl);
+}
+
+final class LoginController$UserUpdated extends LoginControllerState {
+  const LoginController$UserUpdated();
 }
 
 final class LoginController$Error extends LoginControllerState {

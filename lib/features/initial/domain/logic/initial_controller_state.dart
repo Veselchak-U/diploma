@@ -18,6 +18,10 @@ final class InitialController$Unauthorized extends InitialControllerState {
   const InitialController$Unauthorized(this.reason);
 }
 
+final class InitialController$UserIncomplete extends InitialControllerState {
+  const InitialController$UserIncomplete();
+}
+
 final class InitialController$Success extends InitialControllerState {
   const InitialController$Success();
 }

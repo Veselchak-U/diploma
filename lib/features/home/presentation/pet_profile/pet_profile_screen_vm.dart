@@ -30,7 +30,6 @@ class PetProfileScreenVm {
   final imageLoading = ValueNotifier<bool>(false);
   final formKey = GlobalKey<FormState>();
 
-  int? petId;
   CategoryApiModel? petCategory;
   String petTitle = '';
   String petBreed = '';
@@ -45,7 +44,7 @@ class PetProfileScreenVm {
     _petProfileController.addListener(_petProfileControllerListener);
     _petProfileController.getCategories();
     isAddMode = _pet == null;
-    _initPet(_pet);
+    _initPetFields(_pet);
   }
 
   void dispose() {
@@ -56,10 +55,9 @@ class PetProfileScreenVm {
     imageLoading.dispose();
   }
 
-  void _initPet(PetEntity? pet) {
+  void _initPetFields(PetEntity? pet) {
     if (pet == null) return;
 
-    petId = pet.id;
     petCategory = pet.category;
     petTitle = pet.title;
     petPhotoUrl.value = pet.photoUrl;

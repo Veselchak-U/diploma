@@ -32,4 +32,21 @@ class UserApiModel {
       email.trim().isNotEmpty &&
       telephone.trim().isNotEmpty &&
       photo.trim().isNotEmpty;
+
+  UserApiModel copyWith({
+    int? id,
+    String? name,
+    String? surname,
+    String? telephone,
+    String? photo,
+  }) {
+    return UserApiModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      surname: surname ?? this.surname,
+      email: email,
+      telephone: telephone ?? this.telephone,
+      photo: photo ?? this.photo,
+    );
+  }
 }

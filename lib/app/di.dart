@@ -60,10 +60,12 @@ class DI {
     _sl.registerLazySingleton(() => LifecycleController());
     _sl.registerFactory(() => InitialController(
           _sl<LocalStorage>(),
+          _sl<LoginRepository>(),
         ));
     _sl.registerFactory(() => LoginController(
           _sl<LoginRepository>(),
           _sl<LocalStorage>(),
+          _sl<RemoteFileStorage>(),
         ));
     _sl.registerFactory(() => PetProfileController(
           _sl<PetRepository>(),

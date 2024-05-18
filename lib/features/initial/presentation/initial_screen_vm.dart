@@ -38,6 +38,10 @@ class InitialScreenVm {
           name: AppRoute.login.name,
           reason: state.reason,
         ),
+      InitialController$UserIncomplete() => (
+          name: AppRoute.registration.name,
+          reason: '',
+        ),
       const InitialController$Success() => (
           name: AppRoute.home.name,
           reason: '',

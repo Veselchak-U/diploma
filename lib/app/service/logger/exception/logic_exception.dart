@@ -4,5 +4,5 @@ class LogicException implements Exception {
   const LogicException(this.message);
 
   @override
-  String toString() => 'LogicException: $message';
+  String toString() => message;
 }

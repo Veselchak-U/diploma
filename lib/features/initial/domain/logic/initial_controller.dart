@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:control/control.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/features/login/data/repository/login_repository.dart';
 
 part 'initial_controller_state.dart';
 
 final class InitialController extends StateController<InitialControllerState>
     with SequentialControllerHandler {
   final LocalStorage _localStorage;
+  final LoginRepository _loginRepository;
 
   InitialController(
-    this._localStorage, {
+    this._localStorage,
+    this._loginRepository, {
     super.initialState = const InitialController$Idle(),
   }) {
     _init();
@@ -30,6 +33,19 @@ final class InitialController extends StateController<InitialControllerState>
         final userId = await _localStorage.getUserId();
         if (userId == null) {
           setState(const InitialController$Unauthorized(''));
+          return;
+        }
+
+        // Check if user incomplete
+        final user = await _loginRepository.getUserById(userId);
+        if (user == null) {
+          setState(InitialController$Unauthorized(
+            'Пользователь с id: $userId не найден в БД',
+          ));
+          return;
+        }
+        if (!user.isComplete) {
+          setState(const InitialController$UserIncomplete());
           return;
         }
 

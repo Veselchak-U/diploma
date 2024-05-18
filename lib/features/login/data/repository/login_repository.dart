@@ -6,6 +6,10 @@ abstract interface class LoginRepository {
   Future<UserApiModel?> loginByGoogle();
 
   Future<UserApiModel?> loginByPhone(String phone);
+
+  Future<UserApiModel?> getUserById(int? id);
+
+  Future<void> updateUser(UserApiModel user);
 }
 
 class LoginRepositoryImpl implements LoginRepository {
@@ -51,5 +55,15 @@ class LoginRepositoryImpl implements LoginRepository {
     );
 
     return user;
+  }
+
+  @override
+  Future<UserApiModel?> getUserById(int? id) {
+    return _loginDatasource.getUserById(id);
+  }
+
+  @override
+  Future<void> updateUser(UserApiModel user) {
+    return _loginDatasource.updateUser(user);
   }
 }

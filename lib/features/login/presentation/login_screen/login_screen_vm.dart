@@ -50,10 +50,6 @@ class LoginScreenVm {
     _loginController.loginByGoogle();
   }
 
-  // void loginByPhone(String phone) {
-  //   _loginController.loginByPhone(phone);
-  // }
-
   void _loginControllerListener() {
     _updateLoading(_loginController.state);
     _handleSuccess(_loginController.state);
@@ -69,11 +65,14 @@ class LoginScreenVm {
 
   void _handleSuccess(LoginControllerState state) {
     switch (state) {
-      case final LoginController$Success state:
+      case final LoginController$LoginSuccess state:
         if (state.user.isComplete) {
           _context.pushReplacementNamed(AppRoute.home.name);
         } else {
-          _context.pushReplacementNamed(AppRoute.fillUser.name);
+          _context.pushReplacementNamed(
+            AppRoute.registration.name,
+            extra: state.user,
+          );
         }
         break;
       default:

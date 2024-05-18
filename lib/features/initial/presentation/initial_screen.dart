@@ -17,7 +17,7 @@ class InitialScreen extends StatelessWidget {
           const Center(
             child: SizedBox(
               width: 320,
-              height: 320,
+              height: 400,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: LoadingIndicator(),

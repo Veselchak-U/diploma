@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:control/control.dart';
 import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/app/service/storage/remote_file_storage.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 
@@ -12,10 +14,12 @@ final class LoginController extends StateController<LoginControllerState>
     with SequentialControllerHandler {
   final LoginRepository _loginRepository;
   final LocalStorage _localStorage;
+  final RemoteFileStorage _remoteFileStorage;
 
   LoginController(
     this._loginRepository,
-    this._localStorage, {
+    this._localStorage,
+    this._remoteFileStorage, {
     super.initialState = const LoginController$Idle(),
   }) {
     _init();
@@ -44,27 +48,36 @@ final class LoginController extends StateController<LoginControllerState>
         }
         await _localStorage.setUserId(userId);
 
-        setState(LoginController$Success(user));
+        setState(LoginController$LoginSuccess(user));
       },
       _errorHandler,
       _doneHandler,
     );
   }
 
-  // void loginByPhone(String phone) {
-  //   return handle(
-  //     () async {
-  //       setState(const LoginController$Loading());
-  //
-  //       final user = await _loginRepository.loginByPhone(phone);
-  //       await _localStorage.setUserId(user?.id);
-  //
-  //       setState(const LoginController$Success());
-  //     },
-  //     _errorHandler,
-  //     _doneHandler,
-  //   );
-  // }
+  void uploadImage(File file) {
+    return handle(
+      () async {
+        setState(const LoginController$ImageLoading());
+        final imageUrl = await _remoteFileStorage.uploadUserImage(file);
+        setState(LoginControllerS$ImageSuccess(imageUrl));
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
+  void updateUser(UserApiModel user) {
+    return handle(
+      () async {
+        setState(const LoginController$Loading());
+        await _loginRepository.updateUser(user);
+        setState(const LoginController$UserUpdated());
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
 
   FutureOr<void> _errorHandler(Object e, StackTrace st) {
     setState(LoginController$Error(e));
