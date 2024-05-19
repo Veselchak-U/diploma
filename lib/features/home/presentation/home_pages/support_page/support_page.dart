@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
+import 'package:get_pet/features/home/data/model/question_api_model.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
@@ -34,7 +36,7 @@ class _SupportPageState extends State<SupportPage>
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 24).r,
               child: LoadingButton(
                 label: 'Написать в поддержку',
-                onPressed: vm.createNewQuestion,
+                onPressed: vm.addNewQuestion,
               ),
             ),
           ),
@@ -50,16 +52,7 @@ class _SupportPageState extends State<SupportPage>
                       children: [
                         questions.isEmpty
                             ? const _EmptyQuestionsWidget()
-                            : Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16).r,
-                                  child: Text(
-                                    'Мои заявки',
-                                    style: AppTextStyles.s13w600,
-                                  ),
-                                ),
-                              ),
+                            : _QuestionsListWidget(questions),
                         if (loading) const LoadingIndicator(),
                       ],
                     );
@@ -81,6 +74,74 @@ class _EmptyQuestionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text('Обращений ещё не было'),
+    );
+  }
+}
+
+class _QuestionsListWidget extends StatelessWidget {
+  final List<QuestionApiModel> questions;
+
+  const _QuestionsListWidget(
+    this.questions, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16).r,
+          child: Text(
+            'Мои заявки',
+            style: AppTextStyles.s13w600,
+          ),
+        ),
+        Expanded(
+          child: ListView.separated(
+            itemBuilder: (context, index) => _QuestionItem(questions[index]),
+            separatorBuilder: (context, _) => SizedBox(height: 8.r),
+            itemCount: questions.length,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _QuestionItem extends StatelessWidget {
+  final QuestionApiModel question;
+
+  const _QuestionItem(
+    this.question, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.gray3Light),
+        borderRadius: BorderRadius.vertical(
+          top: const Radius.circular(16).r,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            question.title,
+            style: AppTextStyles.s13w400,
+            // overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            question.description,
+            style: AppTextStyles.s13w400,
+            // overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/features/home/data/model/question_api_model.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
+import 'package:go_router/go_router.dart';
 
 class SupportPageVm {
   final BuildContext _context;
@@ -34,11 +36,10 @@ class SupportPageVm {
     _supportController.getUserQuestions();
   }
 
-  Future<void> createNewQuestion() async {
-    //   GoRouter.of(_context).pushNamed(
-    //     AppRoute.petDetails.name,
-    //     extra: pet,
-    //   );
+  Future<void> addNewQuestion() async {
+    GoRouter.of(_context).pushNamed(
+      AppRoute.addQuestion.name,
+    );
   }
 
   Future<void> openQuestionDetails() async {

@@ -12,6 +12,8 @@ import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
+import 'package:get_pet/features/home/presentation/add_question/add_question_screen.dart';
+import 'package:get_pet/features/home/presentation/add_question/add_question_screen_vm.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
@@ -188,6 +190,18 @@ class AppNavigation {
               child: const PetDetailsScreen(),
             ),
           ),
+          GoRoute(
+              name: AppRoute.addQuestion.name,
+              path: AppRoute.addQuestion.path,
+              builder: (context, state) => Provider(
+                    lazy: false,
+                    create: (context) => AddQuestionScreenVm(
+                      context,
+                      DI.get<SupportController>(),
+                    ),
+                    dispose: (context, vm) => vm.dispose(),
+                    child: const AddQuestionScreen(),
+                  )),
         ],
       ),
       GoRoute(
