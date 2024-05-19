@@ -5,7 +5,7 @@ import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
-import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';

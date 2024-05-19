@@ -1,7 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
-import 'package:get_pet/features/home/domain/logic/pet_details_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 

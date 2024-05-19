@@ -5,9 +5,12 @@ import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/app/service/storage/remote_file_storage.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
+import 'package:get_pet/features/home/data/datasource/questions_datasource.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
-import 'package:get_pet/features/home/domain/logic/pet_details_controller.dart';
-import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
+import 'package:get_pet/features/home/data/repository/question_repository.dart';
+import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
+import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart';
 import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
@@ -44,6 +47,8 @@ class DI {
         () => FirebaseDatasourceImpl());
     _sl.registerLazySingleton<PetDatasource>(
         () => PetDatasourceImpl(_sl<RemoteStorage>()));
+    _sl.registerLazySingleton<QuestionDatasource>(
+        () => QuestionDatasourceImpl(_sl<RemoteStorage>()));
   }
 
   void _repositories() {
@@ -56,6 +61,10 @@ class DI {
         ));
     _sl.registerLazySingleton<PetRepository>(() => PetRepositoryImpl(
           _sl<PetDatasource>(),
+          _sl<LocalStorage>(),
+        ));
+    _sl.registerLazySingleton<QuestionRepository>(() => QuestionRepositoryImpl(
+          _sl<QuestionDatasource>(),
           _sl<LocalStorage>(),
         ));
   }
@@ -78,6 +87,9 @@ class DI {
         ));
     _sl.registerFactory(() => PetDetailsController(
           _sl<UserRepository>(),
+        ));
+    _sl.registerLazySingleton(() => SupportController(
+          _sl<QuestionRepository>(),
         ));
   }
 }

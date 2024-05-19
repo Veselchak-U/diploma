@@ -9,8 +9,10 @@ import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
-import 'package:get_pet/features/home/domain/logic/pet_details_controller.dart';
-import 'package:get_pet/features/home/domain/logic/pet_profile_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
+import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
+import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
 import 'package:get_pet/features/home/presentation/pet_details/pet_details_screen.dart';
@@ -136,13 +138,25 @@ class AppNavigation {
       GoRoute(
         name: AppRoute.home.name,
         path: AppRoute.home.path,
-        builder: (context, state) => Provider(
-          lazy: false,
-          create: (context) => HomeScreenVm(
-            context,
-            DI.get<PetRepository>(),
-          ),
-          dispose: (context, vm) => vm.dispose(),
+        builder: (context, state) => MultiProvider(
+          providers: [
+            Provider(
+              lazy: false,
+              create: (context) => HomeScreenVm(
+                context,
+                DI.get<PetRepository>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+            ),
+            Provider(
+              lazy: false,
+              create: (context) => SupportPageVm(
+                context,
+                DI.get<SupportController>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+            ),
+          ],
           child: const HomeScreen(),
         ),
         routes: [
