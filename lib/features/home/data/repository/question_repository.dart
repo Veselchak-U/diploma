@@ -4,6 +4,8 @@ import 'package:get_pet/features/home/data/model/question_api_model.dart';
 
 abstract interface class QuestionRepository {
   Future<List<QuestionApiModel>> getUserQuestions();
+
+  Future<void> addQuestion(QuestionApiModel question);
 }
 
 class QuestionRepositoryImpl implements QuestionRepository {
@@ -23,5 +25,10 @@ class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     return _questionDatasource.getUserQuestions(userId);
+  }
+
+  @override
+  Future<void> addQuestion(QuestionApiModel question) {
+    return _questionDatasource.addQuestion(question);
   }
 }

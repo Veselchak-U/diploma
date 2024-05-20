@@ -3,6 +3,8 @@ import 'package:get_pet/features/home/data/model/question_api_model.dart';
 
 abstract interface class QuestionDatasource {
   Future<List<QuestionApiModel>> getUserQuestions(int userId);
+
+  Future<void> addQuestion(QuestionApiModel question);
 }
 
 class QuestionDatasourceImpl implements QuestionDatasource {
@@ -20,5 +22,13 @@ class QuestionDatasourceImpl implements QuestionDatasource {
     return result.isEmpty
         ? []
         : result.map((e) => QuestionApiModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<void> addQuestion(QuestionApiModel question) {
+    return _remoteStorage.insert(
+      to: 'questions',
+      data: question.toJson(),
+    );
   }
 }

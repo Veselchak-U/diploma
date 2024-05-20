@@ -40,7 +40,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
             children: [
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Тема проблемы',
+                  labelText: 'Тема',
                   helperText: '',
                 ),
                 initialValue: vm.questionTitle,
@@ -52,7 +52,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Описание проблемы',
+                  labelText: 'Описание',
                   helperText: '',
                 ),
                 initialValue: vm.questionDescription,
@@ -64,7 +64,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
                     : null,
               ),
               ValueListenableBuilder(
-                valueListenable: vm.questionPhotoUrl,
+                valueListenable: vm.questionImageUrl,
                 builder: (context, questionPhotoUrl, _) {
                   return questionPhotoUrl == null
                       ? Padding(

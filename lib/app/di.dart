@@ -90,6 +90,8 @@ class DI {
         ));
     _sl.registerLazySingleton(() => SupportController(
           _sl<QuestionRepository>(),
+          _sl<RemoteFileStorage>(),
+          _sl<LocalStorage>(),
         ));
   }
 }

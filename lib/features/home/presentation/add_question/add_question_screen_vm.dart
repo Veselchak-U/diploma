@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
-import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +18,7 @@ class AddQuestionScreenVm {
     _init();
   }
 
-  final questionPhotoUrl = ValueNotifier<String?>(null);
+  final questionImageUrl = ValueNotifier<String?>(null);
   final loading = ValueNotifier<bool>(true);
   final imageLoading = ValueNotifier<bool>(false);
   final formKey = GlobalKey<FormState>();
@@ -33,7 +32,7 @@ class AddQuestionScreenVm {
 
   void dispose() {
     _supportController.removeListener(_supportControllerListener);
-    questionPhotoUrl.dispose();
+    questionImageUrl.dispose();
     loading.dispose();
     imageLoading.dispose();
   }
@@ -48,10 +47,6 @@ class AddQuestionScreenVm {
     questionDescription = value;
   }
 
-  Future<void> onAddQuestion() async {
-    if (formKey.currentState?.validate() != true) return;
-  }
-
   Future<void> onAddPhoto() async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -61,18 +56,27 @@ class AddQuestionScreenVm {
     }
   }
 
+  Future<void> onAddQuestion() async {
+    if (formKey.currentState?.validate() != true) return;
+
+    _supportController.addQuestion(
+      title: questionTitle,
+      description: questionDescription,
+      imageUrl: questionImageUrl.value,
+    );
+  }
+
   void _supportControllerListener() {
     final state = _supportController.state;
     _handleLoading(state);
-    _handleCategories(state);
     _handleUploadImage(state);
-    _handleAddOrUpdateSuccess(state);
+    _handleAddSuccess(state);
     _handleError(state);
   }
 
-  void _handleLoading(PetProfileControllerState state) {
+  void _handleLoading(SupportControllerState state) {
     switch (state) {
-      case PetProfileController$Loading():
+      case SupportController$Loading():
         loading.value = true;
         break;
       default:
@@ -81,23 +85,13 @@ class AddQuestionScreenVm {
     }
   }
 
-  void _handleCategories(PetProfileControllerState state) {
+  void _handleUploadImage(SupportControllerState state) {
     switch (state) {
-      case PetProfileController$CategoriesSuccess():
-        categories.value = state.categories;
-        break;
-      default:
-        break;
-    }
-  }
-
-  void _handleUploadImage(PetProfileControllerState state) {
-    switch (state) {
-      case PetProfileController$ImageLoading():
+      case SupportController$ImageLoading():
         imageLoading.value = true;
         break;
-      case PetProfileController$ImageSuccess():
-        petPhotoUrl.value = state.imageUrl;
+      case SupportController$ImageSuccess():
+        questionImageUrl.value = state.imageUrl;
         imageLoading.value = false;
         break;
       default:
@@ -106,14 +100,11 @@ class AddQuestionScreenVm {
     }
   }
 
-  void _handleAddOrUpdateSuccess(PetProfileControllerState state) {
+  void _handleAddSuccess(SupportControllerState state) {
     switch (state) {
-      case PetProfileController$AddSuccess():
-        AppOverlays.showErrorBanner(msg: 'Анкета добавлена!', isError: false);
-        GoRouter.of(_context).pop();
-        break;
-      case PetProfileController$UpdateSuccess():
-        AppOverlays.showErrorBanner(msg: 'Анкета изменена!', isError: false);
+      case SupportController$AddSuccess():
+        AppOverlays.showErrorBanner(
+            msg: 'Обращение отправлено', isError: false);
         GoRouter.of(_context).pop();
         break;
       default:
@@ -121,9 +112,9 @@ class AddQuestionScreenVm {
     }
   }
 
-  void _handleError(PetProfileControllerState state) {
+  void _handleError(SupportControllerState state) {
     switch (state) {
-      case PetProfileController$Error():
+      case SupportController$Error():
         AppOverlays.showErrorBanner(msg: '${state.error}');
         break;
       default:
