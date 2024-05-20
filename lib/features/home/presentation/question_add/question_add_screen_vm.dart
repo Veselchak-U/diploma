@@ -19,7 +19,7 @@ class QuestionAddScreenVm {
   }
 
   final questionImageUrl = ValueNotifier<String?>(null);
-  final loading = ValueNotifier<bool>(true);
+  final loading = ValueNotifier<bool>(false);
   final imageLoading = ValueNotifier<bool>(false);
   final formKey = GlobalKey<FormState>();
 
@@ -105,6 +105,9 @@ class QuestionAddScreenVm {
       case SupportController$AddSuccess():
         AppOverlays.showErrorBanner(
             msg: 'Обращение отправлено', isError: false);
+
+        _supportController.getUserQuestions();
+
         GoRouter.of(_context).pop();
         break;
       default:

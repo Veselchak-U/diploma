@@ -55,6 +55,7 @@ class _QuestionAddScreenState extends State<QuestionAddScreen> {
                   labelText: 'Описание',
                   helperText: '',
                 ),
+                maxLines: 5,
                 initialValue: vm.questionDescription,
                 textInputAction: TextInputAction.next,
                 onChanged: vm.onDescriptionChanged,

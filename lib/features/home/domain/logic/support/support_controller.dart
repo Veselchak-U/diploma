@@ -76,6 +76,9 @@ final class SupportController extends StateController<SupportControllerState>
 
         await _questionRepository.addQuestion(question);
         setState(const SupportController$AddSuccess());
+
+        // Update list after adding
+        getUserQuestions();
       },
       _errorHandler,
       _doneHandler,

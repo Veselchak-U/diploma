@@ -21,7 +21,11 @@ class QuestionDatasourceImpl implements QuestionDatasource {
 
     return result.isEmpty
         ? []
-        : result.map((e) => QuestionApiModel.fromJson(e)).toList();
+        : result is List<dynamic>
+            ? result.map((e) => QuestionApiModel.fromJson(e)).toList()
+            : result is Map
+                ? [QuestionApiModel.fromJson(result as Map<String, dynamic>)]
+                : [];
   }
 
   @override

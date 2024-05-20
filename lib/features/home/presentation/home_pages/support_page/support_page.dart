@@ -122,28 +122,35 @@ class _QuestionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<SupportPageVm>();
 
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.gray3Light),
-        borderRadius: BorderRadius.all(const Radius.circular(16).r),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.all(const Radius.circular(16).r),
-        onTap: () => vm.openQuestionDetails(question),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              question.title,
-              style: AppTextStyles.s13w400,
-              // overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).r,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.gray3Light),
+          borderRadius: BorderRadius.all(const Radius.circular(16).r),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.all(const Radius.circular(16).r),
+          onTap: () => vm.openQuestionDetails(question),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14).r,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  question.title,
+                  style: AppTextStyles.s13w400,
+                  // overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 7.r),
+                Text(
+                  question.description,
+                  style: AppTextStyles.s13w400,
+                  // overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
-            Text(
-              question.description,
-              style: AppTextStyles.s13w400,
-              // overflow: TextOverflow.ellipsis,
-            ),
-          ],
+          ),
         ),
       ),
     );
