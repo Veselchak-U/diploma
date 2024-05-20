@@ -120,27 +120,31 @@ class _QuestionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<SupportPageVm>();
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.gray3Light),
-        borderRadius: BorderRadius.vertical(
-          top: const Radius.circular(16).r,
-        ),
+        borderRadius: BorderRadius.all(const Radius.circular(16).r),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            question.title,
-            style: AppTextStyles.s13w400,
-            // overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            question.description,
-            style: AppTextStyles.s13w400,
-            // overflow: TextOverflow.ellipsis,
-          ),
-        ],
+      child: InkWell(
+        borderRadius: BorderRadius.all(const Radius.circular(16).r),
+        onTap: () => vm.openQuestionDetails(question),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              question.title,
+              style: AppTextStyles.s13w400,
+              // overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              question.description,
+              style: AppTextStyles.s13w400,
+              // overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

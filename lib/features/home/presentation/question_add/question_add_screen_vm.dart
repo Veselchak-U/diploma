@@ -7,11 +7,11 @@ import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddQuestionScreenVm {
+class QuestionAddScreenVm {
   final BuildContext _context;
   final SupportController _supportController;
 
-  AddQuestionScreenVm(
+  QuestionAddScreenVm(
     this._context,
     this._supportController,
   ) {

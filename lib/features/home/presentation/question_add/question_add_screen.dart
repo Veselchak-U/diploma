@@ -1,26 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_pet/features/home/presentation/add_question/add_question_screen_vm.dart';
+import 'package:get_pet/features/home/presentation/question_add/question_add_screen_vm.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
 import 'package:get_pet/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
-class AddQuestionScreen extends StatefulWidget {
-  const AddQuestionScreen({super.key});
+class QuestionAddScreen extends StatefulWidget {
+  const QuestionAddScreen({super.key});
 
   @override
-  State<AddQuestionScreen> createState() => _AddQuestionScreenState();
+  State<QuestionAddScreen> createState() => _QuestionAddScreenState();
 }
 
-class _AddQuestionScreenState extends State<AddQuestionScreen> {
-  late final AddQuestionScreenVm vm;
+class _QuestionAddScreenState extends State<QuestionAddScreen> {
+  late final QuestionAddScreenVm vm;
 
   @override
   void initState() {
     super.initState();
-    vm = context.read<AddQuestionScreenVm>();
+    vm = context.read<QuestionAddScreenVm>();
   }
 
   @override

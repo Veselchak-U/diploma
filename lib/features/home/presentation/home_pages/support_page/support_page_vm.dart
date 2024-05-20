@@ -38,15 +38,15 @@ class SupportPageVm {
 
   Future<void> addNewQuestion() async {
     GoRouter.of(_context).pushNamed(
-      AppRoute.addQuestion.name,
+      AppRoute.questionAdd.name,
     );
   }
 
-  Future<void> openQuestionDetails() async {
-    //   GoRouter.of(_context).pushNamed(
-    //     AppRoute.petDetails.name,
-    //     extra: pet,
-    //   );
+  Future<void> openQuestionDetails(QuestionApiModel question) async {
+    GoRouter.of(_context).pushNamed(
+      AppRoute.questionDetails.name,
+      extra: question,
+    );
   }
 
   void _supportControllerListener() {

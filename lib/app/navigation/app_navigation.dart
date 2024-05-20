@@ -7,13 +7,12 @@ import 'package:get_pet/app/navigation/navigation_error_screen.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/features/home/data/model/question_api_model.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
-import 'package:get_pet/features/home/presentation/add_question/add_question_screen.dart';
-import 'package:get_pet/features/home/presentation/add_question/add_question_screen_vm.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
@@ -21,6 +20,9 @@ import 'package:get_pet/features/home/presentation/pet_details/pet_details_scree
 import 'package:get_pet/features/home/presentation/pet_details/pet_details_screen_vm.dart';
 import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_screen.dart';
 import 'package:get_pet/features/home/presentation/pet_profile/pet_profile_screen_vm.dart';
+import 'package:get_pet/features/home/presentation/question_add/question_add_screen.dart';
+import 'package:get_pet/features/home/presentation/question_add/question_add_screen_vm.dart';
+import 'package:get_pet/features/home/presentation/question_details/question_details_screen.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen_vm.dart';
@@ -191,17 +193,25 @@ class AppNavigation {
             ),
           ),
           GoRoute(
-              name: AppRoute.addQuestion.name,
-              path: AppRoute.addQuestion.path,
-              builder: (context, state) => Provider(
-                    lazy: false,
-                    create: (context) => AddQuestionScreenVm(
-                      context,
-                      DI.get<SupportController>(),
-                    ),
-                    dispose: (context, vm) => vm.dispose(),
-                    child: const AddQuestionScreen(),
-                  )),
+            name: AppRoute.questionAdd.name,
+            path: AppRoute.questionAdd.path,
+            builder: (context, state) => Provider(
+              lazy: false,
+              create: (context) => QuestionAddScreenVm(
+                context,
+                DI.get<SupportController>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+              child: const QuestionAddScreen(),
+            ),
+          ),
+          GoRoute(
+            name: AppRoute.questionDetails.name,
+            path: AppRoute.questionDetails.path,
+            builder: (context, state) => QuestionDetailsScreen(
+              state.extra as QuestionApiModel,
+            ),
+          ),
         ],
       ),
       GoRoute(
