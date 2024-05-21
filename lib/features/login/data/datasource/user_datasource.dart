@@ -27,7 +27,7 @@ class UserDatasourceImpl implements UserDatasource {
       throw const LogicException('Cannot find user with null id');
     }
 
-    final Map result = await _remoteStorage.select(
+    final Map result = await _remoteStorage.selectOne(
       from: 'user',
       where: {'iduser': id},
     );
@@ -43,7 +43,7 @@ class UserDatasourceImpl implements UserDatasource {
       throw const LogicException('Cannot find user with empty email');
     }
 
-    final Map result = await _remoteStorage.select(
+    final Map result = await _remoteStorage.selectOne(
       from: 'user',
       where: {'email': email},
     );
@@ -70,7 +70,7 @@ class UserDatasourceImpl implements UserDatasource {
       throw const LogicException('Cannot find user with empty phone');
     }
 
-    final Map result = await _remoteStorage.select(
+    final Map result = await _remoteStorage.selectOne(
       from: 'user',
       where: {'telephone': phone},
     );

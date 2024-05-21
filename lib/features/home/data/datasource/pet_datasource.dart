@@ -27,8 +27,9 @@ class PetDatasourceImpl implements PetDatasource {
 
   @override
   Future<List<CategoryApiModel>> getCategories() async {
-    final result = await _remoteStorage.selectAll(
+    final result = await _remoteStorage.select(
       from: 'category',
+      where: {},
     );
 
     return result.isEmpty
@@ -59,8 +60,9 @@ class PetDatasourceImpl implements PetDatasource {
 
   @override
   Future<List<PetApiModel>> getNewPets() async {
-    final result = await _remoteStorage.selectAll(
+    final result = await _remoteStorage.select(
       from: 'questionnaire',
+      where: {},
     );
 
     final models = result.map((e) => PetApiModel.fromJson(e)).toList();
@@ -167,7 +169,7 @@ class PetDatasourceImpl implements PetDatasource {
 
   @override
   Future<UserApiModel> getUser(int userId) async {
-    final result = await _remoteStorage.select(
+    final result = await _remoteStorage.selectOne(
       from: 'user',
       where: {'iduser': userId},
     );

@@ -3,9 +3,12 @@ import 'package:get_pet/config.dart';
 import 'package:mysql_utils/mysql_utils.dart';
 
 abstract interface class RemoteStorage {
-  Future<List<dynamic>> selectAll({required String from});
+  Future<List<dynamic>> select({
+    required String from,
+    required Map<String, dynamic> where,
+  });
 
-  Future<dynamic> select({
+  Future<dynamic> selectOne({
     required String from,
     required Map<String, dynamic> where,
   });
@@ -60,11 +63,15 @@ class RemoteStorageImpl implements RemoteStorage {
       );
 
   @override
-  Future<List<dynamic>> selectAll({required String from}) async {
+  Future<List<dynamic>> select({
+    required String from,
+    required Map<String, dynamic> where,
+  }) async {
     final result = await _db
         .getAll(
           table: from,
           fields: '*',
+          where: where,
           debug: true,
         )
         .timeout(_requestTimeOut);
@@ -75,7 +82,7 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   @override
-  Future<dynamic> select({
+  Future<dynamic> selectOne({
     required String from,
     required Map<String, dynamic> where,
   }) async {
