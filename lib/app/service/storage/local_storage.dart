@@ -7,11 +7,16 @@ abstract interface class LocalStorage {
   Future<int?> getUserId();
 
   Future<void> setUserId(int? value);
+
+  Set<int> getReadQuestionIds();
+
+  Future<void> setReadQuestionIds(Set<int> ids);
 }
 
 class LocalStorageImpl implements LocalStorage {
   static const _keyFirstRun = 'first_run';
   static const _keyUserId = 'user_id';
+  static const _keyReadIds = 'read_ids';
 
   late final SharedPreferences _sharedPrefs;
   late final FlutterSecureStorage _secureStorage;
@@ -45,5 +50,22 @@ class LocalStorageImpl implements LocalStorage {
     return value == null
         ? _secureStorage.delete(key: _keyUserId)
         : _secureStorage.write(key: _keyUserId, value: '$value');
+  }
+
+  @override
+  Set<int> getReadQuestionIds() {
+    final value = _sharedPrefs.getString(_keyReadIds) ?? '';
+    if (value.isEmpty) return {};
+
+    final split = value.split(',');
+
+    return split.map((e) => int.parse(e)).toSet();
+  }
+
+  @override
+  Future<void> setReadQuestionIds(Set<int> ids) {
+    final value = ids.isEmpty ? '' : ids.join(',');
+
+    return _sharedPrefs.setString(_keyReadIds, value);
   }
 }

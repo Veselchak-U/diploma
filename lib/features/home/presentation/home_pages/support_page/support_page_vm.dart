@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/navigation/app_route.dart';
-import 'package:get_pet/features/home/data/model/question_api_model.dart';
+import 'package:get_pet/features/home/domain/entity/question_entity.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +17,7 @@ class SupportPageVm {
   }
 
   final loading = ValueNotifier<bool>(true);
-  final questions = ValueNotifier<List<QuestionApiModel>>([]);
+  final questions = ValueNotifier<List<QuestionEntity>>([]);
 
   Future<void> _init() async {
     _supportController.addListener(_supportControllerListener);
@@ -42,7 +42,11 @@ class SupportPageVm {
     );
   }
 
-  Future<void> openQuestionDetails(QuestionApiModel question) async {
+  Future<void> openQuestionDetails(QuestionEntity question) async {
+    if (question.isNew) {
+      _supportController.markAsRead(question);
+    }
+
     GoRouter.of(_context).pushNamed(
       AppRoute.questionDetails.name,
       extra: question,

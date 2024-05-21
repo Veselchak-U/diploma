@@ -7,9 +7,9 @@ import 'package:get_pet/app/navigation/navigation_error_screen.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
-import 'package:get_pet/features/home/data/model/question_api_model.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
+import 'package:get_pet/features/home/domain/entity/question_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
@@ -209,7 +209,7 @@ class AppNavigation {
             name: AppRoute.questionDetails.name,
             path: AppRoute.questionDetails.path,
             builder: (context, state) => QuestionDetailsScreen(
-              state.extra as QuestionApiModel,
+              state.extra as QuestionEntity,
             ),
           ),
         ],

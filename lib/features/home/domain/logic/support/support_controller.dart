@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:control/control.dart';
+import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/app/service/storage/remote_file_storage.dart';
-import 'package:get_pet/features/home/data/model/question_api_model.dart';
 import 'package:get_pet/features/home/data/repository/question_repository.dart';
+import 'package:get_pet/features/home/domain/entity/question_entity.dart';
 
 part 'support_controller_state.dart';
 
@@ -24,11 +25,27 @@ final class SupportController extends StateController<SupportControllerState>
     _init();
   }
 
-  void _init() {}
+  Timer? _questionsUpdateTimer;
+
+  void _init() {
+    _startUpdateTimer();
+  }
 
   @override
   void dispose() {
+    _questionsUpdateTimer?.cancel();
     super.dispose();
+  }
+
+  void _startUpdateTimer() {
+    _questionsUpdateTimer = Timer(
+      const Duration(seconds: 30),
+      () {
+        LoggerService().d('SupportController._questionsUpdateTimer fired');
+        getUserQuestions();
+        _startUpdateTimer();
+      },
+    );
   }
 
   void getUserQuestions() {
@@ -65,9 +82,10 @@ final class SupportController extends StateController<SupportControllerState>
         setState(const SupportController$Loading());
 
         final userId = await _localStorage.getUserId();
-        final question = QuestionApiModel(
+        final question = QuestionEntity(
+          isNew: false,
           id: null,
-          idUser: userId,
+          userId: userId,
           title: title,
           description: description,
           photo: imageUrl,
@@ -78,6 +96,18 @@ final class SupportController extends StateController<SupportControllerState>
         setState(const SupportController$AddSuccess());
 
         // Update list after adding
+        getUserQuestions();
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
+  void markAsRead(QuestionEntity question) {
+    return handle(
+      () async {
+        await _questionRepository.markAsRead(question);
+        // Update list after
         getUserQuestions();
       },
       _errorHandler,

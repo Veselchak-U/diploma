@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
-import 'package:get_pet/features/home/data/model/question_api_model.dart';
+import 'package:get_pet/features/home/domain/entity/question_entity.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
@@ -79,7 +79,7 @@ class _EmptyQuestionsWidget extends StatelessWidget {
 }
 
 class _QuestionsListWidget extends StatelessWidget {
-  final List<QuestionApiModel> questions;
+  final List<QuestionEntity> questions;
 
   const _QuestionsListWidget(
     this.questions, {
@@ -88,6 +88,8 @@ class _QuestionsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<SupportPageVm>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -99,10 +101,13 @@ class _QuestionsListWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            itemBuilder: (context, index) => _QuestionItem(questions[index]),
-            separatorBuilder: (context, _) => SizedBox(height: 8.r),
-            itemCount: questions.length,
+          child: RefreshIndicator(
+            onRefresh: () async => vm.updateQuestions(),
+            child: ListView.separated(
+              itemBuilder: (context, index) => _QuestionItem(questions[index]),
+              separatorBuilder: (context, _) => SizedBox(height: 8.r),
+              itemCount: questions.length,
+            ),
           ),
         ),
       ],
@@ -111,7 +116,7 @@ class _QuestionsListWidget extends StatelessWidget {
 }
 
 class _QuestionItem extends StatelessWidget {
-  final QuestionApiModel question;
+  final QuestionEntity question;
 
   const _QuestionItem(
     this.question, {
@@ -139,13 +144,17 @@ class _QuestionItem extends StatelessWidget {
               children: [
                 Text(
                   question.title,
-                  style: AppTextStyles.s13w400,
+                  style: question.isNew
+                      ? AppTextStyles.s13w600
+                      : AppTextStyles.s13w400,
                   // overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 7.r),
                 Text(
                   question.description,
-                  style: AppTextStyles.s13w400,
+                  style: question.isNew
+                      ? AppTextStyles.s13w600
+                      : AppTextStyles.s13w400,
                   // overflow: TextOverflow.ellipsis,
                 ),
               ],

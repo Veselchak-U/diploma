@@ -13,7 +13,7 @@ final class SupportController$Loading extends SupportControllerState {
 }
 
 final class SupportController$QuestionsSuccess extends SupportControllerState {
-  final List<QuestionApiModel> questions;
+  final List<QuestionEntity> questions;
 
   const SupportController$QuestionsSuccess(this.questions);
 }
