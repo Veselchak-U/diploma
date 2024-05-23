@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/app/service/info/info_service.dart';
-import 'package:get_pet/features/login/domain/logic/login_controller.dart';
+import 'package:get_pet/features/login/domain/logic/user_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreenVm {
   final BuildContext _context;
-  final LoginController _loginController;
+  final UserController _userController;
   final InfoService _infoService;
 
   final String? logoutReason;
 
   LoginScreenVm(
     this._context,
-    this._loginController,
+    this._userController,
     this._infoService, {
     this.logoutReason,
   }) {
@@ -26,14 +26,14 @@ class LoginScreenVm {
   final isPhoneComplete = ValueNotifier<bool>(false);
 
   void _init() {
-    _loginController.addListener(_loginControllerListener);
+    _userController.addListener(_loginControllerListener);
     _getAppVersion();
     _showLogoutReason();
   }
 
   void dispose() {
-    _loginController.removeListener(_loginControllerListener);
-    _loginController.dispose();
+    _userController.removeListener(_loginControllerListener);
+    _userController.dispose();
     loading.dispose();
     appVersion.dispose();
     isPhoneComplete.dispose();
@@ -47,25 +47,25 @@ class LoginScreenVm {
   }
 
   Future<void> loginByGoogle() async {
-    _loginController.loginByGoogle();
+    _userController.loginByGoogle();
   }
 
   void _loginControllerListener() {
-    _updateLoading(_loginController.state);
-    _handleSuccess(_loginController.state);
-    _handleError(_loginController.state);
+    _updateLoading(_userController.state);
+    _handleSuccess(_userController.state);
+    _handleError(_userController.state);
   }
 
-  void _updateLoading(LoginControllerState state) {
+  void _updateLoading(UserControllerState state) {
     loading.value = switch (state) {
-      const LoginController$Loading() => true,
+      const UserController$Loading() => true,
       _ => false,
     };
   }
 
-  void _handleSuccess(LoginControllerState state) {
+  void _handleSuccess(UserControllerState state) {
     switch (state) {
-      case final LoginController$LoginSuccess state:
+      case final UserController$LoginSuccess state:
         if (state.user.isComplete) {
           _context.pushReplacementNamed(AppRoute.home.name);
         } else {
@@ -80,9 +80,9 @@ class LoginScreenVm {
     }
   }
 
-  void _handleError(LoginControllerState state) {
+  void _handleError(UserControllerState state) {
     switch (state) {
-      case LoginController$Error():
+      case UserController$Error():
         AppOverlays.showErrorBanner(msg: '${state.error}');
         break;
       default:

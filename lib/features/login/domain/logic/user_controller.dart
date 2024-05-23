@@ -9,21 +9,21 @@ import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 import 'package:get_pet/features/login/data/repository/user_repository.dart';
 
-part 'login_controller_state.dart';
+part 'user_controller_state.dart';
 
-final class LoginController extends StateController<LoginControllerState>
+final class UserController extends StateController<UserControllerState>
     with SequentialControllerHandler {
   final LoginRepository _loginRepository;
   final UserRepository _userRepository;
   final LocalStorage _localStorage;
   final RemoteFileStorage _remoteFileStorage;
 
-  LoginController(
+  UserController(
     this._loginRepository,
     this._userRepository,
     this._localStorage,
     this._remoteFileStorage, {
-    super.initialState = const LoginController$Idle(),
+    super.initialState = const UserController$Idle(),
   }) {
     _init();
   }
@@ -38,7 +38,7 @@ final class LoginController extends StateController<LoginControllerState>
   void loginByGoogle() {
     return handle(
       () async {
-        setState(const LoginController$Loading());
+        setState(const UserController$Loading());
 
         final user = await _loginRepository.loginByGoogle();
         if (user == null) {
@@ -51,7 +51,7 @@ final class LoginController extends StateController<LoginControllerState>
         }
         await _localStorage.setUserId(userId);
 
-        setState(LoginController$LoginSuccess(user));
+        setState(UserController$LoginSuccess(user));
       },
       _errorHandler,
       _doneHandler,
@@ -61,9 +61,9 @@ final class LoginController extends StateController<LoginControllerState>
   void uploadImage(File file) {
     return handle(
       () async {
-        setState(const LoginController$ImageLoading());
+        setState(const UserController$ImageLoading());
         final imageUrl = await _remoteFileStorage.uploadUserImage(file);
-        setState(LoginControllerS$ImageSuccess(imageUrl));
+        setState(UserControllerS$ImageSuccess(imageUrl));
       },
       _errorHandler,
       _doneHandler,
@@ -73,9 +73,31 @@ final class LoginController extends StateController<LoginControllerState>
   void updateUser(UserApiModel user) {
     return handle(
       () async {
-        setState(const LoginController$Loading());
+        setState(const UserController$Loading());
         await _userRepository.updateUser(user);
-        setState(const LoginController$UserUpdated());
+        setState(UserController$UserUpdated(user));
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
+  void getUser() {
+    return handle(
+      () async {
+        setState(const UserController$Loading());
+        final userId = await _localStorage.getUserId();
+        if (userId == null) {
+          throw const LogicException(
+              'id пользователя не найдено на устройстве');
+        }
+
+        final user = await _userRepository.getUserById(userId);
+        if (user == null) {
+          throw LogicException('Пользователь id: $userId не найден в БД');
+        }
+
+        setState(UserController$UserUpdated(user));
       },
       _errorHandler,
       _doneHandler,
@@ -83,7 +105,7 @@ final class LoginController extends StateController<LoginControllerState>
   }
 
   FutureOr<void> _errorHandler(Object e, StackTrace st) {
-    setState(LoginController$Error(e));
+    setState(UserController$Error(e));
   }
 
   FutureOr<void> _doneHandler() {

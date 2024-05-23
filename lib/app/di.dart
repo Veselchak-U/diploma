@@ -16,7 +16,7 @@ import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart'
 import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 import 'package:get_pet/features/login/data/repository/user_repository.dart';
-import 'package:get_pet/features/login/domain/logic/login_controller.dart';
+import 'package:get_pet/features/login/domain/logic/user_controller.dart';
 
 class DI {
   static final _sl = GetIt.instance;
@@ -75,7 +75,7 @@ class DI {
           _sl<LocalStorage>(),
           _sl<UserRepository>(),
         ));
-    _sl.registerFactory(() => LoginController(
+    _sl.registerFactory(() => UserController(
           _sl<LoginRepository>(),
           _sl<UserRepository>(),
           _sl<LocalStorage>(),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
-import 'package:get_pet/features/login/domain/logic/login_controller.dart';
+import 'package:get_pet/features/login/domain/logic/user_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,12 +12,12 @@ import 'package:image_picker/image_picker.dart';
 class RegistrationScreenVm {
   final BuildContext _context;
   final UserApiModel _user;
-  final LoginController _loginController;
+  final UserController _userController;
 
   RegistrationScreenVm(
     this._context,
     this._user,
-    this._loginController,
+    this._userController,
   ) {
     _init();
   }
@@ -32,13 +32,13 @@ class RegistrationScreenVm {
   String userTelephone = '';
 
   void _init() {
-    _loginController.addListener(_loginControllerListener);
+    _userController.addListener(_loginControllerListener);
     _initUserFields(_user);
   }
 
   void dispose() {
-    _loginController.removeListener(_loginControllerListener);
-    _loginController.dispose();
+    _userController.removeListener(_loginControllerListener);
+    _userController.dispose();
     userPhotoUrl.dispose();
     imageLoading.dispose();
     loading.dispose();
@@ -56,7 +56,7 @@ class RegistrationScreenVm {
       source: ImageSource.gallery,
     );
     if (image != null) {
-      _loginController.uploadImage(File(image.path));
+      _userController.uploadImage(File(image.path));
     }
   }
 
@@ -88,23 +88,23 @@ class RegistrationScreenVm {
       photo: userPhotoUrl.value ?? '',
     );
 
-    _loginController.updateUser(user);
+    _userController.updateUser(user);
   }
 
   void _loginControllerListener() {
-    final state = _loginController.state;
+    final state = _userController.state;
     _handleUploadImage(state);
     _updateLoading(state);
     _handleUpdateUser(state);
     _handleError(state);
   }
 
-  void _handleUploadImage(LoginControllerState state) {
+  void _handleUploadImage(UserControllerState state) {
     switch (state) {
-      case LoginController$ImageLoading():
+      case UserController$ImageLoading():
         imageLoading.value = true;
         break;
-      case LoginControllerS$ImageSuccess():
+      case UserControllerS$ImageSuccess():
         userPhotoUrl.value = state.imageUrl;
         imageLoading.value = false;
         break;
@@ -114,16 +114,16 @@ class RegistrationScreenVm {
     }
   }
 
-  void _updateLoading(LoginControllerState state) {
+  void _updateLoading(UserControllerState state) {
     loading.value = switch (state) {
-      const LoginController$Loading() => true,
+      const UserController$Loading() => true,
       _ => false,
     };
   }
 
-  void _handleUpdateUser(LoginControllerState state) {
+  void _handleUpdateUser(UserControllerState state) {
     switch (state) {
-      case const LoginController$UserUpdated():
+      case final UserController$UserUpdated _:
         _context.pushReplacementNamed(AppRoute.home.name);
         break;
       default:
@@ -131,9 +131,9 @@ class RegistrationScreenVm {
     }
   }
 
-  void _handleError(LoginControllerState state) {
+  void _handleError(UserControllerState state) {
     switch (state) {
-      case LoginController$Error():
+      case UserController$Error():
         AppOverlays.showErrorBanner(msg: '${state.error}');
         break;
       default:

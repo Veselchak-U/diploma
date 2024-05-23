@@ -8,6 +8,7 @@ import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
 import 'package:get_pet/widgets/loading_indicator.dart';
+import 'package:get_pet/widgets/user_avatar.dart';
 import 'package:provider/provider.dart';
 
 class PetDetailsScreen extends StatelessWidget {
@@ -202,25 +203,7 @@ class _UserDetailsState extends State<_UserDetails> {
 
     return Row(
       children: [
-        Container(
-          width: 52.r,
-          height: 52.r,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                offset: const Offset(1.0, 1.0),
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: CachedNetworkImage(
-            imageUrl: user.photo,
-            placeholder: (_, __) => const LoadingIndicator(),
-            errorWidget: (_, __, ___) => const Icon(Icons.error),
-          ),
-        ),
+        UserAvatar(user.photo),
         SizedBox(width: 8.r),
         Expanded(
           child: Column(

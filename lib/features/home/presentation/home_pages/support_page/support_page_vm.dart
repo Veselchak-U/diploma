@@ -16,13 +16,12 @@ class SupportPageVm {
     _init();
   }
 
-  final loading = ValueNotifier<bool>(true);
+  final loading = ValueNotifier<bool>(false);
   final questions = ValueNotifier<List<QuestionEntity>>([]);
 
   Future<void> _init() async {
     _supportController.addListener(_supportControllerListener);
     _supportController.getUserQuestions();
-    loading.value = false;
   }
 
   void dispose() {

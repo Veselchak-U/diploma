@@ -13,6 +13,7 @@ import 'package:get_pet/features/home/domain/entity/question_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
+import 'package:get_pet/features/home/presentation/home_pages/profile_page/profile_page_vm.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page_vm.dart';
 import 'package:get_pet/features/home/presentation/home_screen.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
@@ -27,7 +28,7 @@ import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen.dart';
 import 'package:get_pet/features/initial/presentation/initial_screen_vm.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
-import 'package:get_pet/features/login/domain/logic/login_controller.dart';
+import 'package:get_pet/features/login/domain/logic/user_controller.dart';
 import 'package:get_pet/features/login/presentation/login_screen/login_screen.dart';
 import 'package:get_pet/features/login/presentation/login_screen/login_screen_vm.dart';
 import 'package:get_pet/features/login/presentation/registration_screen/registration_screen.dart';
@@ -113,7 +114,7 @@ class AppNavigation {
           lazy: false,
           create: (context) => LoginScreenVm(
             context,
-            DI.get<LoginController>(),
+            DI.get<UserController>(),
             DI.get<InfoService>(),
             logoutReason: state.extra as String?,
           ),
@@ -133,7 +134,7 @@ class AppNavigation {
           create: (context) => RegistrationScreenVm(
             context,
             state.extra as UserApiModel,
-            DI.get<LoginController>(),
+            DI.get<UserController>(),
           ),
           dispose: (context, vm) => vm.dispose(),
           child: const RegistrationScreen(),
@@ -158,6 +159,14 @@ class AppNavigation {
               create: (context) => SupportPageVm(
                 context,
                 DI.get<SupportController>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+            ),
+            Provider(
+              lazy: false,
+              create: (context) => ProfilePageVm(
+                context,
+                DI.get<UserController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
             ),
