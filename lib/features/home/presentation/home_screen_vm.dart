@@ -4,16 +4,19 @@ import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
+import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/widgets/bottom_sheets.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreenVm {
   final BuildContext _context;
   final PetRepository _petRepository;
+  final SupportController _supportController;
 
   HomeScreenVm(
     this._context,
     this._petRepository,
+    this._supportController,
   ) {
     _init();
   }
@@ -21,17 +24,22 @@ class HomeScreenVm {
   final categories = ValueNotifier<List<CategoryApiModel>>([]);
   final newPets = ValueNotifier<List<PetEntity>>([]);
   final loading = ValueNotifier<bool>(true);
+  final unreadNotificationCount = ValueNotifier<int>(0);
 
   Future<void> _init() async {
     categories.value = await _petRepository.getCategories();
     newPets.value = await _petRepository.getNewPets();
     loading.value = false;
+    _supportController.addListener(_supportControllerListener);
+    _supportController.getUserQuestions();
   }
 
   void dispose() {
+    _supportController.removeListener(_supportControllerListener);
     categories.dispose();
     newPets.dispose();
     loading.dispose();
+    unreadNotificationCount.dispose();
   }
 
   void addPet() {
@@ -78,5 +86,21 @@ class HomeScreenVm {
       AppRoute.petDetails.name,
       extra: pet,
     );
+  }
+
+  void _supportControllerListener() {
+    final state = _supportController.state;
+    _handleSupportQuestions(state);
+  }
+
+  void _handleSupportQuestions(SupportControllerState state) {
+    switch (state) {
+      case final SupportController$QuestionsSuccess state:
+        final unreadCount = state.questions.where((e) => e.isNew).length;
+        unreadNotificationCount.value = unreadCount;
+        break;
+      default:
+        break;
+    }
   }
 }

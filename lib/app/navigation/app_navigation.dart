@@ -149,6 +149,7 @@ class AppNavigation {
               create: (context) => HomeScreenVm(
                 context,
                 DI.get<PetRepository>(),
+                DI.get<SupportController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
             ),
