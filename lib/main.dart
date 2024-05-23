@@ -14,6 +14,7 @@ import 'package:get_pet/app/service/lifecycle/lifecycle_controller.dart';
 import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/app/service/logger/observer/state_controller_observer.dart';
 import 'package:get_pet/app/service/storage/local_storage.dart';
+import 'package:get_pet/app/style/app_theme.dart';
 import 'package:get_pet/config.dart';
 import 'package:get_pet/firebase_options.dart';
 import 'package:window_manager/window_manager.dart';
@@ -51,20 +52,15 @@ Future<void> _initializeApp() async {
     return true;
   };
 
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle.dark.copyWith(
-  //     statusBarColor: Colors.white,
-  //     statusBarBrightness: Brightness.dark,
-  //   ),
-  // );
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   await SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
-    // SystemUiMode.manual,
-    // overlays: [SystemUiOverlay.top],
+  );
+  SystemChrome.setSystemUIOverlayStyle(
+    AppTheme.systemOverlayStyleLight,
   );
 
   await DI().init();

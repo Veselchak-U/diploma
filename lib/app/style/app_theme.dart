@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
@@ -41,6 +42,14 @@ class AppTheme {
       surface: Color(0xff0f1417),
       onSurface: Color(0xffdfe3e7),
     ),
+  );
+
+  static const systemOverlayStyleLight = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
   );
 
   static final _elevatedButtonThemeLight = ElevatedButtonThemeData(
