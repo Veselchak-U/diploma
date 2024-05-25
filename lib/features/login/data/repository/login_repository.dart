@@ -1,4 +1,4 @@
-import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart';
+import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
 import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
@@ -10,16 +10,16 @@ abstract interface class LoginRepository {
 
 class LoginRepositoryImpl implements LoginRepository {
   final UserDatasource _userDatasource;
-  final FirebaseDatasource _firebaseDatasource;
+  final LoginDatasource _loginDatasource;
 
   const LoginRepositoryImpl(
     this._userDatasource,
-    this._firebaseDatasource,
+    this._loginDatasource,
   );
 
   @override
   Future<UserApiModel?> loginByGoogle() async {
-    final googleUser = await _firebaseDatasource.loginByGoogle();
+    final googleUser = await _loginDatasource.loginByGoogle();
 
     var user = await _userDatasource.getUserByEmail(googleUser.email);
     user ??= await _userDatasource.addUser(

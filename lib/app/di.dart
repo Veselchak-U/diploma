@@ -12,7 +12,7 @@ import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_contr
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/features/initial/domain/logic/initial_controller.dart';
-import 'package:get_pet/features/login/data/datasource/firebase_datasource.dart';
+import 'package:get_pet/features/login/data/datasource/login_datasource.dart';
 import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 import 'package:get_pet/features/login/data/repository/user_repository.dart';
@@ -43,8 +43,7 @@ class DI {
   void _dataSources() {
     _sl.registerLazySingleton<UserDatasource>(
         () => UserDatasourceImpl(_sl<RemoteStorage>()));
-    _sl.registerLazySingleton<FirebaseDatasource>(
-        () => FirebaseDatasourceImpl());
+    _sl.registerLazySingleton<LoginDatasource>(() => LoginDatasourceImpl());
     _sl.registerLazySingleton<PetDatasource>(
         () => PetDatasourceImpl(_sl<RemoteStorage>()));
     _sl.registerLazySingleton<QuestionDatasource>(
@@ -54,7 +53,7 @@ class DI {
   void _repositories() {
     _sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
           _sl<UserDatasource>(),
-          _sl<FirebaseDatasource>(),
+          _sl<LoginDatasource>(),
         ));
     _sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
           _sl<UserDatasource>(),

@@ -4,7 +4,6 @@ import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:get_pet/app/service/storage/remote_storage.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/model/pet_api_model.dart';
-import 'package:get_pet/features/login/data/model/user_api_model.dart';
 
 abstract interface class PetDatasource {
   Future<List<CategoryApiModel>> getCategories();
@@ -16,8 +15,6 @@ abstract interface class PetDatasource {
   Future<void> updatePet(PetApiModel model);
 
   Future<void> deletePet(int id);
-
-  Future<UserApiModel> getUser(int userId);
 }
 
 class PetDatasourceImpl implements PetDatasource {
@@ -165,27 +162,5 @@ class PetDatasourceImpl implements PetDatasource {
       from: 'questionnaire',
       where: {'idquestionnaire': petId},
     );
-  }
-
-  @override
-  Future<UserApiModel> getUser(int userId) async {
-    final result = await _remoteStorage.selectOne(
-      from: 'user',
-      where: {'iduser': userId},
-    );
-
-    final model = UserApiModel.fromJson(result);
-
-    return model;
-
-    // return UserApiModel(
-    //   id: -1,
-    //   name: 'Ольга',
-    //   surname: 'Усатова',
-    //   email: 'qqq@www.com',
-    //   telephone: '+79181234567',
-    //   photo:
-    //       'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fapp%2Fkoshka_64.png?alt=media&token=c6d3b740-9a85-47c1-b869-2bc7fe2413bf',
-    // );
   }
 }

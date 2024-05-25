@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-abstract interface class FirebaseDatasource {
+abstract interface class LoginDatasource {
   Future<User> loginByGoogle();
 
   Future<bool?> verifyPhoneNumber(String phone);
 }
 
-class FirebaseDatasourceImpl implements FirebaseDatasource {
+class LoginDatasourceImpl implements LoginDatasource {
   @override
   Future<User> loginByGoogle() async {
     final googleAccount = await GoogleSignIn().signIn();
