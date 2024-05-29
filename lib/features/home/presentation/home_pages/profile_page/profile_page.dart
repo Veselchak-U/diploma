@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
+import 'package:get_pet/features/home/presentation/home_pages/home_page/widgets/pet_card.dart';
 import 'package:get_pet/features/home/presentation/home_pages/profile_page/profile_page_vm.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/widgets/app_scaffold.dart';
 import 'package:get_pet/widgets/loading_button.dart';
+import 'package:get_pet/widgets/loading_indicator.dart';
 import 'package:get_pet/widgets/user_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage>
 
     return AppScaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ValueListenableBuilder(
             valueListenable: vm.user,
@@ -39,6 +42,10 @@ class _ProfilePageState extends State<ProfilePage>
                 child: _UserDetails(user),
               );
             },
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16).r,
+            child: Text('Мои объявления', style: AppTextStyles.s13w600),
           ),
           const Expanded(
             child: _UserQuestionnaries(),
@@ -109,26 +116,48 @@ class _UserQuestionnaries extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final vm = context.read<ProfilePageVm>();
 
-    // ValueListenableBuilder(
-    //   valueListenable: vm.loading,
-    //   builder: (context, loading, _) {
-    //     return ValueListenableBuilder(
-    //       valueListenable: vm.questions,
-    //       builder: (context, questions, _) {
-    //         return Stack(
-    //           alignment: Alignment.center,
-    //           children: [
-    //             questions.isEmpty
-    //                 ? const _EmptyQuestionsWidget()
-    //                 : _QuestionsListWidget(questions),
-    //             if (loading) const LoadingIndicator(),
-    //           ],
-    //         );
-    //       },
-    //     );
-    //   },
-    // ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ValueListenableBuilder(
+          valueListenable: vm.myPets,
+          builder: (context, myPets, _) {
+            return RefreshIndicator(
+              onRefresh: vm.updateMyPets,
+              child: GridView.count(
+                padding: const EdgeInsets.all(16).r,
+                crossAxisCount: 2,
+                childAspectRatio: 0.695,
+                mainAxisSpacing: 16.r,
+                crossAxisSpacing: 16.r,
+                children: List.generate(
+                  myPets.length,
+                  (index) {
+                    final pet = myPets[index];
+
+                    return PetCard(
+                      pet,
+                      openPetDetails: () => vm.openPetDetails(pet),
+                      deletePet: () => vm.deletePet(pet),
+                    );
+                  },
+                ),
+              ),
+            );
+          },
+        ),
+        ValueListenableBuilder(
+          valueListenable: vm.myPetsLoading,
+          builder: (context, myPetsLoading, _) {
+            return Visibility(
+              visible: myPetsLoading,
+              child: const LoadingIndicator(),
+            );
+          },
+        ),
+      ],
+    );
   }
 }

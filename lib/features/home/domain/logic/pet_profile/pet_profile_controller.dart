@@ -41,6 +41,18 @@ final class PetProfileController
     );
   }
 
+  void getCurrentUserPets() {
+    return handle(
+      () async {
+        setState(const PetProfileController$CurrentUserPetsLoading());
+        final pets = await _petRepository.getCurrentUserPets();
+        setState(PetProfileController$CurrentUserPetsSuccess(pets));
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
   void uploadImage(File file) {
     return handle(
       () async {

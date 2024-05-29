@@ -10,6 +10,8 @@ abstract interface class PetRepository {
 
   Future<List<PetEntity>> getNewPets();
 
+  Future<List<PetEntity>> getCurrentUserPets();
+
   Future<void> addPet(PetEntity pet);
 
   Future<void> updatePet(PetEntity pet);
@@ -40,6 +42,19 @@ class PetRepositoryImpl implements PetRepository {
   @override
   Future<List<PetEntity>> getNewPets() async {
     final models = await _petDatasource.getNewPets();
+    final entities = models.map(_convertToPetEntity).toList();
+
+    return entities;
+  }
+
+  @override
+  Future<List<PetEntity>> getCurrentUserPets() async {
+    final userId = await _localStorage.getUserId();
+    if (userId == null) {
+      throw const LogicException('Cannot find pets by user: userId == null');
+    }
+
+    final models = await _petDatasource.getPetsByUser(userId);
     final entities = models.map(_convertToPetEntity).toList();
 
     return entities;

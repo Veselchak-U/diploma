@@ -19,6 +19,18 @@ final class PetProfileController$CategoriesSuccess
   const PetProfileController$CategoriesSuccess(this.categories);
 }
 
+final class PetProfileController$CurrentUserPetsLoading
+    extends PetProfileControllerState {
+  const PetProfileController$CurrentUserPetsLoading();
+}
+
+final class PetProfileController$CurrentUserPetsSuccess
+    extends PetProfileControllerState {
+  final List<PetEntity> pets;
+
+  const PetProfileController$CurrentUserPetsSuccess(this.pets);
+}
+
 final class PetProfileController$ImageLoading
     extends PetProfileControllerState {
   const PetProfileController$ImageLoading();

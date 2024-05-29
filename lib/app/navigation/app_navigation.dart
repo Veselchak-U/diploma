@@ -167,6 +167,8 @@ class AppNavigation {
               create: (context) => ProfilePageVm(
                 context,
                 DI.get<UserController>(),
+                DI.get<PetProfileController>(),
+                DI.get<PetRepository>(),
               ),
               dispose: (context, vm) => vm.dispose(),
             ),

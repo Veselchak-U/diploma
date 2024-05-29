@@ -10,6 +10,8 @@ abstract interface class PetDatasource {
 
   Future<List<PetApiModel>> getNewPets();
 
+  Future<List<PetApiModel>> getPetsByUser(int userId);
+
   Future<void> addPet(PetApiModel model);
 
   Future<void> updatePet(PetApiModel model);
@@ -34,27 +36,6 @@ class PetDatasourceImpl implements PetDatasource {
     return result.isEmpty
         ? []
         : result.map((e) => CategoryApiModel.fromJson(e)).toList();
-
-    // return [
-    //   CategoryApiModel(
-    //     id: 1,
-    //     name: 'Коты',
-    //     photo: Uint8List(0),
-    //     count: 250,
-    //   ),
-    //   CategoryApiModel(
-    //     id: 2,
-    //     name: 'Собаки',
-    //     photo: Uint8List(0),
-    //     count: 340,
-    //   ),
-    //   CategoryApiModel(
-    //     id: 3,
-    //     name: 'Рыбки',
-    //     photo: Uint8List(0),
-    //     count: 10,
-    //   ),
-    // ];
   }
 
   @override
@@ -63,77 +44,20 @@ class PetDatasourceImpl implements PetDatasource {
       from: 'questionnaire',
       where: {},
     );
-
     final models = result.map((e) => PetApiModel.fromJson(e)).toList();
 
     return models;
+  }
 
-    // return [
-    //   PetApiModel(
-    //     id: 1,
-    //     userId: -1,
-    //     categoryId: 1,
-    //     title: 'Шотландская вислоухая',
-    //     photo:
-    //         'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fusers%2F1%2F9dddbf5d-3e9b-44df-946e-235232d0c0bc?alt=media&token=501c2551-5bc8-4fcf-bc1a-85bb00010b4f',
-    //     breed: 'Шотландская вислоухая',
-    //     location: 'Шахты (111 км)',
-    //     age: '1,5 года',
-    //     color: 'Фолд',
-    //     weight: '2,9 кг',
-    //     type: PetType.mating,
-    //     description:
-    //         'Кошка Маруся ищет кота для прекрасного времяпровождения. Шерсть красивая, потомство будет очень красивое.',
-    //   ),
-    //   PetApiModel(
-    //     id: 2,
-    //     userId: -1,
-    //     categoryId: 2,
-    //     title: 'Стаффордширский терьер',
-    //     photo:
-    //         'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fusers%2F1%2F9dddbf5d-3e9b-44df-946e-235232d0c0bc?alt=media&token=501c2551-5bc8-4fcf-bc1a-85bb00010b4f',
-    //     breed: 'Шотландская вислоухая',
-    //     location: 'Ростов-на-Дону (57 км)',
-    //     age: '1,5 года',
-    //     color: 'Фолд',
-    //     weight: '2,9 кг',
-    //     type: PetType.adopting,
-    //     description:
-    //         'Кошка Маруся ищет кота для прекрасного времяпровождения. Шерсть красивая, потомство будет очень красивое.',
-    //   ),
-    //   PetApiModel(
-    //     id: 3,
-    //     userId: -1,
-    //     categoryId: 2,
-    //     title: 'Стаффордширский терьер',
-    //     photo:
-    //         'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fusers%2F1%2F9dddbf5d-3e9b-44df-946e-235232d0c0bc?alt=media&token=501c2551-5bc8-4fcf-bc1a-85bb00010b4f',
-    //     breed: 'Шотландская вислоухая',
-    //     location: 'Ростов-на-Дону (57 км)',
-    //     age: '1,5 года',
-    //     color: 'Фолд',
-    //     weight: '2,9 кг',
-    //     type: PetType.sale,
-    //     description:
-    //         'Кошка Маруся ищет кота для прекрасного времяпровождения. Шерсть красивая, потомство будет очень красивое.',
-    //   ),
-    //   PetApiModel(
-    //     id: 4,
-    //     userId: -1,
-    //     categoryId: 1,
-    //     title: 'Шотландская вислоухая',
-    //     photo:
-    //         'https://firebasestorage.googleapis.com/v0/b/getpet-ea0fa.appspot.com/o/images%2Fusers%2F1%2F9dddbf5d-3e9b-44df-946e-235232d0c0bc?alt=media&token=501c2551-5bc8-4fcf-bc1a-85bb00010b4f',
-    //     breed: 'Шотландская вислоухая',
-    //     location: 'Шахты (111 км)',
-    //     age: '1,5 года',
-    //     color: 'Фолд',
-    //     weight: '2,9 кг',
-    //     type: PetType.mating,
-    //     description:
-    //         'Кошка Маруся ищет кота для прекрасного времяпровождения. Шерсть красивая, потомство будет очень красивое.',
-    //   ),
-    // ];
+  @override
+  Future<List<PetApiModel>> getPetsByUser(int userId) async {
+    final result = await _remoteStorage.select(
+      from: 'questionnaire',
+      where: {'user_iduser': userId},
+    );
+    final models = result.map((e) => PetApiModel.fromJson(e)).toList();
+
+    return models;
   }
 
   @override
