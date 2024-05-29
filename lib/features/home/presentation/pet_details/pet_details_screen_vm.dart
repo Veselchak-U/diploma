@@ -38,7 +38,7 @@ class PetDetailsScreenVm {
   void _getUser(int? userId) {
     if (userId == null) {
       AppOverlays.showErrorBanner(
-          msg: 'Пользователь, создавший анкету, не задан.');
+          msg: 'Пользователь, создавший объявление, не задан.');
       return;
     }
 

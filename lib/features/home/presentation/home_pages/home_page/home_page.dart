@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           const HomePageCategories(),
           Padding(
             padding: const EdgeInsets.all(16).r,
-            child: Text('Новые пары', style: AppTextStyles.s13w600),
+            child: Text('Объявления', style: AppTextStyles.s13w600),
           ),
           const Expanded(
             child: HomePageAnimals(),

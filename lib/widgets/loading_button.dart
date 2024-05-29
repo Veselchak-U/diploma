@@ -11,12 +11,14 @@ class LoadingButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool loading;
   final LoadingButtonType type;
+  final Widget? icon;
 
   const LoadingButton({
     required this.label,
     required this.onPressed,
     this.loading = false,
     this.type = LoadingButtonType.primary,
+    this.icon,
     super.key,
   });
 
@@ -27,24 +29,45 @@ class LoadingButton extends StatelessWidget {
           onPressed: loading ? null : onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8).r,
-            child: Text(label, style: AppTextStyles.s15w500),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon != null ? icon! : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                Text(label, style: AppTextStyles.s15w500),
+              ],
+            ),
           ),
         ),
       LoadingButtonType.transparent => TextButton(
           onPressed: loading ? null : onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8).r,
-            child: Text(label, style: AppTextStyles.s15w500),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon != null ? icon! : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                Text(label, style: AppTextStyles.s15w500),
+              ],
+            ),
           ),
         ),
       LoadingButtonType.red => TextButton(
           onPressed: loading ? null : onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8).r,
-            child: Text(label,
-                style: AppTextStyles.s15w500.copyWith(
-                  color: AppColors.errorLight,
-                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon != null ? icon! : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                Text(label,
+                    style: AppTextStyles.s15w500.copyWith(
+                      color: AppColors.errorLight,
+                    )),
+              ],
+            ),
           ),
         ),
     };

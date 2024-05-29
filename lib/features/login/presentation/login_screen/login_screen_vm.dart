@@ -99,7 +99,7 @@ class LoginScreenVm {
 
     AppOverlays.showErrorBanner(
       msg: logoutReason ?? '',
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 5),
     );
   }
 }

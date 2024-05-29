@@ -237,11 +237,13 @@ class PetProfileScreenVm {
   void _handleAddOrUpdateSuccess(PetProfileControllerState state) {
     switch (state) {
       case PetProfileController$AddSuccess():
-        AppOverlays.showErrorBanner(msg: 'Анкета добавлена!', isError: false);
+        AppOverlays.showErrorBanner(
+            msg: 'Объявление добавлено!', isError: false);
         GoRouter.of(_context).pop();
         break;
       case PetProfileController$UpdateSuccess():
-        AppOverlays.showErrorBanner(msg: 'Анкета изменена!', isError: false);
+        AppOverlays.showErrorBanner(
+            msg: 'Объявление изменено!', isError: false);
         GoRouter.of(_context).pop();
         break;
       default:

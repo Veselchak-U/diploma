@@ -33,7 +33,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: vm.isAddMode ? 'Добавление анкеты' : 'Изменение анкеты',
+      title: vm.isAddMode ? 'Добавление объявления' : 'Изменение объявления',
       body: Form(
         key: vm.formKey,
         child: SingleChildScrollView(
@@ -66,7 +66,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Название анкеты',
+                  labelText: 'Название объявления',
                   helperText: '',
                 ),
                 initialValue: vm.petTitle,
@@ -74,7 +74,7 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                 onChanged: vm.onTitleChanged,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => (value == null || value.isEmpty)
-                    ? 'Заполните название анкеты'
+                    ? 'Заполните название объявления'
                     : null,
               ),
               ValueListenableBuilder(
@@ -189,8 +189,9 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                   valueListenable: vm.loading,
                   builder: (context, loading, _) {
                     return LoadingButton(
-                      label:
-                          vm.isAddMode ? 'Добавить анкету' : 'Изменить анкету',
+                      label: vm.isAddMode
+                          ? 'Добавить объявление'
+                          : 'Изменить объявление',
                       loading: loading,
                       onPressed: vm.isAddMode ? vm.onAddPet : vm.onUpdatePet,
                     );

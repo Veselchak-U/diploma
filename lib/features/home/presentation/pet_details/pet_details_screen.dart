@@ -245,9 +245,12 @@ class _UserDetailsState extends State<_UserDetails> {
                       ),
                     ),
                   )
-                : LoadingButton(
-                    label: 'Написать',
-                    onPressed: _openPhone,
+                : SizedBox(
+                    width: 150.r,
+                    child: LoadingButton(
+                      label: 'Написать',
+                      onPressed: _openPhone,
+                    ),
                   );
           },
         ),

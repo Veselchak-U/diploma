@@ -57,7 +57,7 @@ class HomeScreenVm {
     final result = await BottomSheets.showConfirmationDialog(
       context: _context,
       title: 'Подтверждение',
-      text: 'Вы действительно хотите удалить анкету "${pet.title}"?',
+      text: 'Вы действительно хотите удалить объявление "${pet.title}"?',
       confirmLabel: 'Да, удалить',
     );
 
