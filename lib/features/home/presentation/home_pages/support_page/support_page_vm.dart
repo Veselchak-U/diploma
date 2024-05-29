@@ -26,7 +26,6 @@ class SupportPageVm {
 
   void dispose() {
     _supportController.removeListener(_supportControllerListener);
-    _supportController.dispose();
     loading.dispose();
     questions.dispose();
   }

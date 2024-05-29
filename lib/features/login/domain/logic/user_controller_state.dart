@@ -40,6 +40,22 @@ final class UserController$UserUpdated extends UserControllerState {
   const UserController$UserUpdated(this.user);
 }
 
+final class UserController$LogoutLoading extends UserControllerState {
+  const UserController$LogoutLoading();
+}
+
+final class UserController$LogoutSuccess extends UserControllerState {
+  const UserController$LogoutSuccess();
+}
+
+final class UserController$DeleteLoading extends UserControllerState {
+  const UserController$DeleteLoading();
+}
+
+final class UserController$DeleteSuccess extends UserControllerState {
+  const UserController$DeleteSuccess();
+}
+
 final class UserController$Error extends UserControllerState {
   final Object error;
 

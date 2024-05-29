@@ -8,6 +8,8 @@ abstract interface class LoginDatasource {
   Future<User> loginByGoogle();
 
   Future<bool?> verifyPhoneNumber(String phone);
+
+  Future<void> logout();
 }
 
 class LoginDatasourceImpl implements LoginDatasource {
@@ -62,5 +64,11 @@ class LoginDatasourceImpl implements LoginDatasource {
     );
 
     return completer.future;
+  }
+
+  @override
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().disconnect();
   }
 }

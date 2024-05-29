@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage>
               label: 'Удалить профиль',
               loading: false,
               type: LoadingButtonType.red,
-              onPressed: () {}, //vm.addNewQuestion,
+              onPressed: vm.deleteCurrentUser, //vm.addNewQuestion,
             ),
           ),
         ],

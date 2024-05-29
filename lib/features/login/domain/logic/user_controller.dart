@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:control/control.dart';
-import 'package:get_pet/app/service/logger/exception/logic_exception.dart';
-import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/app/service/storage/remote_file_storage.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
@@ -15,13 +13,11 @@ final class UserController extends StateController<UserControllerState>
     with SequentialControllerHandler {
   final LoginRepository _loginRepository;
   final UserRepository _userRepository;
-  final LocalStorage _localStorage;
   final RemoteFileStorage _remoteFileStorage;
 
   UserController(
     this._loginRepository,
     this._userRepository,
-    this._localStorage,
     this._remoteFileStorage, {
     super.initialState = const UserController$Idle(),
   }) {
@@ -39,18 +35,7 @@ final class UserController extends StateController<UserControllerState>
     return handle(
       () async {
         setState(const UserController$Loading());
-
         final user = await _loginRepository.loginByGoogle();
-        if (user == null) {
-          throw const LogicException('Пользователь не найден в БД');
-        }
-
-        final userId = user.id;
-        if (userId == null) {
-          throw const LogicException('У пользователя не задан id');
-        }
-        await _localStorage.setUserId(userId);
-
         setState(UserController$LoginSuccess(user));
       },
       _errorHandler,
@@ -86,18 +71,32 @@ final class UserController extends StateController<UserControllerState>
     return handle(
       () async {
         setState(const UserController$Loading());
-        final userId = await _localStorage.getUserId();
-        if (userId == null) {
-          throw const LogicException(
-              'id пользователя не найдено на устройстве');
-        }
-
-        final user = await _userRepository.getUserById(userId);
-        if (user == null) {
-          throw LogicException('Пользователь id: $userId не найден в БД');
-        }
-
+        final user = await _userRepository.getCurrentUser();
         setState(UserController$UserUpdated(user));
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
+  void logout() {
+    return handle(
+      () async {
+        setState(const UserController$LogoutLoading());
+        await _loginRepository.logout();
+        setState(const UserController$LogoutSuccess());
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
+  void deleteCurrentUser() {
+    return handle(
+      () async {
+        setState(const UserController$DeleteLoading());
+        await _loginRepository.deleteCurrentUser();
+        setState(const UserController$DeleteSuccess());
       },
       _errorHandler,
       _doneHandler,

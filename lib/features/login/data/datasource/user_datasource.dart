@@ -14,6 +14,8 @@ abstract interface class UserDatasource {
   Future<UserApiModel?> addUser(UserApiModel user);
 
   Future<int> updateUser(UserApiModel user);
+
+  Future<int> deleteUser(int userId);
 }
 
 class UserDatasourceImpl implements UserDatasource {
@@ -116,5 +118,13 @@ class UserDatasourceImpl implements UserDatasource {
     );
 
     // return 0;
+  }
+
+  @override
+  Future<int> deleteUser(int userId) {
+    return _remoteStorage.delete(
+      from: 'user',
+      where: {'iduser': userId},
+    );
   }
 }

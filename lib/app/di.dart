@@ -54,9 +54,13 @@ class DI {
     _sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
           _sl<UserDatasource>(),
           _sl<LoginDatasource>(),
+          _sl<LocalStorage>(),
+          _sl<PetDatasource>(),
+          _sl<QuestionDatasource>(),
         ));
     _sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
           _sl<UserDatasource>(),
+          _sl<LocalStorage>(),
         ));
     _sl.registerLazySingleton<PetRepository>(() => PetRepositoryImpl(
           _sl<PetDatasource>(),
@@ -77,7 +81,6 @@ class DI {
     _sl.registerFactory(() => UserController(
           _sl<LoginRepository>(),
           _sl<UserRepository>(),
-          _sl<LocalStorage>(),
           _sl<RemoteFileStorage>(),
         ));
     _sl.registerFactory(() => PetProfileController(

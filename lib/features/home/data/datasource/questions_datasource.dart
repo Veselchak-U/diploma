@@ -5,6 +5,8 @@ abstract interface class QuestionDatasource {
   Future<List<QuestionApiModel>> getUserQuestions(int userId);
 
   Future<void> addQuestion(QuestionApiModel question);
+
+  Future<void> deleteAllByUser(int userId);
 }
 
 class QuestionDatasourceImpl implements QuestionDatasource {
@@ -29,6 +31,14 @@ class QuestionDatasourceImpl implements QuestionDatasource {
     return _remoteStorage.insert(
       to: 'questions',
       data: question.toJson(),
+    );
+  }
+
+  @override
+  Future<void> deleteAllByUser(int userId) {
+    return _remoteStorage.delete(
+      from: 'questions',
+      where: {'user_iduser': userId},
     );
   }
 }
