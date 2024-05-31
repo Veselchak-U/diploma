@@ -68,7 +68,7 @@ class _SupportPageState extends State<SupportPage>
 }
 
 class _EmptyQuestionsWidget extends StatelessWidget {
-  const _EmptyQuestionsWidget({super.key});
+  const _EmptyQuestionsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +81,7 @@ class _EmptyQuestionsWidget extends StatelessWidget {
 class _QuestionsListWidget extends StatelessWidget {
   final List<QuestionEntity> questions;
 
-  const _QuestionsListWidget(
-    this.questions, {
-    super.key,
-  });
+  const _QuestionsListWidget(this.questions);
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +115,7 @@ class _QuestionsListWidget extends StatelessWidget {
 class _QuestionItem extends StatelessWidget {
   final QuestionEntity question;
 
-  const _QuestionItem(
-    this.question, {
-    super.key,
-  });
+  const _QuestionItem(this.question);
 
   @override
   Widget build(BuildContext context) {

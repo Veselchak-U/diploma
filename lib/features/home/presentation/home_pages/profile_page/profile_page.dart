@@ -68,10 +68,7 @@ class _ProfilePageState extends State<ProfilePage>
 class _UserDetails extends StatelessWidget {
   final UserApiModel user;
 
-  const _UserDetails(
-    this.user, {
-    super.key,
-  });
+  const _UserDetails(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +104,11 @@ class _UserDetails extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }
 
 class _UserQuestionnaries extends StatelessWidget {
-  const _UserQuestionnaries({super.key});
+  const _UserQuestionnaries();
 
   @override
   Widget build(BuildContext context) {

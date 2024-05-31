@@ -25,8 +25,9 @@ class AppScaffold extends StatelessWidget {
           ? AppBar(
               title: Text(
                 title ?? '',
-                style: AppTextStyles.s18w400,
+                style: AppTextStyles.s18w600,
               ),
+              centerTitle: true,
               leading: leading,
               actions: actions,
             )

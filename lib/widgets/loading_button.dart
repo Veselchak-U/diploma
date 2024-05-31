@@ -33,7 +33,7 @@ class LoadingButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon != null ? icon! : const SizedBox.shrink(),
-                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 16.r) : const SizedBox.shrink(),
                 Text(label, style: AppTextStyles.s15w500),
               ],
             ),
@@ -47,7 +47,7 @@ class LoadingButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon != null ? icon! : const SizedBox.shrink(),
-                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 16.r) : const SizedBox.shrink(),
                 Text(label, style: AppTextStyles.s15w500),
               ],
             ),
@@ -61,7 +61,7 @@ class LoadingButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon != null ? icon! : const SizedBox.shrink(),
-                icon != null ? SizedBox(width: 8.r) : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 16.r) : const SizedBox.shrink(),
                 Text(label,
                     style: AppTextStyles.s15w500.copyWith(
                       color: AppColors.errorLight,

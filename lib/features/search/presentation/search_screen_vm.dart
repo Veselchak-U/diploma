@@ -53,6 +53,34 @@ class SearchScreenVm {
     searchText.dispose();
   }
 
+  onTapCategory(CategoryApiModel value) {
+    if (selectedCategories.value.contains(value)) {
+      selectedCategories.value.remove(value);
+    } else {
+      selectedCategories.value.add(value);
+    }
+    selectedCategories.value = [...selectedCategories.value];
+
+    searchPets();
+  }
+
+  onTapPetType(PetType value) {
+    if (selectedTypes.value.contains(value)) {
+      selectedTypes.value.remove(value);
+    } else {
+      selectedTypes.value.add(value);
+    }
+    selectedTypes.value = [...selectedTypes.value];
+
+    searchPets();
+  }
+
+  void onSearchTextChanged(String value) {
+    searchText.value = value;
+
+    searchPets();
+  }
+
   void searchPets() {
     final searchFilter = SearchFilter(
       selectedCategories: selectedCategories.value,
