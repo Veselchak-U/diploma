@@ -6,7 +6,7 @@ import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
 import 'package:get_pet/features/home/presentation/home_pages/home_page/home_page.dart';
 import 'package:get_pet/features/home/presentation/home_pages/profile_page/profile_page.dart';
-import 'package:get_pet/features/home/presentation/home_pages/search_page/search_page.dart';
+import 'package:get_pet/features/search/presentation/search_screen.dart';
 import 'package:get_pet/features/home/presentation/home_pages/support_page/support_page.dart';
 import 'package:get_pet/features/home/presentation/home_screen_vm.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static const _pages = <Widget>[
     HomePage(),
-    SearchPage(),
+    SearchScreen(),
     SupportPage(),
     ProfilePage(),
   ];

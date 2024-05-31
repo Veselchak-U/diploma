@@ -93,7 +93,7 @@ class ProfilePageVm {
     }
   }
 
-  Future<void> updateMyPets() {
+  Future<void> refreshMyPets() {
     _petProfileController.getCurrentUserPets();
 
     return Future.value();
@@ -126,6 +126,7 @@ class ProfilePageVm {
     switch (state) {
       case UserController$UserUpdated():
         user.value = state.user;
+        _petProfileController.getCurrentUserPets();
         break;
       default:
         break;

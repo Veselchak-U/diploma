@@ -248,7 +248,7 @@ class _UserDetailsState extends State<_UserDetails> {
                 : SizedBox(
                     width: 150.r,
                     child: LoadingButton(
-                      label: 'Написать',
+                      label: 'Связаться',
                       onPressed: _openPhone,
                     ),
                   );

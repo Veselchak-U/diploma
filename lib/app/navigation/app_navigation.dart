@@ -33,6 +33,8 @@ import 'package:get_pet/features/login/presentation/login_screen/login_screen.da
 import 'package:get_pet/features/login/presentation/login_screen/login_screen_vm.dart';
 import 'package:get_pet/features/login/presentation/registration_screen/registration_screen.dart';
 import 'package:get_pet/features/login/presentation/registration_screen/registration_screen_vm.dart';
+import 'package:get_pet/features/search/domain/logic/pet_search_controller.dart';
+import 'package:get_pet/features/search/presentation/search_screen_vm.dart';
 import 'package:get_pet/features/settings/presentation/settings_screen.dart';
 import 'package:get_pet/features/settings/presentation/settings_screen_vm.dart';
 import 'package:get_pet/widgets/app_drawer.dart';
@@ -151,6 +153,15 @@ class AppNavigation {
                 context,
                 DI.get<PetRepository>(),
                 DI.get<SupportController>(),
+              ),
+              dispose: (context, vm) => vm.dispose(),
+            ),
+            Provider(
+              lazy: false,
+              create: (context) => SearchScreenVm(
+                context,
+                DI.get<PetSearchController>(),
+                null,
               ),
               dispose: (context, vm) => vm.dispose(),
             ),

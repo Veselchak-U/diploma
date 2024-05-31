@@ -125,7 +125,7 @@ class _UserQuestionnaries extends StatelessWidget {
           valueListenable: vm.myPets,
           builder: (context, myPets, _) {
             return RefreshIndicator(
-              onRefresh: vm.updateMyPets,
+              onRefresh: vm.refreshMyPets,
               child: GridView.count(
                 padding: const EdgeInsets.all(16).r,
                 crossAxisCount: 2,

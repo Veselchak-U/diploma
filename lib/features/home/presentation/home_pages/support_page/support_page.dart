@@ -96,7 +96,7 @@ class _QuestionsListWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 16).r,
           child: Text(
-            'Мои заявки',
+            'Мои обращения',
             style: AppTextStyles.s13w600,
           ),
         ),

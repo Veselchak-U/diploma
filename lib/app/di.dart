@@ -17,6 +17,7 @@ import 'package:get_pet/features/login/data/datasource/user_datasource.dart';
 import 'package:get_pet/features/login/data/repository/login_repository.dart';
 import 'package:get_pet/features/login/data/repository/user_repository.dart';
 import 'package:get_pet/features/login/domain/logic/user_controller.dart';
+import 'package:get_pet/features/search/domain/logic/pet_search_controller.dart';
 
 class DI {
   static final _sl = GetIt.instance;
@@ -94,6 +95,9 @@ class DI {
           _sl<QuestionRepository>(),
           _sl<RemoteFileStorage>(),
           _sl<LocalStorage>(),
+        ));
+    _sl.registerLazySingleton(() => PetSearchController(
+          _sl<PetRepository>(),
         ));
   }
 }
