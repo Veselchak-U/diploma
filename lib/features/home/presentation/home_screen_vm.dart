@@ -35,7 +35,6 @@ class HomeScreenVm {
   Future<void> _init() async {
     _petCommonController.addListener(_petCommonControllerListener);
     _petCommonController.getCategories();
-    _petCommonController.getNewPets();
 
     _supportController.addListener(_supportControllerListener);
     _supportController.getUserQuestions();
@@ -131,6 +130,7 @@ class HomeScreenVm {
     switch (state) {
       case final PetCommonController$CategoriesUpdated state:
         categories.value = state.categories;
+        _petCommonController.getNewPets();
         break;
       default:
         break;

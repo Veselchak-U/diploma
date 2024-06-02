@@ -1,5 +1,6 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
@@ -43,7 +44,9 @@ class PetDetailsScreenVm {
     loading.dispose();
   }
 
-  void onEditPet() {}
+  void onEditPet() {
+    GoRouter.of(_context).pushNamed(AppRoute.petProfile.name, extra: pet);
+  }
 
   Future<void> onDeletePet() async {
     final result = await BottomSheets.showConfirmationDialog(

@@ -147,6 +147,7 @@ class PetProfileScreenVm {
     if (_checkFieldFullness() == false) return;
 
     final pet = PetEntity(
+      id: _pet?.id,
       category: petCategory!,
       title: petTitle,
       photoUrl: petPhotoUrl.value!,
@@ -253,6 +254,7 @@ class PetProfileScreenVm {
 
         _petCommonController.getNewPets();
 
+        GoRouter.of(_context).pop();
         GoRouter.of(_context).pop();
         break;
       default:

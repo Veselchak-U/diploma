@@ -182,7 +182,7 @@ class _PetDetailPiece extends StatelessWidget {
 }
 
 class _ControlButtons extends StatelessWidget {
-  const _ControlButtons({super.key});
+  const _ControlButtons();
 
   @override
   Widget build(BuildContext context) {

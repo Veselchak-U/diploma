@@ -33,7 +33,7 @@ class PetCard extends StatelessWidget {
           children: [
             Expanded(
               child: Hero(
-                tag: pet.id ?? -1,
+                tag: pet.photoUrl,
                 child: CachedNetworkImage(
                   imageUrl: pet.photoUrl,
                   imageBuilder: (context, imageProvider) {

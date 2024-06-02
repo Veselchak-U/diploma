@@ -104,6 +104,7 @@ class AppNavigation {
             create: (context) => InitialScreenVm(
               context,
               DI.get<InitialController>(),
+              DI.get<PetCommonController>(),
             ),
             dispose: (context, vm) => vm.dispose(),
             child: const InitialScreen(),

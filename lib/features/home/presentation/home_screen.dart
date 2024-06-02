@@ -49,18 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
       BlendMode.srcIn,
     );
 
-    return ValueListenableBuilder(
-      valueListenable: vm.pageIndex,
-      builder: (context, pageIndex, _) {
-        return Scaffold(
-          body: SafeArea(
-            child: PageView(
-              controller: vm.pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: _pages,
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
+    return Scaffold(
+      body: SafeArea(
+        child: PageView(
+          controller: vm.pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: _pages,
+        ),
+      ),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: vm.pageIndex,
+        builder: (context, pageIndex, _) {
+          return BottomNavigationBar(
             unselectedItemColor: AppColors.onBackgroundLight,
             showUnselectedLabels: true,
             items: [
@@ -118,9 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: pageIndex,
             selectedItemColor: selectedColor,
             onTap: vm.onPageSelected,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
