@@ -62,7 +62,7 @@ class HomePageHead extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             child: InkWell(
               borderRadius: BorderRadius.circular(16.r),
-              onTap: vm.search,
+              onTap: vm.onTapSearchText,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8).r,

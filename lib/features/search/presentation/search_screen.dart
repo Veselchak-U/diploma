@@ -16,10 +16,28 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin {
+  late final SearchScreenVm vm;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    vm = context.read<SearchScreenVm>();
+  }
+
+  @override
+  void dispose() {
+    vm.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<SearchScreenVm>();
+    super.build(context);
 
     return AppScaffold(
       title: 'Поиск объявлений',
@@ -182,7 +200,8 @@ class _SearchTextSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16).r,
           child: TextFormField(
-            initialValue: vm.searchText.value,
+            focusNode: vm.searchFieldFocusNode,
+            controller: vm.searchFieldController,
             textInputAction: TextInputAction.search,
             onChanged: vm.onSearchTextChanged,
             onTapOutside: (_) {

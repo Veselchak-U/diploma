@@ -11,12 +11,10 @@ import 'package:go_router/go_router.dart';
 class SearchScreenVm {
   final BuildContext _context;
   final PetSearchController _petSearchController;
-  final SearchFilter? _searchFilter;
 
   SearchScreenVm(
     this._context,
     this._petSearchController,
-    this._searchFilter,
   ) {
     _init();
   }
@@ -26,20 +24,14 @@ class SearchScreenVm {
   final selectedCategories = ValueNotifier<List<CategoryApiModel>>([]);
   final selectedTypes = ValueNotifier<List<PetType>>([]);
   final searchText = ValueNotifier<String>('');
-
   final foundedPets = ValueNotifier<List<PetEntity>>([]);
+
+  final searchFieldFocusNode = FocusNode();
+  final searchFieldController = TextEditingController();
 
   Future<void> _init() async {
     _petSearchController.addListener(_petSearchControllerListener);
     _petSearchController.getCategories();
-
-    if (_searchFilter != null) {
-      selectedCategories.value = _searchFilter.selectedCategories;
-      selectedTypes.value = _searchFilter.selectedTypes;
-      searchText.value = _searchFilter.searchText;
-
-      _petSearchController.searchPets(_searchFilter);
-    }
   }
 
   void dispose() {
@@ -51,26 +43,58 @@ class SearchScreenVm {
     selectedCategories.dispose();
     selectedTypes.dispose();
     searchText.dispose();
+    foundedPets.dispose();
+
+    searchFieldFocusNode.dispose();
+    searchFieldController.dispose();
   }
 
-  onTapCategory(CategoryApiModel value) {
-    if (selectedCategories.value.contains(value)) {
-      selectedCategories.value.remove(value);
-    } else {
-      selectedCategories.value.add(value);
+  void onSearchOutside(SearchFilter value) {
+    var actualFilter = SearchFilter(
+      selectedCategories: value.selectedCategories,
+      selectedTypes: value.selectedTypes,
+      searchText: value.searchText,
+    );
+
+    // Handle tap "Search" on home page
+    if (value.selectedCategories.isEmpty &&
+        value.selectedTypes.isEmpty &&
+        value.searchText == ' ') {
+      actualFilter = actualFilter.copyWith(searchText: '');
+      searchFieldFocusNode.requestFocus();
     }
-    selectedCategories.value = [...selectedCategories.value];
+
+    selectedCategories.value = actualFilter.selectedCategories;
+    selectedTypes.value = actualFilter.selectedTypes;
+    searchText.value = actualFilter.searchText;
+
+    searchFieldController.text = actualFilter.searchText;
 
     searchPets();
   }
 
-  onTapPetType(PetType value) {
-    if (selectedTypes.value.contains(value)) {
-      selectedTypes.value.remove(value);
+  void onTapCategory(CategoryApiModel value) {
+    final newList = [...selectedCategories.value];
+
+    if (newList.contains(value)) {
+      newList.remove(value);
     } else {
-      selectedTypes.value.add(value);
+      newList.add(value);
     }
-    selectedTypes.value = [...selectedTypes.value];
+    selectedCategories.value = newList;
+
+    searchPets();
+  }
+
+  void onTapPetType(PetType value) {
+    final newList = [...selectedTypes.value];
+
+    if (newList.contains(value)) {
+      newList.remove(value);
+    } else {
+      newList.add(value);
+    }
+    selectedTypes.value = newList;
 
     searchPets();
   }
@@ -87,6 +111,11 @@ class SearchScreenVm {
       selectedTypes: selectedTypes.value,
       searchText: searchText.value,
     );
+
+    if (searchFilter.isEmpty) {
+      foundedPets.value = [];
+      return;
+    }
 
     _petSearchController.searchPets(searchFilter);
   }

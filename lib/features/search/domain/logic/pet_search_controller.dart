@@ -10,7 +10,7 @@ part 'pet_search_controller_state.dart';
 
 final class PetSearchController
     extends StateController<PetSearchControllerState>
-    with SequentialControllerHandler {
+    with DroppableControllerHandler {
   final PetRepository _petRepository;
 
   PetSearchController(

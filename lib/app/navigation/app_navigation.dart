@@ -145,47 +145,49 @@ class AppNavigation {
       GoRoute(
         name: AppRoute.home.name,
         path: AppRoute.home.path,
-        builder: (context, state) => MultiProvider(
-          providers: [
-            Provider(
-              lazy: false,
-              create: (context) => HomeScreenVm(
-                context,
-                DI.get<PetRepository>(),
-                DI.get<SupportController>(),
+        builder: (context, state) {
+          final searchScreenVm = SearchScreenVm(
+            context,
+            DI.get<PetSearchController>(),
+          );
+
+          return MultiProvider(
+            providers: [
+              Provider(
+                lazy: false,
+                create: (context) => HomeScreenVm(
+                  context,
+                  DI.get<PetRepository>(),
+                  DI.get<SupportController>(),
+                  searchScreenVm,
+                ),
+                dispose: (context, vm) => vm.dispose(),
               ),
-              dispose: (context, vm) => vm.dispose(),
-            ),
-            Provider(
-              lazy: false,
-              create: (context) => SearchScreenVm(
-                context,
-                DI.get<PetSearchController>(),
-                null,
+              Provider.value(
+                value: searchScreenVm,
               ),
-              dispose: (context, vm) => vm.dispose(),
-            ),
-            Provider(
-              lazy: false,
-              create: (context) => SupportPageVm(
-                context,
-                DI.get<SupportController>(),
+              Provider(
+                lazy: false,
+                create: (context) => SupportPageVm(
+                  context,
+                  DI.get<SupportController>(),
+                ),
+                dispose: (context, vm) => vm.dispose(),
               ),
-              dispose: (context, vm) => vm.dispose(),
-            ),
-            Provider(
-              lazy: false,
-              create: (context) => ProfilePageVm(
-                context,
-                DI.get<UserController>(),
-                DI.get<PetProfileController>(),
-                DI.get<PetRepository>(),
+              Provider(
+                lazy: false,
+                create: (context) => ProfilePageVm(
+                  context,
+                  DI.get<UserController>(),
+                  DI.get<PetProfileController>(),
+                  DI.get<PetRepository>(),
+                ),
+                dispose: (context, vm) => vm.dispose(),
               ),
-              dispose: (context, vm) => vm.dispose(),
-            ),
-          ],
-          child: const HomeScreen(),
-        ),
+            ],
+            child: const HomeScreen(),
+          );
+        },
         routes: [
           GoRoute(
             name: AppRoute.petProfile.name,

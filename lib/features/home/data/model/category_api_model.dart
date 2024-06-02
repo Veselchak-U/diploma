@@ -32,4 +32,16 @@ class CategoryApiModel {
 
   @override
   String toString() => name;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (other.runtimeType != runtimeType) return false;
+
+    return other is CategoryApiModel && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }

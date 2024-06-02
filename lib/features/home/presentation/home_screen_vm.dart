@@ -5,6 +5,8 @@ import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
+import 'package:get_pet/features/search/domain/entity/search_filter.dart';
+import 'package:get_pet/features/search/presentation/search_screen_vm.dart';
 import 'package:get_pet/widgets/bottom_sheets.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,15 +14,20 @@ class HomeScreenVm {
   final BuildContext _context;
   final PetRepository _petRepository;
   final SupportController _supportController;
+  final SearchScreenVm _searchScreenVm;
 
   HomeScreenVm(
     this._context,
     this._petRepository,
     this._supportController,
+    this._searchScreenVm,
   ) {
     _init();
   }
 
+  final pageController = PageController();
+
+  final pageIndex = ValueNotifier<int>(0);
   final categories = ValueNotifier<List<CategoryApiModel>>([]);
   final newPets = ValueNotifier<List<PetEntity>>([]);
   final loading = ValueNotifier<bool>(true);
@@ -36,6 +43,10 @@ class HomeScreenVm {
 
   void dispose() {
     _supportController.removeListener(_supportControllerListener);
+
+    pageController.dispose();
+
+    pageIndex.dispose();
     categories.dispose();
     newPets.dispose();
     loading.dispose();
@@ -47,8 +58,25 @@ class HomeScreenVm {
     GoRouter.of(_context).pushNamed(AppRoute.petProfile.name);
   }
 
-  void search() {
-    LoggerService().d('HomeScreenVm.search()');
+  void onPageSelected(int value) {
+    pageIndex.value = value;
+    pageController.jumpToPage(value);
+  }
+
+  void onTapSearchText() {
+    _searchScreenVm.onSearchOutside(
+      SearchFilter(searchText: ' '),
+    );
+
+    onPageSelected(1);
+  }
+
+  void onTapCategory(CategoryApiModel category) {
+    _searchScreenVm.onSearchOutside(
+      SearchFilter(selectedCategories: [category]),
+    );
+
+    onPageSelected(1);
   }
 
   Future<void> deletePet(PetEntity pet) async {

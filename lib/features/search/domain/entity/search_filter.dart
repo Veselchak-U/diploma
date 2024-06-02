@@ -7,8 +7,23 @@ class SearchFilter {
   final String searchText;
 
   SearchFilter({
-    required this.selectedCategories,
-    required this.selectedTypes,
-    required this.searchText,
+    this.selectedCategories = const [],
+    this.selectedTypes = const [],
+    this.searchText = '',
   });
+
+  bool get isEmpty =>
+      selectedCategories.isEmpty &&
+      selectedTypes.isEmpty &&
+      searchText.trim().isEmpty;
+
+  SearchFilter copyWith({
+    String? searchText,
+  }) {
+    return SearchFilter(
+      selectedCategories: selectedCategories,
+      selectedTypes: selectedTypes,
+      searchText: searchText ?? this.searchText,
+    );
+  }
 }

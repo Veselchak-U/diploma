@@ -39,36 +39,41 @@ class _CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final screenWidth = MediaQuery.sizeOf(context).width;
+    final vm = context.read<HomeScreenVm>();
 
     return SizedBox(
       width: screenWidth / 2,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16).r,
-          border: Border.all(color: theme.disabledColor),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24).r,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 32.r,
-                height: 32.r,
-                child: Image.memory(category.photo),
-              ),
-              SizedBox(width: 16.r),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(category.name, style: AppTextStyles.s13w600),
-                  category.count != null
-                      ? Text('Всего ${category.count}',
-                          style: AppTextStyles.s11w400)
-                      : const SizedBox.shrink(),
-                ],
-              ),
-            ],
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16).r,
+        onTap: () => vm.onTapCategory(category),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16).r,
+            border: Border.all(color: theme.disabledColor),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24).r,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 32.r,
+                  height: 32.r,
+                  child: Image.memory(category.photo),
+                ),
+                SizedBox(width: 16.r),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(category.name, style: AppTextStyles.s13w600),
+                    category.count != null
+                        ? Text('Всего ${category.count}',
+                            style: AppTextStyles.s11w400)
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
