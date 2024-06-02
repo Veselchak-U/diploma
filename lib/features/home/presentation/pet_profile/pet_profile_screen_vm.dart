@@ -5,6 +5,7 @@ import 'package:get_pet/app/service/logger/logger_service.dart';
 import 'package:get_pet/features/home/data/model/category_api_model.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/pet_type.dart';
+import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
@@ -14,11 +15,13 @@ class PetProfileScreenVm {
   final BuildContext _context;
   final PetEntity? _pet;
   final PetProfileController _petProfileController;
+  final PetCommonController _petCommonController;
 
   PetProfileScreenVm(
     this._context,
     this._pet,
     this._petProfileController,
+    this._petCommonController,
   ) {
     _init();
   }
@@ -239,11 +242,17 @@ class PetProfileScreenVm {
       case PetProfileController$AddSuccess():
         AppOverlays.showErrorBanner(
             msg: 'Объявление добавлено!', isError: false);
+
+        _petCommonController.getNewPets();
+
         GoRouter.of(_context).pop();
         break;
       case PetProfileController$UpdateSuccess():
         AppOverlays.showErrorBanner(
             msg: 'Объявление изменено!', isError: false);
+
+        _petCommonController.getNewPets();
+
         GoRouter.of(_context).pop();
         break;
       default:

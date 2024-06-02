@@ -21,6 +21,7 @@ class PetDetailsScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return AppScaffold(
+      title: 'Просмотр объявления',
       body: Stack(
         children: [
           Column(
@@ -28,7 +29,7 @@ class PetDetailsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Hero(
-                  tag: vm.pet.id ?? -1,
+                  tag: vm.pet.photoUrl,
                   child: CachedNetworkImage(
                     imageUrl: vm.pet.photoUrl,
                     fit: BoxFit.cover,
@@ -120,14 +121,18 @@ class PetDetailsScreen extends StatelessWidget {
                                   style: AppTextStyles.s15w400),
                               SizedBox(height: 24.r),
                               ValueListenableBuilder(
-                                valueListenable: vm.user,
-                                builder: (context, user, _) {
+                                valueListenable: vm.userDetails,
+                                builder: (context, userDetails, _) {
                                   return ValueListenableBuilder(
                                     valueListenable: vm.loading,
                                     builder: (context, loading, _) {
+                                      final isMyPet = userDetails.isMyPet;
+
                                       return loading
                                           ? const LoadingIndicator()
-                                          : _UserDetails(user);
+                                          : isMyPet
+                                              ? const _ControlButtons()
+                                              : _UserDetails(userDetails.user);
                                     },
                                   );
                                 },
@@ -172,6 +177,34 @@ class _PetDetailPiece extends StatelessWidget {
           Text(label, style: AppTextStyles.s11w400),
         ],
       ),
+    );
+  }
+}
+
+class _ControlButtons extends StatelessWidget {
+  const _ControlButtons({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<PetDetailsScreenVm>();
+
+    return Row(
+      children: [
+        Expanded(
+          child: LoadingButton(
+            label: 'Редактировать',
+            onPressed: vm.onEditPet,
+          ),
+        ),
+        SizedBox(width: 8.r),
+        Expanded(
+          child: LoadingButton(
+            label: 'Удалить',
+            type: LoadingButtonType.red,
+            onPressed: vm.onDeletePet,
+          ),
+        ),
+      ],
     );
   }
 }

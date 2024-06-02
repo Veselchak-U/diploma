@@ -69,7 +69,7 @@ class ProfilePageVm {
           'безвозвратно удалены из системы. Вы действительно хотите удалить '
           'свой профиль?',
       confirmLabel: 'Да, удалить безвозвратно',
-      confirmLabelType: LoadingButtonType.red,
+      confirmLabelType: LoadingButtonType.danger,
     );
 
     if (result != true) return;

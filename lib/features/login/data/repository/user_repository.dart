@@ -6,6 +6,8 @@ import 'package:get_pet/features/login/data/model/user_api_model.dart';
 abstract interface class UserRepository {
   Future<UserApiModel> getCurrentUser();
 
+  Future<int?> getCurrentUserId();
+
   Future<UserApiModel?> getUserById(int? id);
 
   Future<void> updateUser(UserApiModel user);
@@ -33,6 +35,11 @@ class UserRepositoryImpl implements UserRepository {
     }
 
     return user;
+  }
+
+  @override
+  Future<int?> getCurrentUserId() {
+    return _localStorage.getUserId();
   }
 
   @override

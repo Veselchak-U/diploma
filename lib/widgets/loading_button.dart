@@ -4,7 +4,7 @@ import 'package:get_pet/app/style/app_colors.dart';
 import 'package:get_pet/app/style/app_text_styles.dart';
 import 'package:get_pet/widgets/loading_indicator.dart';
 
-enum LoadingButtonType { primary, transparent, red }
+enum LoadingButtonType { primary, transparent, red, danger }
 
 class LoadingButton extends StatelessWidget {
   final String label;
@@ -66,6 +66,28 @@ class LoadingButton extends StatelessWidget {
                     style: AppTextStyles.s15w500.copyWith(
                       color: AppColors.errorLight,
                     )),
+              ],
+            ),
+          ),
+        ),
+      LoadingButtonType.danger => TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+              AppColors.errorLight,
+            ),
+            foregroundColor: MaterialStateProperty.all(
+              AppColors.white,
+            ),
+          ),
+          onPressed: loading ? null : onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8).r,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon != null ? icon! : const SizedBox.shrink(),
+                icon != null ? SizedBox(width: 16.r) : const SizedBox.shrink(),
+                Text(label, style: AppTextStyles.s15w500),
               ],
             ),
           ),

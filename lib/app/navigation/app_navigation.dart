@@ -10,6 +10,7 @@ import 'package:get_pet/app/service/storage/local_storage.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/entity/question_entity.dart';
+import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
@@ -151,21 +152,17 @@ class AppNavigation {
             DI.get<PetSearchController>(),
           );
 
+          final homeScreenVm = HomeScreenVm(
+            context,
+            DI.get<PetCommonController>(),
+            DI.get<SupportController>(),
+            searchScreenVm,
+          );
+
           return MultiProvider(
             providers: [
-              Provider(
-                lazy: false,
-                create: (context) => HomeScreenVm(
-                  context,
-                  DI.get<PetRepository>(),
-                  DI.get<SupportController>(),
-                  searchScreenVm,
-                ),
-                dispose: (context, vm) => vm.dispose(),
-              ),
-              Provider.value(
-                value: searchScreenVm,
-              ),
+              Provider.value(value: searchScreenVm),
+              Provider.value(value: homeScreenVm),
               Provider(
                 lazy: false,
                 create: (context) => SupportPageVm(
@@ -198,6 +195,7 @@ class AppNavigation {
                 context,
                 state.extra as PetEntity?,
                 DI.get<PetProfileController>(),
+                DI.get<PetCommonController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
               child: const PetProfileScreen(),
@@ -212,6 +210,7 @@ class AppNavigation {
                 context,
                 state.extra as PetEntity,
                 DI.get<PetDetailsController>(),
+                DI.get<PetCommonController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
               child: const PetDetailsScreen(),

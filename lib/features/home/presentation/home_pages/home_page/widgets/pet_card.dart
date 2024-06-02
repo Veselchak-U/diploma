@@ -7,14 +7,12 @@ import 'package:get_pet/widgets/loading_indicator.dart';
 
 class PetCard extends StatelessWidget {
   final VoidCallback openPetDetails;
-  final VoidCallback deletePet;
 
   final PetEntity pet;
 
   const PetCard(
     this.pet, {
     required this.openPetDetails,
-    required this.deletePet,
     super.key,
   });
 
@@ -25,7 +23,6 @@ class PetCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(16).r,
       onTap: openPetDetails,
-      onLongPress: deletePet,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16).r,

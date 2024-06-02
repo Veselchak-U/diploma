@@ -26,9 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
     ProfilePage(),
   ];
 
+  late final HomeScreenVm vm;
+
+  @override
+  void initState() {
+    super.initState();
+    vm = context.read<HomeScreenVm>();
+  }
+
+  @override
+  void dispose() {
+    vm.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<HomeScreenVm>();
     final theme = Theme.of(context);
     final selectedColor = theme.colorScheme.secondary;
     final selectedColorFilter = ColorFilter.mode(

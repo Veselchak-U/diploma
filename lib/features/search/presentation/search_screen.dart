@@ -100,7 +100,6 @@ class _SearchScreenState extends State<SearchScreen>
                               return PetCard(
                                 pet,
                                 openPetDetails: () => vm.openPetDetails(pet),
-                                deletePet: () {},
                               );
                             },
                           ),

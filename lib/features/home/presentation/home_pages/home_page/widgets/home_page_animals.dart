@@ -34,7 +34,6 @@ class HomePageAnimals extends StatelessWidget {
                     return PetCard(
                       pet,
                       openPetDetails: () => vm.openPetDetails(pet),
-                      deletePet: () => vm.deletePet(pet),
                     );
                   },
                 ),

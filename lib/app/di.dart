@@ -8,6 +8,7 @@ import 'package:get_pet/features/home/data/datasource/pet_datasource.dart';
 import 'package:get_pet/features/home/data/datasource/questions_datasource.dart';
 import 'package:get_pet/features/home/data/repository/pet_repository.dart';
 import 'package:get_pet/features/home/data/repository/question_repository.dart';
+import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
@@ -84,12 +85,16 @@ class DI {
           _sl<UserRepository>(),
           _sl<RemoteFileStorage>(),
         ));
+    _sl.registerLazySingleton(() => PetCommonController(
+          _sl<PetRepository>(),
+        ));
     _sl.registerFactory(() => PetProfileController(
           _sl<PetRepository>(),
           _sl<RemoteFileStorage>(),
         ));
     _sl.registerFactory(() => PetDetailsController(
           _sl<UserRepository>(),
+          _sl<PetRepository>(),
         ));
     _sl.registerLazySingleton(() => SupportController(
           _sl<QuestionRepository>(),
