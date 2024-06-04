@@ -51,6 +51,16 @@ final class PetSearchController
     );
   }
 
+  void searchOutside(SearchFilter searchFilter) {
+    return handle(
+      () async {
+        setState(PetSearchController$SearchOutside(searchFilter));
+      },
+      _errorHandler,
+      _doneHandler,
+    );
+  }
+
   FutureOr<void> _errorHandler(Object e, StackTrace st) {
     setState(PetSearchController$Error(e));
   }

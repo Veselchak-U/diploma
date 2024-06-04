@@ -49,30 +49,6 @@ class SearchScreenVm {
     searchFieldController.dispose();
   }
 
-  void onSearchOutside(SearchFilter value) {
-    var actualFilter = SearchFilter(
-      selectedCategories: value.selectedCategories,
-      selectedTypes: value.selectedTypes,
-      searchText: value.searchText,
-    );
-
-    // Handle tap "Search" on home page
-    if (value.selectedCategories.isEmpty &&
-        value.selectedTypes.isEmpty &&
-        value.searchText == ' ') {
-      actualFilter = actualFilter.copyWith(searchText: '');
-      searchFieldFocusNode.requestFocus();
-    }
-
-    selectedCategories.value = actualFilter.selectedCategories;
-    selectedTypes.value = actualFilter.selectedTypes;
-    searchText.value = actualFilter.searchText;
-
-    searchFieldController.text = actualFilter.searchText;
-
-    searchPets();
-  }
-
   void onTapCategory(CategoryApiModel value) {
     final newList = [...selectedCategories.value];
 
@@ -83,7 +59,7 @@ class SearchScreenVm {
     }
     selectedCategories.value = newList;
 
-    searchPets();
+    _searchPets();
   }
 
   void onTapPetType(PetType value) {
@@ -96,16 +72,16 @@ class SearchScreenVm {
     }
     selectedTypes.value = newList;
 
-    searchPets();
+    _searchPets();
   }
 
   void onSearchTextChanged(String value) {
     searchText.value = value;
 
-    searchPets();
+    _searchPets();
   }
 
-  void searchPets() {
+  void _searchPets() {
     final searchFilter = SearchFilter(
       selectedCategories: selectedCategories.value,
       selectedTypes: selectedTypes.value,
@@ -127,11 +103,26 @@ class SearchScreenVm {
     );
   }
 
+  void _onSearchOutside(SearchFilter newFilter) {
+    selectedCategories.value = newFilter.selectedCategories;
+    selectedTypes.value = newFilter.selectedTypes;
+    searchText.value = newFilter.searchText;
+    searchFieldController.text = newFilter.searchText;
+
+    // Handle tap on home page "Search" field
+    if (newFilter.isEmpty) {
+      searchFieldFocusNode.requestFocus();
+    }
+
+    _searchPets();
+  }
+
   void _petSearchControllerListener() {
     final state = _petSearchController.state;
     _handleLoading(state);
     _handleCategories(state);
     _handlePets(state);
+    _handleSearchOutside(state);
     _handleError(state);
   }
 
@@ -156,6 +147,16 @@ class SearchScreenVm {
     switch (state) {
       case PetSearchController$SearchSuccess():
         foundedPets.value = state.foundedPets;
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _handleSearchOutside(PetSearchControllerState state) {
+    switch (state) {
+      case PetSearchController$SearchOutside():
+        _onSearchOutside(state.searchFilter);
         break;
       default:
         break;

@@ -5,7 +5,7 @@ import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/support/support_controller.dart';
 import 'package:get_pet/features/search/domain/entity/search_filter.dart';
-import 'package:get_pet/features/search/presentation/search_screen_vm.dart';
+import 'package:get_pet/features/search/domain/logic/pet_search_controller.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,13 +13,13 @@ class HomeScreenVm {
   final BuildContext _context;
   final PetCommonController _petCommonController;
   final SupportController _supportController;
-  final SearchScreenVm _searchScreenVm;
+  final PetSearchController _petSearchController;
 
   HomeScreenVm(
     this._context,
     this._petCommonController,
     this._supportController,
-    this._searchScreenVm,
+    this._petSearchController,
   ) {
     _init();
   }
@@ -63,15 +63,15 @@ class HomeScreenVm {
   }
 
   void onTapSearchText() {
-    _searchScreenVm.onSearchOutside(
-      SearchFilter(searchText: ' '),
+    _petSearchController.searchOutside(
+      SearchFilter(),
     );
 
     onPageSelected(1);
   }
 
   void onTapCategory(CategoryApiModel category) {
-    _searchScreenVm.onSearchOutside(
+    _petSearchController.searchOutside(
       SearchFilter(selectedCategories: [category]),
     );
 

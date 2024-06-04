@@ -148,22 +148,26 @@ class AppNavigation {
         name: AppRoute.home.name,
         path: AppRoute.home.path,
         builder: (context, state) {
-          final searchScreenVm = SearchScreenVm(
-            context,
-            DI.get<PetSearchController>(),
-          );
-
-          final homeScreenVm = HomeScreenVm(
-            context,
-            DI.get<PetCommonController>(),
-            DI.get<SupportController>(),
-            searchScreenVm,
-          );
-
           return MultiProvider(
             providers: [
-              Provider.value(value: searchScreenVm),
-              Provider.value(value: homeScreenVm),
+              Provider(
+                lazy: false,
+                create: (context) => HomeScreenVm(
+                  context,
+                  DI.get<PetCommonController>(),
+                  DI.get<SupportController>(),
+                  DI.get<PetSearchController>(),
+                ),
+                dispose: (context, vm) => vm.dispose(),
+              ),
+              Provider(
+                lazy: false,
+                create: (context) => SearchScreenVm(
+                  context,
+                  DI.get<PetSearchController>(),
+                ),
+                dispose: (context, vm) => vm.dispose(),
+              ),
               Provider(
                 lazy: false,
                 create: (context) => SupportPageVm(
