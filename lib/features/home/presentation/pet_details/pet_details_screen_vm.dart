@@ -4,6 +4,7 @@ import 'package:get_pet/app/navigation/app_route.dart';
 import 'package:get_pet/features/home/domain/entity/pet_entity.dart';
 import 'package:get_pet/features/home/domain/logic/pet_common/pet_common_controller.dart';
 import 'package:get_pet/features/home/domain/logic/pet_details/pet_details_controller.dart';
+import 'package:get_pet/features/home/domain/logic/pet_profile/pet_profile_controller.dart';
 import 'package:get_pet/features/login/data/model/user_api_model.dart';
 import 'package:get_pet/widgets/app_overlays.dart';
 import 'package:get_pet/widgets/bottom_sheets.dart';
@@ -17,12 +18,14 @@ class PetDetailsScreenVm {
   final PetEntity _pet;
   final PetDetailsController _petDetailsController;
   final PetCommonController _petCommonController;
+  final PetProfileController _petProfileController;
 
   PetDetailsScreenVm(
     this._context,
     this._pet,
     this._petDetailsController,
     this._petCommonController,
+    this._petProfileController,
   ) {
     _init();
   }
@@ -122,6 +125,7 @@ class PetDetailsScreenVm {
     switch (state) {
       case PetDetailsController$DeletePetSuccess():
         _petCommonController.getNewPets();
+        _petProfileController.getCurrentUserPets();
 
         GoRouter.of(_context).pop();
         break;

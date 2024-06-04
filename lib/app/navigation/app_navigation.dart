@@ -216,6 +216,7 @@ class AppNavigation {
                 state.extra as PetEntity,
                 DI.get<PetDetailsController>(),
                 DI.get<PetCommonController>(),
+                DI.get<PetProfileController>(),
               ),
               dispose: (context, vm) => vm.dispose(),
               child: const PetDetailsScreen(),

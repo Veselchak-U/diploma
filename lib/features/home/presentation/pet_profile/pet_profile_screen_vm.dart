@@ -245,6 +245,7 @@ class PetProfileScreenVm {
             msg: 'Объявление добавлено!', isError: false);
 
         _petCommonController.getNewPets();
+        _petProfileController.getCurrentUserPets();
 
         GoRouter.of(_context).pop();
         break;
@@ -253,6 +254,7 @@ class PetProfileScreenVm {
             msg: 'Объявление изменено!', isError: false);
 
         _petCommonController.getNewPets();
+        _petProfileController.getCurrentUserPets();
 
         GoRouter.of(_context).pop();
         GoRouter.of(_context).pop();

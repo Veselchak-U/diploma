@@ -88,7 +88,7 @@ class DI {
     _sl.registerLazySingleton(() => PetCommonController(
           _sl<PetRepository>(),
         ));
-    _sl.registerFactory(() => PetProfileController(
+    _sl.registerLazySingleton(() => PetProfileController(
           _sl<PetRepository>(),
           _sl<RemoteFileStorage>(),
         ));

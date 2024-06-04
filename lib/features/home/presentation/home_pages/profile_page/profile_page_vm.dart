@@ -77,22 +77,6 @@ class ProfilePageVm {
     _userController.deleteCurrentUser();
   }
 
-  Future<void> deletePet(PetEntity pet) async {
-    final result = await BottomSheets.showConfirmationDialog(
-      context: _context,
-      title: 'Подтверждение',
-      text: 'Вы действительно хотите удалить объявление "${pet.title}"?',
-      confirmLabel: 'Да, удалить',
-    );
-
-    if (result == true) {
-      loading.value = true;
-      await _petRepository.deletePet(pet);
-      _petProfileController.getCurrentUserPets();
-      loading.value = false;
-    }
-  }
-
   Future<void> refreshMyPets() {
     _petProfileController.getCurrentUserPets();
 
